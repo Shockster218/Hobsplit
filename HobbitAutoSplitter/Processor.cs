@@ -11,76 +11,15 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using Emgu.CV.CvEnum;
 
-namespace HobbitFramecounter
+namespace HobbitAutoSplitter
 {
     class Processor
     {
         private Process process;
-        private string inputPath;
-        private string outputPath;
-        private TimeSpan start;
-        private TimeSpan end;
-        private int fps;
 
         public Processor(string inputPath, int start, int end, int fps)
         {
             process = new Process();
-            this.inputPath = inputPath;
-            this.start = Calculator.ConvertIntToTimespan(start);
-            this.end = Calculator.ConvertIntToTimespan(end);
-            this.fps = fps;
-
-            //Test();
-        }
-
-        //private void Test()
-        //{
-        //    Mat m = new Mat(inputPath);
-        //    DetectText(m.ToImage<Bgr, byte>());
-        //    m.Dispose();
-        //}
-
-        private void ConvertVideoToImage()
-        {
-            outputPath = $"{Config.convertedDir}\\{inputPath.TrimEnd(System.IO.Path.DirectorySeparatorChar)}";
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-
-            process.StartInfo.FileName = Config.ffmpegDir;
-            process.StartInfo.Arguments = $"-ss {start} -i {inputPath} -to {end} -r 1/1 {outputPath}/%0d.bmp";
-
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = false;
-
-            process.Exited += (sender, args) =>
-            {
-                ProcessImage();
-            };
-
-            process.EnableRaisingEvents = true;
-
-            process.Start();
-            
-        }
-
-        private void ProcessImage()
-        {
-            if (outputPath != string.Empty)
-            {
-                try
-                {
-                    foreach (String file in System.IO.Directory.GetFiles(outputPath))
-                    {
-                        Mat m = new Mat(file);
-                        DetectText(m.ToImage<Bgr, byte>());
-                        m.Dispose();
-                    }
-                }
-                catch
-                {
-                    //Error in conversion.
-                }
-            }
         }
 
         private void DetectText(Image<Bgr, byte> img)
