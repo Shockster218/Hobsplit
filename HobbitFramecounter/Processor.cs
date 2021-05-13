@@ -30,7 +30,7 @@ namespace HobbitFramecounter
             this.end = Calculator.ConvertIntToTimespan(end);
             this.fps = fps;
 
-            Test();
+            //Test();
         }
 
         //private void Test()
@@ -110,8 +110,8 @@ namespace HobbitFramecounter
             Image<Bgr, byte> imgout = img.CopyBlank();
             foreach (var r in list)
             {
-                CvInvoke.Rectangle(img, r, new MCvScalar(0, 0, 255), 2);
-                CvInvoke.Rectangle(imgout, r, new MCvScalar(0, 255, 255), -1);
+                CvInvoke.Rectangle(img, r, new MCvScalar(0, 0, 255), 2, LineType.FourConnected);
+                CvInvoke.Rectangle(imgout, r, new MCvScalar(245, 255, 0), -1, LineType.FourConnected);
             }
             imgout._And(img);
 
