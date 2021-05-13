@@ -20,6 +20,5 @@
         <TextBlock x:Name="textblock60FPS" HorizontalAlignment="Left" Margin="51,278,0,0" TextWrapping="Wrap" Text="60 FPS" VerticalAlignment="Top" Height="28" Width="70" FontSize="16" Grid.ColumnSpan="3" IsEnabled="False"/>
         <RadioButton x:Name="radiobutton30FPS" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="163,282,0,0" Height="22" FontSize="16" RenderTransformOrigin="0.368,1.35" Width="66" Checked="radiobutton30FPS_Checked" Grid.ColumnSpan="3"/>
         <TextBlock x:Name="textblock30FPS" HorizontalAlignment="Left" Margin="182,279,0,0" TextWrapping="Wrap" Text="30 FPS" VerticalAlignment="Top" FontSize="16" Grid.ColumnSpan="3" IsEnabled="False"/>
-        <Image x:Name="test" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="313" Margin="347,41,0,0" VerticalAlignment="Top" Width="354"/>
     </Grid>
 </Window>

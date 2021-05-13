@@ -13,8 +13,8 @@ namespace HobbitFramecounter
         public static MainWindow instance;
         public MainWindow()
         {
-            InitializeComponent();
             instance = this;
+            InitializeComponent();
         }
 
         private void buttonBrowse_Click(object sender, RoutedEventArgs e)
@@ -24,7 +24,7 @@ namespace HobbitFramecounter
 
             if (dialog.ShowDialog() == true)
             {
-                textblockPathOutput.Text = dialog.FileName;;
+                textblockPathOutput.Text = dialog.FileName;
             }
         }
 
