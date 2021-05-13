@@ -1,0 +1,25 @@
+﻿<Window x:Class="HobbitFramecounter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HobbitFramecounter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="textbblockStepOne" HorizontalAlignment="Left" Margin="29,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="164" Grid.ColumnSpan="3"><Run FontSize="16" Text="Step 1: Set video path"/><LineBreak/><Run/></TextBlock>
+        <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="200,47,0,0" VerticalAlignment="Top" Width="86" Click="buttonBrowse_Click" Height="27" RenderTransformOrigin="0.465,0.154" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="textblockPathOutput" HorizontalAlignment="Left" Margin="29,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="17" Width="246" FontSize="10" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="textblockStepThree" HorizontalAlignment="Left" Margin="31,241,0,0" TextWrapping="Wrap" Text="Step 3: Choose video framerate" VerticalAlignment="Top" RenderTransformOrigin="-0.061,-1.438" FontSize="16" Width="222" Grid.ColumnSpan="3"/>
+        <RadioButton x:Name="radiobutton60FPS" Content="" HorizontalAlignment="Left" Margin="31,282,0,0" VerticalAlignment="Top" Height="22" Width="67" FontSize="16" Checked="radioButton60FPS_Checked" IsChecked="True" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="textblock60FPS" HorizontalAlignment="Left" Margin="51,278,0,0" TextWrapping="Wrap" Text="60 FPS" VerticalAlignment="Top" Height="28" Width="70" FontSize="16" Grid.ColumnSpan="3" IsEnabled="False"/>
+        <RadioButton x:Name="radiobutton30FPS" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="163,282,0,0" Height="22" FontSize="16" RenderTransformOrigin="0.368,1.35" Width="66" Checked="radiobutton30FPS_Checked" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="textblock30FPS" HorizontalAlignment="Left" Margin="182,279,0,0" TextWrapping="Wrap" Text="30 FPS" VerticalAlignment="Top" FontSize="16" Grid.ColumnSpan="3" IsEnabled="False"/>
+        <Image x:Name="test" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="313" Margin="347,41,0,0" VerticalAlignment="Top" Width="354"/>
+    </Grid>
+</Window>
