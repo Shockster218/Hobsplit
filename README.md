@@ -1,2 +1,2 @@
 # HobbitFramecounter
-Personal frame counter stemmed from MKarma's idea also used as a form of testing other loading screen frame detections for The Hobbit speedruns.
+My attempt at making a real time hobbit autosplitter for console that works good.
