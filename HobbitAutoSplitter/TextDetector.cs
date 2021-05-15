@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Media.Imaging;
-using System.IO;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using drawing = System.Drawing;
 
 using Emgu.CV;
@@ -13,16 +9,10 @@ using Emgu.CV.CvEnum;
 
 namespace HobbitAutoSplitter
 {
-    class Processor
+    struct TextDetector
     {
-        private Process process;
-
-        public Processor(string inputPath, int start, int end, int fps)
-        {
-            process = new Process();
-        }
-
-        private void DetectText(Image<Bgr, byte> img)
+        private string output;
+        public void DetectText(Image<Bgr, byte> img)
         {
             Image<Gray, byte> sobel = img.Convert<Gray, byte>().Sobel(1, 0, 3).AbsDiff(new Gray(0.0)).Convert<Gray, byte>().ThresholdBinary(new Gray(50), new Gray(255));
             Mat SE = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new drawing.Size(50, 30), new drawing.Point(-1, -1));
@@ -57,20 +47,12 @@ namespace HobbitAutoSplitter
             Tesseract tess = new Tesseract("tessdata", "eng", OcrEngineMode.TesseractOnly);
             tess.SetImage(imgout);
             tess.Recognize();
-            string result = tess.GetUTF8Text();
+            output = tess.GetUTF8Text();
         }
 
-        private BitmapImage ConvertBitmapToBitmapImage(drawing.Bitmap bitmap)
+        public string GetOutput()
         {
-            MemoryStream ms = new MemoryStream();
-            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-            image.EndInit();
-
-            return image;
+            return output;
         }
     }
 }

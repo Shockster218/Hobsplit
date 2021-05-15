@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HobbitAutoSplitter.Properties {
+namespace HobbitAutoSplitter {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,6 +20,18 @@ namespace HobbitAutoSplitter.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string obsPath {
+            get {
+                return ((string)(this["obsPath"]));
+            }
+            set {
+                this["obsPath"] = value;
             }
         }
     }
