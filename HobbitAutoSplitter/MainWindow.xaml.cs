@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Linq;
 using System.Diagnostics;
-using WindowsInput;
 
 namespace HobbitAutoSplitter
 {
@@ -25,26 +24,28 @@ namespace HobbitAutoSplitter
         {
             Process p = new Process();
             string obsPath = Settings.Default.obsPath;
-            if (string.IsNullOrEmpty(obsPath))
+            p = Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault();
+            if (p == null)
             {
-                p = Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault();
-                if (p == null)
+                if (string.IsNullOrEmpty(obsPath))
                 {
                     MessageBoxResult result = MessageBox.Show("Could not find OBS. Please make sure you have OBS open before continuing.", "Couldn't find OBS", MessageBoxButton.OKCancel);
                     if (result == MessageBoxResult.OK)
                     {
                         CheckForOBS();
+                        return;
                     }
                     else
                     {
                         CloseWindow();
+                        return;
                     }
                 }
-                else
-                {
-                    obsPath = p.MainModule.FileName;
-                    Settings.Default.obsPath = obsPath;
-                }
+            }
+            else
+            {
+                obsPath = p.MainModule.FileName;
+                Settings.Default.obsPath = obsPath;
             }
 
             OBS = new ProcessManager(p);

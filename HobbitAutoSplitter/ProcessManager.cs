@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace HobbitAutoSplitter
 
         public ProcessManager(Process process)
         {
-            this.process = process.Site == null ? StartOBS() : process;
-            //processBounds = new ProcessBounds(this, process);
+            this.process = process == null ? StartOBS() : process;
+            SetBounds();
         }
 
         private Process StartOBS()
@@ -34,6 +35,18 @@ namespace HobbitAutoSplitter
                 MainWindow.instance.NoOBSPath();
             }
             return null;
+        }
+
+        private void SetBounds()
+        {
+            while (true)
+            {
+                if (process != null)
+                {
+                    processBounds = new ProcessBounds(this, process);
+                }
+                break;
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]
