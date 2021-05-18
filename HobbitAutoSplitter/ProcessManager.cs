@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Windows;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Diagnostics;
-using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace HobbitAutoSplitter
@@ -10,81 +13,203 @@ namespace HobbitAutoSplitter
     public class ProcessManager
     {
         public Process process { get; private set; }
-        public ProcessBounds processBounds { get; private set; }
 
-        public ProcessManager(Process process)
+        private CancellationToken source;
+
+        public ProcessManager()
         {
-            this.process = process == null ? StartOBS() : process;
-            SetBounds();
+            SetProcess();
         }
 
-        private Process StartOBS()
+        [DllImport("user32.dll")]
+        public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private async void SetProcess()
         {
-            ProcessStartInfo info = new ProcessStartInfo("cmd.exe");
-            try
+            await Task.Factory.StartNew(() => StartOBS());
+            source = new CancellationToken();
+            _ = Task.Factory.StartNew(() => CaptureApplication(), source);
+        }
+
+        private void StartOBS()
+        {
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.WorkingDirectory = Settings.Default.obsDirectory;
+            info.FileName = Settings.Default.obsFileName;
+            if (info.FileName.Any(char.IsDigit))
             {
-                string path = Settings.Default.obsPath;
-                info.WindowStyle = ProcessWindowStyle.Hidden;
-                info.UseShellExecute = true;
-                info.Arguments = $"/C {Path.GetPathRoot(path).Remove(2, 1)} & cd {Path.GetDirectoryName(path)} & {Path.GetFileName(path)}";
-                Process.Start(info);
-                return Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault();
+                Process obsProcess = Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault(x => x.ProcessName.Any(char.IsDigit));
+                if (obsProcess == null)
+                {
+                    process = Process.Start(info);
+                }
+                else
+                {
+                    process = obsProcess;
+                }
             }
-            catch
+            else
             {
                 MainWindow.instance.NoOBSPath();
             }
-            return null;
         }
-
-        private void SetBounds()
+        public void CaptureApplication()
         {
-            while (true)
+            HandleRef hwnd = new HandleRef(this, process.MainWindowHandle);
+            while (!source.IsCancellationRequested)
             {
-                if (process != null)
+                try
                 {
-                    processBounds = new ProcessBounds(this, process);
+                    RECT rc;
+                    GetWindowRect(new HandleRef(this, process.MainWindowHandle), out rc);
+
+                    Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+                    Graphics gfxBmp = Graphics.FromImage(bmp);
+                    IntPtr hdcBitmap = gfxBmp.GetHdc();
+
+                    PrintWindow(process.MainWindowHandle, hdcBitmap, 0);
+
+                    gfxBmp.ReleaseHdc(hdcBitmap);
+                    gfxBmp.Dispose();
+
+                    Application.Current.Dispatcher.Invoke(() => { MainWindow.instance.imageCapture.Source = FrameProccesor.ConvertBitmapToBitmapImage(bmp); });
                 }
-                break;
+                catch { }
             }
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
-            public int Left;        // x position of upper-left corner
-            public int Top;         // y position of upper-left corner
-            public int Right;       // x position of lower-right corner
-            public int Bottom;      // y position of lower-right corner
-        }
+            private int _Left;
+            private int _Top;
+            private int _Right;
+            private int _Bottom;
 
-        public struct ProcessBounds
-        {
-            public int x { get; private set; }
-            public int y { get; private set; }
-            public int width { get; private set; }
-            public int height { get; private set; }
-
-            [DllImport("user32.dll")]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
-
-            [DllImport("user32.dll")]
-            static extern bool SetForegroundWindow(IntPtr hWnd);
-
-            [DllImport("user32.dll")]
-            static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-            public ProcessBounds(ProcessManager pm, Process p)
+            public RECT(RECT Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
             {
-                RECT rect;
-                ShowWindow(p.MainWindowHandle, 3);
-                SetForegroundWindow(p.MainWindowHandle);
-                GetWindowRect(new HandleRef(pm, p.MainWindowHandle), out rect);
-                x = rect.Left;
-                y = rect.Top;
-                width = rect.Right - rect.Left;
-                height = rect.Bottom - rect.Top;
+            }
+            public RECT(int Left, int Top, int Right, int Bottom)
+            {
+                _Left = Left;
+                _Top = Top;
+                _Right = Right;
+                _Bottom = Bottom;
+            }
+
+            public int X
+            {
+                get { return _Left; }
+                set { _Left = value; }
+            }
+            public int Y
+            {
+                get { return _Top; }
+                set { _Top = value; }
+            }
+            public int Left
+            {
+                get { return _Left; }
+                set { _Left = value; }
+            }
+            public int Top
+            {
+                get { return _Top; }
+                set { _Top = value; }
+            }
+            public int Right
+            {
+                get { return _Right; }
+                set { _Right = value; }
+            }
+            public int Bottom
+            {
+                get { return _Bottom; }
+                set { _Bottom = value; }
+            }
+            public int Height
+            {
+                get { return _Bottom - _Top; }
+                set { _Bottom = value + _Top; }
+            }
+            public int Width
+            {
+                get { return _Right - _Left; }
+                set { _Right = value + _Left; }
+            }
+            public System.Drawing.Point Location
+            {
+                get { return new System.Drawing.Point(Left, Top); }
+                set
+                {
+                    _Left = value.X;
+                    _Top = value.Y;
+                }
+            }
+            public System.Drawing.Size Size
+            {
+                get { return new System.Drawing.Size(Width, Height); }
+                set
+                {
+                    _Right = value.Width + _Left;
+                    _Bottom = value.Height + _Top;
+                }
+            }
+
+            public static implicit operator Rectangle(RECT Rectangle)
+            {
+                return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
+            }
+            public static implicit operator RECT(Rectangle Rectangle)
+            {
+                return new RECT(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
+            }
+            public static bool operator ==(RECT Rectangle1, RECT Rectangle2)
+            {
+                return Rectangle1.Equals(Rectangle2);
+            }
+            public static bool operator !=(RECT Rectangle1, RECT Rectangle2)
+            {
+                return !Rectangle1.Equals(Rectangle2);
+            }
+
+            public override string ToString()
+            {
+                return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
+            }
+
+            public override int GetHashCode()
+            {
+                return ToString().GetHashCode();
+            }
+
+            public bool Equals(RECT Rectangle)
+            {
+                return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
+            }
+
+            public override bool Equals(object Object)
+            {
+                if (Object is RECT)
+                {
+                    return Equals((RECT)Object);
+                }
+                else if (Object is Rectangle)
+                {
+                    return Equals(new RECT((Rectangle)Object));
+                }
+
+                return false;
             }
         }
     }

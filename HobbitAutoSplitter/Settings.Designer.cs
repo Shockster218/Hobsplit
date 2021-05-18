@@ -26,12 +26,24 @@ namespace HobbitAutoSplitter {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string obsPath {
+        public string obsDirectory {
             get {
-                return ((string)(this["obsPath"]));
+                return ((string)(this["obsDirectory"]));
             }
             set {
-                this["obsPath"] = value;
+                this["obsDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string obsFileName {
+            get {
+                return ((string)(this["obsFileName"]));
+            }
+            set {
+                this["obsFileName"] = value;
             }
         }
     }

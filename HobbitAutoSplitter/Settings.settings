@@ -2,7 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HobbitAutoSplitter" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="obsPath" Type="System.String" Scope="User">
+    <Setting Name="obsDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="obsFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

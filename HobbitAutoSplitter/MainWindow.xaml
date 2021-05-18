@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Grid x:Name="gridLeft" Margin="10" d:IsHidden="True"/>
         <Grid x:Name="gridRight" Grid.Column="1" Margin="10" d:IsHidden="True">
-            <Image x:Name="imageCapture" Margin="0" d:IsHidden="True"/>
+            <Image x:Name="imageCapture" Margin="0" d:IsHidden="True" Stretch="Fill"/>
         </Grid>
     </Grid>
 </Window>
