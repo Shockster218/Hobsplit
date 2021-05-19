@@ -9,10 +9,9 @@ using Emgu.CV.CvEnum;
 
 namespace HobbitAutoSplitter
 {
-    struct TextDetector
+    public static class TextDetector
     {
-        private string output;
-        public void DetectText(Image<Bgr, byte> img)
+        public static void DetectText(Image<Bgr, byte> img)
         {
             Image<Gray, byte> sobel = img.Convert<Gray, byte>().Sobel(1, 0, 3).AbsDiff(new Gray(0.0)).Convert<Gray, byte>().ThresholdBinary(new Gray(50), new Gray(255));
             Mat SE = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new drawing.Size(50, 30), new drawing.Point(-1, -1));
@@ -47,12 +46,7 @@ namespace HobbitAutoSplitter
             Tesseract tess = new Tesseract("tessdata", "eng", OcrEngineMode.TesseractOnly);
             tess.SetImage(imgout);
             tess.Recognize();
-            output = tess.GetUTF8Text();
-        }
-
-        public string GetOutput()
-        {
-            return output;
+            string output = tess.GetUTF8Text();
         }
     }
 }

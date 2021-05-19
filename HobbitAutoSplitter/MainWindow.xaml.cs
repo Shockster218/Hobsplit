@@ -14,10 +14,12 @@ namespace HobbitAutoSplitter
     {
         public static MainWindow instance;
         public ProcessManager OBS = null;
+        public SnippetTool snippetTool = null;
         
         public MainWindow()
         {
             instance = this;
+            snippetTool = new SnippetTool();
             InitializeComponent();
             CheckForOBS();
         }

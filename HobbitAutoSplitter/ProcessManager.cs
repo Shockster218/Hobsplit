@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace HobbitAutoSplitter
 {
@@ -22,17 +24,17 @@ namespace HobbitAutoSplitter
         }
 
         [DllImport("user32.dll")]
-        public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
+        private static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
+        private static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
-        static extern bool SetForegroundWindow(IntPtr hWnd);
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         private async void SetProcess()
         {
@@ -63,29 +65,47 @@ namespace HobbitAutoSplitter
                 MainWindow.instance.NoOBSPath();
             }
         }
-        public void CaptureApplication()
+        private async void CaptureApplication()
         {
-            HandleRef hwnd = new HandleRef(this, process.MainWindowHandle);
             while (!source.IsCancellationRequested)
             {
                 try
                 {
+                    HandleRef hwnd = new HandleRef(this, process.MainWindowHandle);
                     RECT rc;
-                    GetWindowRect(new HandleRef(this, process.MainWindowHandle), out rc);
+                    GetWindowRect(hwnd, out rc);
 
                     Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
                     Graphics gfxBmp = Graphics.FromImage(bmp);
                     IntPtr hdcBitmap = gfxBmp.GetHdc();
 
-                    PrintWindow(process.MainWindowHandle, hdcBitmap, 0);
+                    PrintWindow(hwnd.Handle, hdcBitmap, 0);
 
                     gfxBmp.ReleaseHdc(hdcBitmap);
-                    gfxBmp.Dispose();
 
-                    Application.Current.Dispatcher.Invoke(() => { MainWindow.instance.imageCapture.Source = FrameProccesor.ConvertBitmapToBitmapImage(bmp); });
+                    Application.Current.Dispatcher.Invoke(() => { MainWindow.instance.imageCapture.Source = ConvertBitmapToBitmapImage(bmp); });
+                    // Add text detection here
+
+                    gfxBmp.Dispose();
+                    bmp.Dispose();
+
+                    await Task.Delay(17);
                 }
                 catch { }
             }
+        }
+
+        private BitmapImage ConvertBitmapToBitmapImage(Bitmap bitmap)
+        {
+            MemoryStream ms = new MemoryStream();
+            bitmap.Save(ms, ImageFormat.Bmp);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+
+            return image;
         }
 
         [StructLayout(LayoutKind.Sequential)]
