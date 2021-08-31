@@ -7,9 +7,9 @@
         public const string loadingKeyword = "loading";
         public static readonly string[] resetKeywords = {
             "newgame",
-            "loadgame",
-            "woadgame",
-            "badgame",
+            "sierra",
+            "entertainment",
+            "presents"
         };
         public static readonly string[] levelsDetection = {
             "anunexpectedparty",
