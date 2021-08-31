@@ -12,7 +12,7 @@ namespace HobbitAutoSplitter {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,25 +25,85 @@ namespace HobbitAutoSplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string obsDirectory {
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode reset {
             get {
-                return ((string)(this["obsDirectory"]));
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["reset"]));
             }
             set {
-                this["obsDirectory"] = value;
+                this["reset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode split {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["split"]));
+            }
+            set {
+                this["split"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode pause {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["pause"]));
+            }
+            set {
+                this["pause"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int device {
+            get {
+                return ((int)(this["device"]));
+            }
+            set {
+                this["device"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int crop {
+            get {
+                return ((int)(this["crop"]));
+            }
+            set {
+                this["crop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode unsplit {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["unsplit"]));
+            }
+            set {
+                this["unsplit"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string obsFileName {
+        public string endFramePath {
             get {
-                return ((string)(this["obsFileName"]));
+                return ((string)(this["endFramePath"]));
             }
             set {
-                this["obsFileName"] = value;
+                this["endFramePath"] = value;
             }
         }
     }

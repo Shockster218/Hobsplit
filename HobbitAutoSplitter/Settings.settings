@@ -2,10 +2,25 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HobbitAutoSplitter" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="obsDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="reset" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
     </Setting>
-    <Setting Name="obsFileName" Type="System.String" Scope="User">
+    <Setting Name="split" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="device" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="crop" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="unsplit" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="endFramePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
