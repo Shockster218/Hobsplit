@@ -14,7 +14,8 @@ namespace HobbitAutoSplitter
         private bool paused = false;
         private bool split = false;
         private bool waitingToStart = false;
-        private bool thief = false;
+        private bool thiefTextBoxDone = false;
+        private bool thiefSplit = false;
         private int level = 0;
         private int detectionLevel = 0;
 
@@ -50,16 +51,6 @@ namespace HobbitAutoSplitter
                     if (!paused)
                     {                        
                         paused = true;
-                        Application.Current.Dispatcher.Invoke(new Action(() =>
-                        {
-                            if(level > 1)
-                            {
-                                MainWindow.instance.ResetSegmentTimer();
-                                MainWindow.instance.InitSegmentTimer();
-                            }
-                            MainWindow.instance.SetStatus(States.LOADING);
-                            Keyboard.ClearFocus();                        
-                        }));
                         sim.Keyboard.KeyDown(Settings.Default.pause);
                     }        
                 }
@@ -92,22 +83,21 @@ namespace HobbitAutoSplitter
                     {
                         if (detectionLevel == 8 && comparison.Contains("away!"))
                         {
-                            if (!thief)
+                            if (thiefTextBoxDone)
                             {
-                                thief = true;
-                                sim.Keyboard.KeyDown(Settings.Default.split);
-                            }
-                            else
-                            {
-                                sim.Keyboard.KeyDown(Settings.Default.unsplit);
-                                sim.Keyboard.KeyDown(Settings.Default.split);
-                            }
+                                if (!thiefSplit)
+                                {
+                                    sim.Keyboard.KeyDown(Settings.Default.split);
+                                }
+                                else
+                                {
+                                    sim.Keyboard.KeyDown(Settings.Default.unsplit);
+                                    sim.Keyboard.KeyDown(Settings.Default.split);
+                                }
 
-                            Application.Current.Dispatcher.Invoke(new Action(() =>
-                            {
-                                MainWindow.instance.ResetSegmentTimer();
-                                MainWindow.instance.InitSegmentTimer();
-                            }));
+                                thiefSplit = true;
+                                thiefTextBoxDone = false;
+                            }
                         } 
                     }
                     foreach (string resetKeyword in Constants.resetKeywords)
@@ -118,12 +108,12 @@ namespace HobbitAutoSplitter
                             {
                                 started = false;
                                 waitingToStart = true;
-                                thief = false;
+                                thiefTextBoxDone = false;
+                                thiefSplit = false;
                                 level = 0;
                                 detectionLevel = 0;
                                 Application.Current.Dispatcher.Invoke(new Action(() =>
                                 {
-                                    MainWindow.instance.ResetSegmentTimer();
                                     MainWindow.instance.SetLevelText(level);
                                     MainWindow.instance.SetStatus(States.READYTOSTART);
                                     Keyboard.ClearFocus();
@@ -152,6 +142,11 @@ namespace HobbitAutoSplitter
                     sim.Keyboard.KeyDown(Settings.Default.pause);
                 }
 
+                if (!thiefTextBoxDone)
+                {
+                    thiefTextBoxDone = true;
+                }
+
                 if (waitingToStart)
                 {
                     started = true;
@@ -159,7 +154,6 @@ namespace HobbitAutoSplitter
                     level++;
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        MainWindow.instance.InitSegmentTimer();
                         MainWindow.instance.SetStatus(States.STARTED);
                         MainWindow.instance.SetLevelText(level);
                         Keyboard.ClearFocus();

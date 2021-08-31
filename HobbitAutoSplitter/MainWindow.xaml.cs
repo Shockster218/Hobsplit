@@ -449,61 +449,61 @@ namespace HobbitAutoSplitter
         }
         #endregion
 
-        #region Segment Timer
-        public void InitSegmentTimer()
-        {
-            dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            dispatcher.Tick += (sender, args) =>
-            {
-                TimeSpan elapsed = TimeSpan.FromMilliseconds(segmentStopwatch.ElapsedMilliseconds);
-                string result = string.Empty;
-                if (elapsed.TotalMinutes < 1)
-                {
-                    if (elapsed.TotalSeconds > 10)
-                    {
-                        result = elapsed.ToString(@"ss\.ff");
-                    }
-                    else
-                    {
-                        result = elapsed.ToString(@"s\.ff");
-                    }
-                }
-                else if (elapsed.TotalHours < 1)
-                {
-                    if (elapsed.TotalMinutes > 10)
-                    {
-                        result = elapsed.ToString(@"mm\:ss\.ff");
-                    }
-                    else
-                    {
-                        result = elapsed.ToString(@"m\:ss\.ff");
-                    }
-                }
-                else
-                {
-                    if (elapsed.TotalHours > 10)
-                    {
-                        result = elapsed.ToString(@"hh\:mm\:ss\.ff");
-                    }
-                    else
-                    {
-                        result = elapsed.ToString(@"h\:mm\:ss\.ff");
-                    }
-                }
-                segmentTimer.Text = result;
-            };
-
-            dispatcher.Start();
-            segmentStopwatch.Start();
-        }
-
-        public void ResetSegmentTimer()
-        {
-            dispatcher.Stop();
-            segmentStopwatch.Reset();
-            segmentTimer.Text = "0.00";
-        }
-        #endregion
+        //#region Segment Timer
+        //public void InitSegmentTimer()
+        //{
+        //    dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        //    dispatcher.Tick += (sender, args) =>
+        //    {
+        //        TimeSpan elapsed = TimeSpan.FromMilliseconds(segmentStopwatch.ElapsedMilliseconds);
+        //        string result = string.Empty;
+        //        if (elapsed.TotalMinutes < 1)
+        //        {
+        //            if (elapsed.TotalSeconds > 10)
+        //            {
+        //                result = elapsed.ToString(@"ss\.ff");
+        //            }
+        //            else
+        //            {
+        //                result = elapsed.ToString(@"s\.ff");
+        //            }
+        //        }
+        //        else if (elapsed.TotalHours < 1)
+        //        {
+        //            if (elapsed.TotalMinutes > 10)
+        //            {
+        //                result = elapsed.ToString(@"mm\:ss\.ff");
+        //            }
+        //            else
+        //            {
+        //                result = elapsed.ToString(@"m\:ss\.ff");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (elapsed.TotalHours > 10)
+        //            {
+        //                result = elapsed.ToString(@"hh\:mm\:ss\.ff");
+        //            }
+        //            else
+        //            {
+        //                result = elapsed.ToString(@"h\:mm\:ss\.ff");
+        //            }
+        //        }
+        //        segmentTimer.Text = result;
+        //    };
+        //
+        //    dispatcher.Start();
+        //    segmentStopwatch.Start();
+        //}
+        //
+        //public void ResetSegmentTimer()
+        //{
+        //    dispatcher.Stop();
+        //    segmentStopwatch.Reset();
+        //    segmentTimer.Text = "0.00";
+        //}
+        //#endregion
 
         #region Level and Status Text
         public void SetLevelText(int level)
