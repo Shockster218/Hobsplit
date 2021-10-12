@@ -1,49 +1,25 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using System.Linq;
-using System.Threading.Tasks;
-using System;
-using System.IO;
+using System.Drawing;
 
 namespace HobbitAutosplitter
 {
-    public class ProcessManager
+    public static class CaptureManager
     {
-        private Process obs;
-
-        public ProcessManager()
+        public static event EventHandler<FrameEventArgs> FrameCreated;
+        public static void Init()
         {
-            _ = Task.Factory.StartNew(() => FindOBS());
+            ProcessManager.OBSOpenedEvent += (s,e) => CaptureApplication();
         }
 
-        public void FindOBS()
-        {
-            while (true)
-            {
-                Process obsProcess = Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault(x => x.ProcessName.Any(char.IsDigit));
-                if (obsProcess != null)
-                {
-                    obs = obsProcess;
-                    _ = Task.Factory.StartNew(() => CaptureApplication());
-                    return;
-                }
-                else
-                {
-                    App.Current.Dispatcher.Invoke(() => { MainWindow.instance.obsPreview.Source = ((Bitmap)Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Assets\\obs_offline.jpg")).ToBitmapImage(); });
-                }
-            }
-        }
-
-        public void CaptureApplication()
+        public static void CaptureApplication()
         {
             while (true)
             {
                 try
                 {
-                    HandleRef hwnd = new HandleRef(this, obs.MainWindowHandle);
+                    HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
                     RECT rc;
                     GetWindowRect(hwnd, out rc);
 
@@ -54,8 +30,11 @@ namespace HobbitAutosplitter
                     PrintWindow(hwnd.Handle, hdcBitmap, 0);
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
-                    App.Current.Dispatcher.Invoke(() => { MainWindow.instance.obsPreview.Source = bmp.ToBitmapImage(); });
-
+                    // Crop
+                    // Freeze
+                    // Invoke event with clone. TODO CHANGE bmp.Clone() to cropped image clone!!!
+                    // As a side note, all subscribers must freeze the bitmap
+                    FrameCreated?.Invoke(null, new FrameEventArgs(bmp.Clone()));
 
                     gfxBmp.Dispose();
                     bmp.Dispose();
@@ -74,9 +53,6 @@ namespace HobbitAutosplitter
 
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         #endregion
 
         [StructLayout(LayoutKind.Sequential)]
@@ -86,7 +62,7 @@ namespace HobbitAutosplitter
             private int _Top;
             private int _Right;
             private int _Bottom;
-        
+
             public RECT(RECT Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
             {
             }
@@ -97,7 +73,7 @@ namespace HobbitAutosplitter
                 _Right = Right;
                 _Bottom = Bottom;
             }
-        
+
             public int X
             {
                 get { return _Left; }
@@ -156,7 +132,7 @@ namespace HobbitAutosplitter
                     _Bottom = value.Height + _Top;
                 }
             }
-        
+
             public static implicit operator Rectangle(RECT Rectangle)
             {
                 return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
@@ -173,22 +149,22 @@ namespace HobbitAutosplitter
             {
                 return !Rectangle1.Equals(Rectangle2);
             }
-        
+
             public override string ToString()
             {
                 return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
             }
-        
+
             public override int GetHashCode()
             {
                 return ToString().GetHashCode();
             }
-        
+
             public bool Equals(RECT Rectangle)
             {
                 return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
             }
-        
+
             public override bool Equals(object Object)
             {
                 if (Object is RECT)
@@ -199,9 +175,19 @@ namespace HobbitAutosplitter
                 {
                     return Equals(new RECT((Rectangle)Object));
                 }
-        
+
                 return false;
             }
+        }
+    }
+
+    public class FrameEventArgs : EventArgs
+    {
+        public Object frame { get; set; }
+
+        public FrameEventArgs(Object frame)
+        {
+            this.frame = frame;
         }
     }
 }

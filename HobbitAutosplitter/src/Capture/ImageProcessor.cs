@@ -19,6 +19,8 @@ namespace HobbitAutosplitter
             image.StreamSource = ms;
             image.EndInit();
 
+            image.Freeze();
+
             return image;
         }
 
