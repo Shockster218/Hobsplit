@@ -8,6 +8,7 @@ namespace HobbitAutosplitter
     public static class CaptureManager
     {
         public static event EventHandler<FrameEventArgs> FrameCreated;
+        public static RECT crop;
         public static void Init()
         {
             ProcessManager.OBSOpenedEvent += (s,e) => CaptureApplication();
@@ -15,14 +16,16 @@ namespace HobbitAutosplitter
 
         public static void CaptureApplication()
         {
+            HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
+            RECT rc;
+            GetWindowRect(hwnd, out rc);
+            crop = rc;
+            App.Current.Dispatcher.Invoke(() => MainWindow.instance.SetCropValues());
+
             while (true)
             {
                 try
                 {
-                    HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
-                    RECT rc;
-                    GetWindowRect(hwnd, out rc);
-
                     Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
                     Graphics gfxBmp = Graphics.FromImage(bmp);
                     IntPtr hdcBitmap = gfxBmp.GetHdc();
@@ -30,14 +33,15 @@ namespace HobbitAutosplitter
                     PrintWindow(hwnd.Handle, hdcBitmap, 0);
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
-                    // Crop
+                    Bitmap cropped = ImageProcessor.CropImageToBitmap(bmp, crop);
                     // Freeze
                     // Invoke event with clone. TODO CHANGE bmp.Clone() to cropped image clone!!!
                     // As a side note, all subscribers must freeze the bitmap
-                    FrameCreated?.Invoke(null, new FrameEventArgs(bmp.Clone()));
+                    FrameCreated?.Invoke(null, new FrameEventArgs(cropped.Clone()));
 
                     gfxBmp.Dispose();
                     bmp.Dispose();
+                    cropped.Dispose();
                 }
                 catch { }
             }
@@ -54,130 +58,130 @@ namespace HobbitAutosplitter
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
         #endregion
+    }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        private int _Left;
+        private int _Top;
+        private int _Right;
+        private int _Bottom;
+
+        public RECT(RECT Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
         {
-            private int _Left;
-            private int _Top;
-            private int _Right;
-            private int _Bottom;
+        }
+        public RECT(int Left, int Top, int Right, int Bottom)
+        {
+            _Left = Left;
+            _Top = Top;
+            _Right = Right;
+            _Bottom = Bottom;
+        }
 
-            public RECT(RECT Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
+        public int X
+        {
+            get { return _Left; }
+            set { _Left = value; }
+        }
+        public int Y
+        {
+            get { return _Top; }
+            set { _Top = value; }
+        }
+        public int Left
+        {
+            get { return _Left; }
+            set { _Left = value; }
+        }
+        public int Top
+        {
+            get { return _Top; }
+            set { _Top = value; }
+        }
+        public int Right
+        {
+            get { return _Right; }
+            set { _Right = value; }
+        }
+        public int Bottom
+        {
+            get { return _Bottom; }
+            set { _Bottom = value; }
+        }
+        public int Height
+        {
+            get { return _Bottom - _Top; }
+            set { _Bottom = value + _Top; }
+        }
+        public int Width
+        {
+            get { return _Right - _Left; }
+            set { _Right = value + _Left; }
+        }
+        public System.Drawing.Point Location
+        {
+            get { return new System.Drawing.Point(Left, Top); }
+            set
             {
+                _Left = value.X;
+                _Top = value.Y;
             }
-            public RECT(int Left, int Top, int Right, int Bottom)
+        }
+        public System.Drawing.Size Size
+        {
+            get { return new System.Drawing.Size(Width, Height); }
+            set
             {
-                _Left = Left;
-                _Top = Top;
-                _Right = Right;
-                _Bottom = Bottom;
+                _Right = value.Width + _Left;
+                _Bottom = value.Height + _Top;
+            }
+        }
+
+        public static implicit operator Rectangle(RECT Rectangle)
+        {
+            return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
+        }
+        public static implicit operator RECT(Rectangle Rectangle)
+        {
+            return new RECT(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
+        }
+        public static bool operator ==(RECT Rectangle1, RECT Rectangle2)
+        {
+            return Rectangle1.Equals(Rectangle2);
+        }
+        public static bool operator !=(RECT Rectangle1, RECT Rectangle2)
+        {
+            return !Rectangle1.Equals(Rectangle2);
+        }
+
+        public override string ToString()
+        {
+            return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        public bool Equals(RECT Rectangle)
+        {
+            return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
+        }
+
+        public override bool Equals(object Object)
+        {
+            if (Object is RECT)
+            {
+                return Equals((RECT)Object);
+            }
+            else if (Object is Rectangle)
+            {
+                return Equals(new RECT((Rectangle)Object));
             }
 
-            public int X
-            {
-                get { return _Left; }
-                set { _Left = value; }
-            }
-            public int Y
-            {
-                get { return _Top; }
-                set { _Top = value; }
-            }
-            public int Left
-            {
-                get { return _Left; }
-                set { _Left = value; }
-            }
-            public int Top
-            {
-                get { return _Top; }
-                set { _Top = value; }
-            }
-            public int Right
-            {
-                get { return _Right; }
-                set { _Right = value; }
-            }
-            public int Bottom
-            {
-                get { return _Bottom; }
-                set { _Bottom = value; }
-            }
-            public int Height
-            {
-                get { return _Bottom - _Top; }
-                set { _Bottom = value + _Top; }
-            }
-            public int Width
-            {
-                get { return _Right - _Left; }
-                set { _Right = value + _Left; }
-            }
-            public System.Drawing.Point Location
-            {
-                get { return new System.Drawing.Point(Left, Top); }
-                set
-                {
-                    _Left = value.X;
-                    _Top = value.Y;
-                }
-            }
-            public System.Drawing.Size Size
-            {
-                get { return new System.Drawing.Size(Width, Height); }
-                set
-                {
-                    _Right = value.Width + _Left;
-                    _Bottom = value.Height + _Top;
-                }
-            }
-
-            public static implicit operator Rectangle(RECT Rectangle)
-            {
-                return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
-            }
-            public static implicit operator RECT(Rectangle Rectangle)
-            {
-                return new RECT(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
-            }
-            public static bool operator ==(RECT Rectangle1, RECT Rectangle2)
-            {
-                return Rectangle1.Equals(Rectangle2);
-            }
-            public static bool operator !=(RECT Rectangle1, RECT Rectangle2)
-            {
-                return !Rectangle1.Equals(Rectangle2);
-            }
-
-            public override string ToString()
-            {
-                return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
-            }
-
-            public override int GetHashCode()
-            {
-                return ToString().GetHashCode();
-            }
-
-            public bool Equals(RECT Rectangle)
-            {
-                return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
-            }
-
-            public override bool Equals(object Object)
-            {
-                if (Object is RECT)
-                {
-                    return Equals((RECT)Object);
-                }
-                else if (Object is Rectangle)
-                {
-                    return Equals(new RECT((Rectangle)Object));
-                }
-
-                return false;
-            }
+            return false;
         }
     }
 

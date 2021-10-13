@@ -17,7 +17,7 @@ namespace HobbitAutosplitter
             _ = Task.Factory.StartNew(() => FindOBS());
         }
 
-        public static void FindOBS()
+        private static void FindOBS()
         {
             App.Current.Dispatcher.Invoke(() =>
             {
@@ -30,10 +30,16 @@ namespace HobbitAutosplitter
                 if (obsProcess != null)
                 {
                     obs = obsProcess;
-                    OBSOpenedEvent?.Invoke(null, EventArgs.Empty);
+                    WaitForOBS();
                     return;
                 }
             }
+        }
+
+        private static void WaitForOBS()
+        {
+            while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
+            OBSOpenedEvent?.Invoke(null, EventArgs.Empty);
         }
 
         public static Process GetOBS()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -24,25 +23,17 @@ namespace HobbitAutosplitter
             return image;
         }
 
-        public static Bitmap CropImageToBitmap(Image source, int width, int height, int xCrop, int yCrop)
+        public static Bitmap CropImageToBitmap(Image source, RECT crop)
         {
-            Rectangle crop = new Rectangle
-            {
-                X = source.Width - (int)Math.Round(xCrop / 100d * source.Width),
-                Y = source.Height - (int)Math.Round(yCrop / 100d * source.Height),
-                Width = source.Width,
-                Height = source.Height
-            };
-
-            Bitmap cropped = new Bitmap(crop.Width - crop.X, crop.Height - crop.Y);
+            Bitmap cropped = new Bitmap(crop.Right, crop.Bottom);
             using (Graphics graphics = Graphics.FromImage(cropped))
             {
-                graphics.DrawImage(source, new Rectangle(0, 0, source.Width, source.Height), crop, GraphicsUnit.Pixel);
+                graphics.DrawImage(source, new Rectangle(0, 0, crop.Right, crop.Bottom), crop, GraphicsUnit.Pixel);
                 graphics.Dispose();
             }
 
-            Rectangle destRect = new Rectangle(0, 0, width, height);
-            Bitmap destImage = new Bitmap(width, height);
+            Rectangle destRect = new Rectangle(0, 0, Constants.width, Constants.height);
+            Bitmap destImage = new Bitmap(Constants.width, Constants.height);
 
             destImage.SetResolution(cropped.HorizontalResolution, cropped.VerticalResolution);
 
@@ -54,12 +45,7 @@ namespace HobbitAutosplitter
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(cropped, destRect, 0, 0, cropped.Width, cropped.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-
+                graphics.DrawImage(cropped, destRect, 0, 0, cropped.Width, cropped.Height, GraphicsUnit.Pixel);
                 graphics.Dispose();
             }
 

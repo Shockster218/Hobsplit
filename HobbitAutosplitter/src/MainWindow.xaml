@@ -3,9 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="578" Width="1024" WindowStyle="None" ResizeMode="NoResize">
     <Grid Width="1024" Height="578">
-        <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="360" Margin="361,45,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
+        <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="360" Margin="360,67,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
+        <xctk:IntegerUpDown x:Name="x" HorizontalAlignment="Left" Margin="506,512,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="506,458,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="w" HorizontalAlignment="Left" Margin="837,458,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="w_ValueChanged" RenderTransformOrigin="-3.113,0.427" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="h" HorizontalAlignment="Left" Margin="840,512,0,0" VerticalAlignment="Top" Height="37" Width="117" ValueChanged="h_ValueChanged" IsEnabled="False"/>
+        <Label x:Name="YLabel" Content="Adjust Top" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="395,458,0,0" RenderTransformOrigin="-0.196,0.871" Height="37" Width="111" FontSize="18"/>
+        <Label x:Name="XLabel" Content="Adjust Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="395,512,0,0" Height="37" Width="111" FontSize="18"/>
+        <Label x:Name="WidthLabel" Content="Adjust Right" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="698,458,0,0" Height="37" Width="137"/>
+        <Label x:Name="HeightLabel" Content="Adjust Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="698,512,0,0" Height="37" Width="134"/>
     </Grid>
 </Window>
