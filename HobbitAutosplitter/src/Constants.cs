@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace HobbitAutosplitter
 {
@@ -25,6 +26,23 @@ namespace HobbitAutosplitter
             if (val.CompareTo(min) < 0) return min;
             else if (val.CompareTo(max) > 0) return max;
             else return val;
+        }
+
+        public static void AsyncInvoke(this EventHandler evnt, object sender, EventArgs args)
+        {
+            EventHandler handler = evnt;
+            if (handler != null)
+            {
+                var invocationList = handler.GetInvocationList();
+
+                foreach(EventHandler h in invocationList)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        h.Invoke(sender, args);
+                    });
+                }
+            }
         }
     }
 }

@@ -10,10 +10,17 @@ namespace HobbitAutosplitter
     {
         private static Process obs;
 
+        public static event EventHandler OBSProcessFoundEvent;
         public static event EventHandler OBSOpenedEvent;
+        public static event EventHandler OBSClosedEvent;
+
+        public static bool obsRunning;
 
         public static void Init()
         {
+            OBSProcessFoundEvent += (s,e) => WaitForOBS();
+            OBSOpenedEvent += (s,e) => IsOBSRunning();
+            CaptureManager.DoneCapturingEvent += (s, e) => FindOBS();
             _ = Task.Factory.StartNew(() => FindOBS());
         }
 
@@ -30,7 +37,7 @@ namespace HobbitAutosplitter
                 if (obsProcess != null)
                 {
                     obs = obsProcess;
-                    WaitForOBS();
+                    OBSProcessFoundEvent?.Invoke(null, EventArgs.Empty);
                     return;
                 }
             }
@@ -39,7 +46,25 @@ namespace HobbitAutosplitter
         private static void WaitForOBS()
         {
             while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
-            OBSOpenedEvent?.Invoke(null, EventArgs.Empty);
+            obsRunning = true;
+            OBSOpenedEvent?.AsyncInvoke(null, EventArgs.Empty);
+        }
+
+        private static void IsOBSRunning()
+        {
+            while (obsRunning)
+            {
+                try
+                {
+                    Process.GetProcessById(obs.Id);
+                }
+                catch (ArgumentException)
+                {
+                    obsRunning = false;
+                    obs = null;
+                    OBSClosedEvent?.AsyncInvoke(null, EventArgs.Empty);
+                }
+            }
         }
 
         public static Process GetOBS()

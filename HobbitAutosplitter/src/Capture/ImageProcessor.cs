@@ -23,7 +23,7 @@ namespace HobbitAutosplitter
             return image;
         }
 
-        public static Bitmap CropImageToBitmap(Image source, RECT crop)
+        public static Bitmap Crop(this Bitmap source, RECT crop)
         {
             Bitmap cropped = new Bitmap(crop.Right, crop.Bottom);
             using (Graphics graphics = Graphics.FromImage(cropped))

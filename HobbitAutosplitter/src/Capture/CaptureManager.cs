@@ -8,6 +8,7 @@ namespace HobbitAutosplitter
     public static class CaptureManager
     {
         public static event EventHandler<FrameEventArgs> FrameCreated;
+        public static event EventHandler DoneCapturingEvent;
         public static RECT crop;
         public static void Init()
         {
@@ -19,10 +20,15 @@ namespace HobbitAutosplitter
             HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
             RECT rc;
             GetWindowRect(hwnd, out rc);
-            crop = rc;
+            crop = new RECT(
+                Settings.Default.cropLeft,
+                Settings.Default.cropTop,
+                Settings.Default.cropRight != 0 ? Settings.Default.cropRight : rc.Right,
+                Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
+                );
             App.Current.Dispatcher.Invoke(() => MainWindow.instance.SetCropValues());
 
-            while (true)
+            while (ProcessManager.obsRunning)
             {
                 try
                 {
@@ -33,7 +39,7 @@ namespace HobbitAutosplitter
                     PrintWindow(hwnd.Handle, hdcBitmap, 0);
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
-                    Bitmap cropped = ImageProcessor.CropImageToBitmap(bmp, crop);
+                    Bitmap cropped = bmp.Crop(crop);
                     // Freeze
                     // Invoke event with clone. TODO CHANGE bmp.Clone() to cropped image clone!!!
                     // As a side note, all subscribers must freeze the bitmap
@@ -45,6 +51,9 @@ namespace HobbitAutosplitter
                 }
                 catch { }
             }
+
+            App.Current.Dispatcher.Invoke(() => MainWindow.instance.UnSetCropValues());
+            DoneCapturingEvent?.AsyncInvoke(null, EventArgs.Empty);
         }
 
         #region Imports
