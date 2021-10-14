@@ -9,7 +9,7 @@ namespace HobbitAutosplitter
         private static SplitData[] splits = new SplitData[15];
         private static Image loadImage;
 
-        public static void Initialize()
+        public static void Init()
         {
             //universalSimilarity = Properties.Settings.Default.unisim;
             PopulateSplitData();
@@ -37,7 +37,7 @@ namespace HobbitAutosplitter
             {
                 new SplitData("Loading"),
                 new SplitData("Start"),
-                new SplitData("DreamWorld"),
+                new SplitData("Dream World"),
                 new SplitData("An Unexpected Party"),
                 new SplitData("Roast Mutton"),
                 new SplitData("Troll Hole"),

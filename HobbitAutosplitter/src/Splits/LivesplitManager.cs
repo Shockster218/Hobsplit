@@ -10,7 +10,12 @@ namespace HobbitAutosplitter
     public static class LivesplitManager
     {
 
-        private static InputSimulator sim = new InputSimulator();
+        private static InputSimulator sim;
+
+        public static void Init()
+        {
+            sim = new InputSimulator();
+        }
 
         public static void HandleTextOutput(string output)
         {

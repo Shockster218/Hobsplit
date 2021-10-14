@@ -14,5 +14,17 @@
     <Setting Name="cropBottom" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="split" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="unsplit" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="reset" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

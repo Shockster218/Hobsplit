@@ -5,16 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="578" Width="1024" WindowStyle="None" ResizeMode="NoResize">
-    <Grid Width="1024" Height="578">
-        <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="360" Margin="360,67,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
-        <xctk:IntegerUpDown x:Name="x" HorizontalAlignment="Left" Margin="506,512,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False"/>
-        <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="506,458,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False"/>
-        <xctk:IntegerUpDown x:Name="w" HorizontalAlignment="Left" Margin="837,458,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="w_ValueChanged" RenderTransformOrigin="-3.113,0.427" IsEnabled="False"/>
-        <xctk:IntegerUpDown x:Name="h" HorizontalAlignment="Left" Margin="840,512,0,0" VerticalAlignment="Top" Height="37" Width="117" ValueChanged="h_ValueChanged" IsEnabled="False"/>
-        <Label x:Name="YLabel" Content="Adjust Top" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="395,458,0,0" RenderTransformOrigin="-0.196,0.871" Height="37" Width="111" FontSize="18"/>
-        <Label x:Name="XLabel" Content="Adjust Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="395,512,0,0" Height="37" Width="111" FontSize="18"/>
-        <Label x:Name="WidthLabel" Content="Adjust Right" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="698,458,0,0" Height="37" Width="137"/>
-        <Label x:Name="HeightLabel" Content="Adjust Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="698,512,0,0" Height="37" Width="134"/>
+        Title="MainWindow" Height="543.929" Width="910.834" WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+        <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="360" Margin="248,42,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
+        <xctk:IntegerUpDown x:Name="x"  HorizontalAlignment="Left" Margin="407,487,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="407,433,0,0" VerticalAlignment="Top" Height="37" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="w" HorizontalAlignment="Left" Margin="762,487,0,0" VerticalAlignment="Top" Height="37" Width="117" ValueChanged="w_ValueChanged" RenderTransformOrigin="-3.113,0.427" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="h" HorizontalAlignment="Left" Margin="762,433,0,0" VerticalAlignment="Top" Height="37" Width="117" ValueChanged="h_ValueChanged" IsEnabled="False"/>
+        <Label x:Name="YLabel" HorizontalContentAlignment="Right" Content="Adjust Top" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="286,433,0,0" RenderTransformOrigin="-0.196,0.871" Height="37" Width="111" FontSize="18"/>
+        <Label x:Name="XLabel" HorizontalContentAlignment="Right" Content="Adjust Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="291,487,0,0" Height="37" Width="106" FontSize="18"/>
+        <Label x:Name="WidthLabel" HorizontalContentAlignment="Right" Content="Adjust Right" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="620,487,0,0" Height="37" Width="134"/>
+        <Label x:Name="HeightLabel" HorizontalContentAlignment="Right" Content="Adjust Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="620,433,0,0" Height="37" Width="137"/>
+        <Label x:Name="split" HorizontalContentAlignment="Right" Content="Split Key" HorizontalAlignment="Left" Margin="23,43,0,0" VerticalAlignment="Top" FontSize="18" Height="35" Width="99"/>
+        <Label x:Name="unsplit" HorizontalContentAlignment="Right" Content="Unsplit Key" HorizontalAlignment="Left" Margin="22,83,0,0" VerticalAlignment="Top" FontSize="18" Height="33" Width="100"/>
+        <Label x:Name="pause" HorizontalContentAlignment="Right" Content="Pause Key" HorizontalAlignment="Left" Margin="23,121,0,0" VerticalAlignment="Top" FontSize="18" Height="33" Width="99"/>
+        <Label x:Name="reset" HorizontalContentAlignment="Right" Content="Reset Key" HorizontalAlignment="Left" Margin="24,159,0,0" VerticalAlignment="Top" FontSize="18" Height="35" Width="98"/>
+        <Button x:Name="splitButton" Content="Set Key..." HorizontalAlignment="Left" Margin="137,51,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="splitButton_Click" KeyDown="splitButton_KeyDown" Height="25" FontSize="14"/>
+        <Button x:Name="unsplitButton" Content="Set Key..." HorizontalAlignment="Left" Margin="137,89,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="unsplitButton_Click" KeyDown="unsplitButton_KeyDown" Height="25" FontSize="14"/>
+        <Button x:Name="resetButton" Content="Set Key..." HorizontalAlignment="Left" Margin="137,165,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="resetButton_Click" KeyDown="resetButton_KeyDown" Height="25" FontSize="14"/>
+        <Button x:Name="pauseButton" Content="Set Key..." HorizontalAlignment="Left" Margin="137,127,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="pauseButton_Click" KeyDown="pauseButton_KeyDown" Height="25" FontSize="14"/>
     </Grid>
 </Window>

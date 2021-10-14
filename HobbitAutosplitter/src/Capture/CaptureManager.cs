@@ -26,7 +26,8 @@ namespace HobbitAutosplitter
                 Settings.Default.cropRight != 0 ? Settings.Default.cropRight : rc.Right,
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
-            App.Current.Dispatcher.Invoke(() => MainWindow.instance.SetCropValues());
+
+            Extensions.InvokeToUIThread(() => MainWindow.instance.EnableCropping());
 
             while (ProcessManager.obsRunning)
             {
@@ -40,9 +41,6 @@ namespace HobbitAutosplitter
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
                     Bitmap cropped = bmp.Crop(crop);
-                    // Freeze
-                    // Invoke event with clone. TODO CHANGE bmp.Clone() to cropped image clone!!!
-                    // As a side note, all subscribers must freeze the bitmap
                     FrameCreated?.Invoke(null, new FrameEventArgs(cropped.Clone()));
 
                     gfxBmp.Dispose();
@@ -52,7 +50,7 @@ namespace HobbitAutosplitter
                 catch { }
             }
 
-            App.Current.Dispatcher.Invoke(() => MainWindow.instance.UnSetCropValues());
+            Extensions.InvokeToUIThread(() => MainWindow.instance.DisableCropping());
             DoneCapturingEvent?.AsyncInvoke(null, EventArgs.Empty);
         }
 

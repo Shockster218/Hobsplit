@@ -70,5 +70,53 @@ namespace HobbitAutosplitter {
                 this["cropBottom"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode split {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["split"]));
+            }
+            set {
+                this["split"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode unsplit {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["unsplit"]));
+            }
+            set {
+                this["unsplit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode reset {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["reset"]));
+            }
+            set {
+                this["reset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NONAME")]
+        public global::WindowsInput.Native.VirtualKeyCode pause {
+            get {
+                return ((global::WindowsInput.Native.VirtualKeyCode)(this["pause"]));
+            }
+            set {
+                this["pause"] = value;
+            }
+        }
     }
 }

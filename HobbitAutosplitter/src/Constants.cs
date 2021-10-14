@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace HobbitAutosplitter
 {
@@ -43,6 +44,11 @@ namespace HobbitAutosplitter
                     });
                 }
             }
+        }
+
+        public static void InvokeToUIThread(Action action)
+        {
+            App.Current.Dispatcher.Invoke(action);
         }
     }
 }
