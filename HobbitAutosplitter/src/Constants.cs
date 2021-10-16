@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
+using System.Windows.Threading;
+using System.Text.RegularExpressions;
+
 
 namespace HobbitAutosplitter
 {
@@ -46,9 +50,29 @@ namespace HobbitAutosplitter
             }
         }
 
-        public static void InvokeToUIThread(Action action)
+        public static void InvokeToUIThread(this MulticastDelegate multicast, object sender, EventArgs args)
         {
-            App.Current.Dispatcher.Invoke(action);
+            foreach (Delegate del in multicast.GetInvocationList())
+            {
+                DispatcherObject dispatcherTarget = del.Target as DispatcherObject;
+                if (dispatcherTarget != null && !dispatcherTarget.Dispatcher.CheckAccess())
+                {
+                    dispatcherTarget.Dispatcher.BeginInvoke(del, sender, args);
+                }
+            }
+        }
+
+        public static IEnumerable<string> CustomSort(this IEnumerable<string> list)
+        {
+            int maxLen = list.Select(s => s.Length).Max();
+
+            return list.Select(s => new
+            {
+                OrgStr = s,
+                SortStr = Regex.Replace(s, @"(\d+)|(\D+)", m => m.Value.PadLeft(maxLen, char.IsDigit(m.Value[0]) ? ' ' : '\xffff'))
+            })
+            .OrderBy(x => x.SortStr)
+            .Select(x => x.OrgStr);
         }
     }
 }

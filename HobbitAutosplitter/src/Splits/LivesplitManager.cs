@@ -1,9 +1,5 @@
-﻿using System;
-using System.Windows;
-using WindowsInput;
-using System.Windows.Input;
-using Shipwreck.Phash;
-using System.Drawing;
+﻿using WindowsInput;
+using WindowsInput.Native;
 
 namespace HobbitAutosplitter
 {
@@ -11,30 +7,42 @@ namespace HobbitAutosplitter
     {
 
         private static InputSimulator sim;
+        private static VirtualKeyCode split;
+        private static VirtualKeyCode unsplit;
+        private static VirtualKeyCode reset;
+        private static VirtualKeyCode pause;
 
         public static void Init()
         {
             sim = new InputSimulator();
+            split = Settings.Default.split;
+            unsplit = Settings.Default.unsplit;
+            reset = Settings.Default.reset;
+            pause = Settings.Default.pause;
+            SplitManager.OnSplit += (s, e) => Split();
+            SplitManager.OnUnsplit += (s, e) => Unsplit();
+            SplitManager.OnReset += (s, e) => Reset();
+            SplitManager.OnPause += (s, e) => Pause();
         }
 
-        public static void HandleTextOutput(string output)
+        public static void Split()
         {
-           
+            sim.Keyboard.KeyPress(split);
         }
 
-        public static void DetectFinalFrame(Bitmap current, Bitmap reference)
+        public static void Unsplit()
         {
-
-        }
-        
-        public static void DetectLevel(Bitmap current, Bitmap reference)
-        {
-
+            sim.Keyboard.KeyPress(unsplit);
         }
 
-        public static void DetectLoading(Bitmap current, Bitmap reference)
+        public static void Reset()
         {
+            sim.Keyboard.KeyPress(reset);
+        }
 
+        public static void Pause()
+        {
+            sim.Keyboard.KeyPress(pause);
         }
     }
 }

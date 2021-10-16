@@ -118,5 +118,17 @@ namespace HobbitAutosplitter {
                 this["pause"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.98")]
+        public float unisim {
+            get {
+                return ((float)(this["unisim"]));
+            }
+            set {
+                this["unisim"] = value;
+            }
+        }
     }
 }

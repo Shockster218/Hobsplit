@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Input;
+using WindowsInput.Native;
 
 namespace HobbitAutosplitter
 {
@@ -25,7 +26,9 @@ namespace HobbitAutosplitter
             ProcessManager.Init();
             SplitManager.Init();
             LivesplitManager.Init();
-            CaptureManager.FrameCreated += ShowFrame;
+            LoadSettings();
+            CaptureManager.FrameCreated += ShowPreview;
+            CaptureManager.ToggleCrop += (s,e) => ToggleCropping();
         }
 
         public void OBSOffline()
@@ -33,36 +36,37 @@ namespace HobbitAutosplitter
             obsPreview.Source = ((Bitmap)Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Assets\\obs_offline.jpg")).ToBitmapImage();
         }
 
-        public void ShowFrame(Object sender, FrameEventArgs frameArgs)
+        public void ShowPreview(Object sender, FrameEventArgs frameArgs)
         {
-            Extensions.InvokeToUIThread(() =>
-            {
-                obsPreview.Source = ((Bitmap)frameArgs.frame).ToBitmapImage();
-                GC.Collect();
-            });
+            obsPreview.Source = ((Bitmap)frameArgs.frame).ToBitmapImage();
+            GC.Collect();
         }
 
-        public void EnableCropping()
+        public void ChangeComparisonReference(Bitmap image)
         {
-            x.IsEnabled = true;
-            y.IsEnabled = true;
-            w.IsEnabled = true;
-            h.IsEnabled = true;
+            splitReference.Source = image.ToBitmapImage();
+        }
+
+        public void ToggleCropping()
+        {
+            x.IsEnabled = !x.IsEnabled;
+            y.IsEnabled = !y.IsEnabled;
+            w.IsEnabled = !w.IsEnabled;
+            h.IsEnabled = !h.IsEnabled;
+        }
+        private void LoadSettings()
+        {
             x.Value = Settings.Default.cropLeft;
             y.Value = Settings.Default.cropTop;
             w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : CaptureManager.crop.Right;
             h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : CaptureManager.crop.Bottom;
+            splitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
+            unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
+            resetButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
+            pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
         }
 
-        public void DisableCropping()
-        {
-            x.IsEnabled = false;
-            y.IsEnabled = false;
-            w.IsEnabled = false;
-            h.IsEnabled = false;
-        }
-
-        private void x_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             int value;
             if(e.NewValue == null) value = 0;
@@ -71,7 +75,7 @@ namespace HobbitAutosplitter
             Settings.Default.cropLeft = value;
             x.Text = value.ToString();
         }
-        private void y_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        private void y_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             int value;
             if (e.NewValue == null) value = 0;
@@ -80,7 +84,7 @@ namespace HobbitAutosplitter
             Settings.Default.cropTop = value;
             y.Text = value.ToString();
         }
-        private void w_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        private void w_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             int value;
             if (e.NewValue == null) value = 0;
@@ -89,7 +93,7 @@ namespace HobbitAutosplitter
             Settings.Default.cropRight = value;
             w.Text = value.ToString();
         }
-        private void h_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        private void h_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             int value;
             if (e.NewValue == null) value = 0;
@@ -123,7 +127,7 @@ namespace HobbitAutosplitter
         {
             if (splitButton.IsFocused)
             {
-                Settings.Default.split = (WindowsInput.Native.VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                Settings.Default.split = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 splitButton.Content = e.Key.ToString();
             }
         }
@@ -132,7 +136,7 @@ namespace HobbitAutosplitter
         {
             if (pauseButton.IsFocused)
             {
-                Settings.Default.pause = (WindowsInput.Native.VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                Settings.Default.pause = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 pauseButton.Content = e.Key.ToString();
             }
         }
@@ -141,7 +145,7 @@ namespace HobbitAutosplitter
         {
             if (resetButton.IsFocused)
             {
-                Settings.Default.reset = (WindowsInput.Native.VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 resetButton.Content = e.Key.ToString();
             }
         }
@@ -150,9 +154,67 @@ namespace HobbitAutosplitter
         {
             if (unsplitButton.IsFocused)
             {
-                Settings.Default.unsplit = (WindowsInput.Native.VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 unsplitButton.Content = e.Key.ToString();
             }
+        }
+        public void InitSegmentTimer()
+        {
+            dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            dispatcher.Tick += (s, a) =>
+            {
+                TimeSpan elapsed = TimeSpan.FromMilliseconds(segmentStopwatch.ElapsedMilliseconds);
+                string result = string.Empty;
+                if (elapsed.TotalMinutes < 1)
+                {
+                    if (elapsed.TotalSeconds > 10)
+                    {
+                        result = elapsed.ToString(@"ss\.ff");
+                    }
+                    else
+                    {
+                        result = elapsed.ToString(@"s\.ff");
+                    }
+                }
+                else if (elapsed.TotalHours < 1)
+                {
+                    if (elapsed.TotalMinutes > 10)
+                    {
+                        result = elapsed.ToString(@"mm\:ss\.ff");
+                    }
+                    else
+                    {
+                        result = elapsed.ToString(@"m\:ss\.ff");
+                    }
+                }
+                else
+                {
+                    if (elapsed.TotalHours > 10)
+                    {
+                        result = elapsed.ToString(@"hh\:mm\:ss\.ff");
+                    }
+                    else
+                    {
+                        result = elapsed.ToString(@"h\:mm\:ss\.ff");
+                    }
+                }
+                segmentTimer.Content = result;
+            };
+        
+            dispatcher.Start();
+            segmentStopwatch.Start();
+        }
+        
+        public void ResetSegmentTimer()
+        {
+            dispatcher.Stop();
+            segmentStopwatch.Reset();
+            segmentTimer.Content = "0.00";
+        }
+
+        public void SetLevelText(int level)
+        {
+            
         }
     }
 }

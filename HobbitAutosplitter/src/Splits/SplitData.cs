@@ -1,37 +1,28 @@
 ﻿using System.Drawing;
-using System.IO;
 
 namespace HobbitAutosplitter
 {
-    public class SplitData
+    public abstract class SplitData
     {
-        private string name;
-        private Image image;
-        private float comparisonSimilarity;
+        protected string name;
+        protected Bitmap image;
+        protected RECT crop;
 
-        public SplitData(string name)
+        protected SplitData(string name, string imagePath)
         {
             this.name = name;
-            image = null;
-            comparisonSimilarity = 0.98f;
+            image = SetImage(imagePath);
         }
 
-        public void SetComparisonSimilarity(float comparisonSimilarity) { this.comparisonSimilarity = comparisonSimilarity; }
-
-        public bool SetImagePath(string path)
+        public abstract float GetIncomingFrameSimilarity();
+        private Bitmap SetImage(string path) 
         {
-            if (File.Exists(path))
-            {
-                image = Image.FromFile(path);
-                return true;
-            }
-            return false;
+            Bitmap bm = new Bitmap(Image.FromFile(path));
+            return bm.Crop(new RECT((int)(0.29 * bm.Width), 0, bm.Width, bm.Height));
         }
 
-        public Image GetImage() { return image; }
+        public Bitmap GetImage() { return image; }
 
         public string GetSplitName() { return name; }
-
-        public float GetComparisonSimilarity() { return comparisonSimilarity; }
     }
 }

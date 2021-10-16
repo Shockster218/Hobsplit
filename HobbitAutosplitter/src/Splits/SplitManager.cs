@@ -1,17 +1,37 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Linq;
+using System.IO;
+using System.Drawing;
+using System.Windows;
 
 namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
+        public static EventHandler OnSplit;
+        public static EventHandler OnUnsplit;
+        public static EventHandler OnReset;
+        public static EventHandler OnPause;
+
         private static float universalSimilarity;
         private static int splitIndex;
-        private static SplitData[] splits = new SplitData[15];
+
+        private static LoadSplitData[] splits;
+
+        private static ResetSplitData resetSplit;
+        private static EndSplitData endSplit;
+        private static ThiefSplitData thiefSplit;
+
         private static Image loadImage;
+
+        public static SplitData currentComparison;
+        public static SplitData previousComparison;
 
         public static void Init()
         {
-            //universalSimilarity = Properties.Settings.Default.unisim;
+            universalSimilarity = Settings.Default.unisim;
+            OnSplit += (s,e) => SetSplitReference();
+            CaptureManager.FrameCreated += CompareFrames;
             PopulateSplitData();
         }
 
@@ -31,26 +51,44 @@ namespace HobbitAutosplitter
 
         private static void PopulateSplitData()
         {
-            //implmenet json file here
-            //else
-            splits = new SplitData[]
+            string[] splitImagePaths = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\split_images").CustomSort().ToArray();
+            if (splitImagePaths.Length != 15)
             {
-                new SplitData("Loading"),
-                new SplitData("Start"),
-                new SplitData("Dream World"),
-                new SplitData("An Unexpected Party"),
-                new SplitData("Roast Mutton"),
-                new SplitData("Troll Hole"),
-                new SplitData("Over Hill and Under Hill"),
-                new SplitData("Riddles in the Dark"),
-                new SplitData("Flies and Spiders"),
-                new SplitData("Barrels out of Bond"),
-                new SplitData("Thief Split"),
-                new SplitData("A Warm Welcome"),
-                new SplitData("Inside Info"),
-                new SplitData("Gathering of the Clouds"),
-                new SplitData("Clouds Burst"),
+                // Say not enough images found
+                return;
+            }
+
+            splits = new LoadSplitData[12]
+            {
+                new LoadSplitData("Dream World", splitImagePaths[0]),               // 1   
+                new LoadSplitData("An Unexpected Party", splitImagePaths[1]),       // 2
+                new LoadSplitData("Roast Mutton", splitImagePaths[2]),              // 3
+                new LoadSplitData("Troll Hole", splitImagePaths[3]),                // 4
+                new LoadSplitData("Over Hill and Under Hill", splitImagePaths[4]),  // 5
+                new LoadSplitData("Riddles in the Dark", splitImagePaths[5]),       // 6
+                new LoadSplitData("Flies and Spiders", splitImagePaths[6]),         // 7
+                new LoadSplitData("Barrels out of Bond", splitImagePaths[7]),       // 8
+                new LoadSplitData("A Warm Welcome", splitImagePaths[8]),            // 9
+                new LoadSplitData("Inside Info", splitImagePaths[10]),              // 11
+                new LoadSplitData("Gathering of the Clouds", splitImagePaths[11]),  // 12
+                new LoadSplitData("Clouds Burst", splitImagePaths[12]),             // 13
             };
+
+            resetSplit = new ResetSplitData("Reset", splitImagePaths[13]);
+            endSplit = new EndSplitData("End", splitImagePaths[12]);
+            thiefSplit = new ThiefSplitData("Thief", splitImagePaths[14]);
+
+            currentComparison = resetSplit;
+        }
+
+        public static void SetSplitReference()
+        {
+            Application.Current.Dispatcher.Invoke(() => MainWindow.instance.ChangeComparisonReference(currentComparison.GetImage()));
+        }
+
+        public static void CompareFrames(object sender, FrameEventArgs frameArgs)
+        {
+
         }
     }
 }

@@ -8,6 +8,7 @@ namespace HobbitAutosplitter
     public static class CaptureManager
     {
         public static event EventHandler<FrameEventArgs> FrameCreated;
+        public static event EventHandler ToggleCrop;
         public static event EventHandler DoneCapturingEvent;
         public static RECT crop;
         public static void Init()
@@ -27,7 +28,8 @@ namespace HobbitAutosplitter
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
 
-            Extensions.InvokeToUIThread(() => MainWindow.instance.EnableCropping());
+            ToggleCrop?.InvokeToUIThread(null, EventArgs.Empty);
+            SplitManager.SetSplitReference();
 
             while (ProcessManager.obsRunning)
             {
@@ -41,16 +43,16 @@ namespace HobbitAutosplitter
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
                     Bitmap cropped = bmp.Crop(crop);
-                    FrameCreated?.Invoke(null, new FrameEventArgs(cropped.Clone()));
+                    FrameCreated?.InvokeToUIThread(null, new FrameEventArgs(cropped.Clone()));
 
                     gfxBmp.Dispose();
                     bmp.Dispose();
                     cropped.Dispose();
                 }
-                catch { }
+                catch{}
             }
 
-            Extensions.InvokeToUIThread(() => MainWindow.instance.DisableCropping());
+            ToggleCrop?.InvokeToUIThread(null, EventArgs.Empty);
             DoneCapturingEvent?.AsyncInvoke(null, EventArgs.Empty);
         }
 
