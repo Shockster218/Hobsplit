@@ -37,7 +37,7 @@ namespace HobbitAutosplitter
                 if (obsProcess != null)
                 {
                     obs = obsProcess;
-                    OBSProcessFoundEvent?.Invoke(null, EventArgs.Empty);
+                    OBSProcessFoundEvent?.SmartInvoke(null, new SmartInvokeArgs());
                     return;
                 }
             }
@@ -47,7 +47,7 @@ namespace HobbitAutosplitter
         {
             while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
             obsRunning = true;
-            OBSOpenedEvent?.AsyncInvoke(null, EventArgs.Empty);
+            OBSOpenedEvent?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.ASYNC));
         }
 
         private static void IsOBSRunning()
@@ -62,7 +62,7 @@ namespace HobbitAutosplitter
                 {
                     obsRunning = false;
                     obs = null;
-                    OBSClosedEvent?.AsyncInvoke(null, EventArgs.Empty);
+                    OBSClosedEvent?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.ASYNC));
                 }
             }
         }

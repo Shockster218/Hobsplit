@@ -122,9 +122,9 @@ namespace HobbitAutosplitter {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.98")]
-        public float unisim {
+        public decimal unisim {
             get {
-                return ((float)(this["unisim"]));
+                return ((decimal)(this["unisim"]));
             }
             set {
                 this["unisim"] = value;

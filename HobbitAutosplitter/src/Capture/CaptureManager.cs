@@ -28,7 +28,7 @@ namespace HobbitAutosplitter
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
 
-            ToggleCrop?.InvokeToUIThread(null, EventArgs.Empty);
+            ToggleCrop?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.UI));
             SplitManager.SetSplitReference();
 
             while (ProcessManager.obsRunning)
@@ -43,7 +43,7 @@ namespace HobbitAutosplitter
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
                     Bitmap cropped = bmp.Crop(crop);
-                    FrameCreated?.InvokeToUIThread(null, new FrameEventArgs(cropped.Clone()));
+                    FrameCreated?.SmartInvoke(null, new FrameEventArgs(cropped.Clone()));
 
                     gfxBmp.Dispose();
                     bmp.Dispose();
@@ -52,8 +52,8 @@ namespace HobbitAutosplitter
                 catch{}
             }
 
-            ToggleCrop?.InvokeToUIThread(null, EventArgs.Empty);
-            DoneCapturingEvent?.AsyncInvoke(null, EventArgs.Empty);
+            ToggleCrop?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.UI));
+            DoneCapturingEvent?.SmartInvoke(null, new SmartInvokeArgs());
         }
 
         #region Imports
@@ -191,16 +191,6 @@ namespace HobbitAutosplitter
             }
 
             return false;
-        }
-    }
-
-    public class FrameEventArgs : EventArgs
-    {
-        public Object frame { get; set; }
-
-        public FrameEventArgs(Object frame)
-        {
-            this.frame = frame;
         }
     }
 }

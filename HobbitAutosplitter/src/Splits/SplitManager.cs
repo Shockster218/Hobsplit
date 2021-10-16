@@ -13,8 +13,14 @@ namespace HobbitAutosplitter
         public static EventHandler OnReset;
         public static EventHandler OnPause;
 
+        public static SplitData currentComparison;
+        public static SplitData previousComparison;
+
         private static float universalSimilarity;
         private static int splitIndex;
+
+        private static bool started;
+        private static bool loading;
 
         private static LoadSplitData[] splits;
 
@@ -22,16 +28,10 @@ namespace HobbitAutosplitter
         private static EndSplitData endSplit;
         private static ThiefSplitData thiefSplit;
 
-        private static Image loadImage;
-
-        public static SplitData currentComparison;
-        public static SplitData previousComparison;
-
         public static void Init()
         {
-            universalSimilarity = Settings.Default.unisim;
             OnSplit += (s,e) => SetSplitReference();
-            CaptureManager.FrameCreated += CompareFrames;
+            CaptureManager.FrameCreated += CheckLoadFrames;
             PopulateSplitData();
         }
 
@@ -44,10 +44,6 @@ namespace HobbitAutosplitter
         public static float GetUniversalSimilarity() { return universalSimilarity; }
 
         public static void SetUniversalSimilarity(float similarity) { universalSimilarity = similarity > 1 ? 1 : similarity; }
-
-        public static Image GetLoadImage() { return loadImage; }
-
-        public static void SetLoadImage(Image image) { loadImage = image; }
 
         private static void PopulateSplitData()
         {
@@ -86,7 +82,7 @@ namespace HobbitAutosplitter
             Application.Current.Dispatcher.Invoke(() => MainWindow.instance.ChangeComparisonReference(currentComparison.GetImage()));
         }
 
-        public static void CompareFrames(object sender, FrameEventArgs frameArgs)
+        public static void CheckLoadFrames(object sender, FrameEventArgs frameArgs)
         {
 
         }

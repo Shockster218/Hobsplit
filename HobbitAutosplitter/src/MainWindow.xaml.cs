@@ -15,20 +15,20 @@ namespace HobbitAutosplitter
     public partial class MainWindow
     {
         public static MainWindow instance;
-        private DispatcherTimer dispatcher = new DispatcherTimer();
-        private Stopwatch segmentStopwatch = new Stopwatch();
+        private bool cropSettingsSet;
 
         public MainWindow()
         {
             InitializeComponent();
             instance = this;
+            CaptureManager.FrameCreated += ShowPreview;
+            CaptureManager.FrameCreated += (s, e) => LoadCropSettings();
+            CaptureManager.ToggleCrop += (s, e) => ToggleCropping();
             CaptureManager.Init();
             ProcessManager.Init();
             SplitManager.Init();
             LivesplitManager.Init();
             LoadSettings();
-            CaptureManager.FrameCreated += ShowPreview;
-            CaptureManager.ToggleCrop += (s,e) => ToggleCropping();
         }
 
         public void OBSOffline()
@@ -56,14 +56,23 @@ namespace HobbitAutosplitter
         }
         private void LoadSettings()
         {
-            x.Value = Settings.Default.cropLeft;
-            y.Value = Settings.Default.cropTop;
-            w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : CaptureManager.crop.Right;
-            h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : CaptureManager.crop.Bottom;
+            similarity.Value = Settings.Default.unisim;
             splitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
             unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
             resetButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
             pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
+        }
+
+        private void LoadCropSettings()
+        {
+            if (!cropSettingsSet)
+            {
+                x.Value = Settings.Default.cropLeft;
+                y.Value = Settings.Default.cropTop;
+                w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : CaptureManager.crop.Right;
+                h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : CaptureManager.crop.Bottom;
+                cropSettingsSet = true;
+            }
         }
 
         private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -101,6 +110,16 @@ namespace HobbitAutosplitter
             CaptureManager.crop.Bottom = value;
             Settings.Default.cropBottom = value;
             h.Text = value.ToString();
+        }
+
+        private void similarity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            decimal value;
+            if (e.NewValue == null) value = 0;
+            else value = ((decimal)e.NewValue).Clamp(0, 1);
+            SplitManager.SetUniversalSimilarity((float)value);
+            Settings.Default.unisim = value;
+            similarity.Text = value.ToString();
         }
 
         private void splitButton_Click(object sender, RoutedEventArgs e)
@@ -157,59 +176,6 @@ namespace HobbitAutosplitter
                 Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 unsplitButton.Content = e.Key.ToString();
             }
-        }
-        public void InitSegmentTimer()
-        {
-            dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            dispatcher.Tick += (s, a) =>
-            {
-                TimeSpan elapsed = TimeSpan.FromMilliseconds(segmentStopwatch.ElapsedMilliseconds);
-                string result = string.Empty;
-                if (elapsed.TotalMinutes < 1)
-                {
-                    if (elapsed.TotalSeconds > 10)
-                    {
-                        result = elapsed.ToString(@"ss\.ff");
-                    }
-                    else
-                    {
-                        result = elapsed.ToString(@"s\.ff");
-                    }
-                }
-                else if (elapsed.TotalHours < 1)
-                {
-                    if (elapsed.TotalMinutes > 10)
-                    {
-                        result = elapsed.ToString(@"mm\:ss\.ff");
-                    }
-                    else
-                    {
-                        result = elapsed.ToString(@"m\:ss\.ff");
-                    }
-                }
-                else
-                {
-                    if (elapsed.TotalHours > 10)
-                    {
-                        result = elapsed.ToString(@"hh\:mm\:ss\.ff");
-                    }
-                    else
-                    {
-                        result = elapsed.ToString(@"h\:mm\:ss\.ff");
-                    }
-                }
-                segmentTimer.Content = result;
-            };
-        
-            dispatcher.Start();
-            segmentStopwatch.Start();
-        }
-        
-        public void ResetSegmentTimer()
-        {
-            dispatcher.Stop();
-            segmentStopwatch.Reset();
-            segmentTimer.Content = "0.00";
         }
 
         public void SetLevelText(int level)

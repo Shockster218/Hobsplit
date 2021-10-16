@@ -73,7 +73,6 @@
     <Compile Include="src\Capture\CaptureManager.cs" />
     <Compile Include="src\Capture\ImageProcessor.cs" />
     <Compile Include="src\Capture\ProcessManager.cs" />
-    <Compile Include="src\Constants.cs" />
     <Compile Include="src\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -84,6 +83,9 @@
     <Compile Include="src\Splits\SplitData.cs" />
     <Compile Include="src\Splits\SplitManager.cs" />
     <Compile Include="src\Splits\ThiefSplitData.cs" />
+    <Compile Include="src\Util\Constants.cs" />
+    <Compile Include="src\Util\EventHelper.cs" />
+    <Compile Include="src\Util\Extensions.cs" />
     <Compile Include="Themes\ColourfulDarkTheme.xaml.cs">
       <DependentUpon>ColourfulDarkTheme.xaml</DependentUpon>
     </Compile>
@@ -152,5 +154,6 @@
       <Version>0.5.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
