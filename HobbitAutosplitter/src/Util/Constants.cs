@@ -15,11 +15,4 @@
         LOADING,
         FINISHED
     }
-
-    public enum InvokeMode
-    {
-        SYNC,
-        ASYNC,
-        UI,      
-    }
 }

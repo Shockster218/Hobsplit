@@ -30,7 +30,6 @@ namespace HobbitAutosplitter
 
         public static void Init()
         {
-            OnSplit += (e) => SetSplitReference();
             CaptureManager.FrameCreated += CheckLoadFrames;
             PopulateSplitData();
         }
@@ -75,11 +74,6 @@ namespace HobbitAutosplitter
             thiefSplit = new ThiefSplitData("Thief", splitImagePaths[14]);
 
             currentComparison = resetSplit;
-        }
-
-        public static void SetSplitReference()
-        {
-            Application.Current.Dispatcher.Invoke(() => MainWindow.instance.ChangeComparisonReference(currentComparison.GetImage()));
         }
 
         public static void CheckLoadFrames(SmartInvokeArgs frameArgs)

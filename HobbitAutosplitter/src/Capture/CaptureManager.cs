@@ -9,7 +9,7 @@ namespace HobbitAutosplitter
     {
 
         public static event SmartEventHandler FrameCreated;
-        public static event SmartEventHandler ToggleCrop;
+        public static event SmartEventHandler ToggleUIElement;
         public static event SmartEventHandler DoneCapturingEvent;
 
 
@@ -31,8 +31,7 @@ namespace HobbitAutosplitter
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
 
-            ToggleCrop?.SmartInvoke(new SmartInvokeArgs(InvokeMode.UI));
-            SplitManager.SetSplitReference();
+            ToggleUIElement?.SmartInvoke(SmartInvokeArgs.Default);
 
             while (ProcessManager.obsRunning)
             {
@@ -46,7 +45,7 @@ namespace HobbitAutosplitter
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
                     Bitmap cropped = bmp.Crop(crop);
-                    FrameCreated?.SmartInvoke(new SmartInvokeArgs(InvokeMode.UI, cropped.Clone()));
+                    FrameCreated?.SmartInvoke(new SmartInvokeArgs(cropped.Clone()));
 
                     gfxBmp.Dispose();
                     bmp.Dispose();
@@ -55,8 +54,8 @@ namespace HobbitAutosplitter
                 catch {}
             }
 
-            ToggleCrop?.SmartInvoke(new SmartInvokeArgs(InvokeMode.UI));
-            DoneCapturingEvent?.SmartInvoke(new SmartInvokeArgs(InvokeMode.SYNC));
+            ToggleUIElement?.SmartInvoke(SmartInvokeArgs.Default);
+            DoneCapturingEvent?.SmartInvoke(SmartInvokeArgs.Default);
         }
 
         #region Imports

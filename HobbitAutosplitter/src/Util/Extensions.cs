@@ -25,41 +25,25 @@ namespace HobbitAutosplitter
 
                 foreach (SmartEventHandler handler in invocationList)
                 {
-                    switch (args.mode)
+                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+                    if(dispatcherTarget != null)
                     {
-                        case InvokeMode.SYNC:
-                            SyncInvoke(handler, args);
-                            break;
-                        case InvokeMode.ASYNC:
-                            AsyncInvoke(handler, args);
-                            break;
-                        case InvokeMode.UI:
-                            UIInvoke(handler, args);
-                            break;
+                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        {
+                            if (!dispatcherTarget.Dispatcher.CheckAccess())
+                            {
+                                dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Task.Factory.StartNew(() =>
+                        {
+                            handler.Invoke(args);
+                        });
                     }
                 }
-            }
-        }
-
-        public static void SyncInvoke(SmartEventHandler handler, SmartInvokeArgs args)
-        {
-            handler.Invoke(args);
-        }
-
-        public static void AsyncInvoke(SmartEventHandler handler, SmartInvokeArgs args)
-        {
-            Task.Factory.StartNew(() =>
-            {
-                handler.Invoke(args);
-            });
-        }
-
-        public static void UIInvoke(SmartEventHandler handler, SmartInvokeArgs args)
-        {
-            DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
-            if (dispatcherTarget != null && !dispatcherTarget.Dispatcher.CheckAccess())
-            {
-                dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
             }
         }
 

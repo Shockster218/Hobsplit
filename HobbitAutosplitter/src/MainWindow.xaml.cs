@@ -23,7 +23,10 @@ namespace HobbitAutosplitter
             instance = this;
             CaptureManager.FrameCreated += ShowPreview;
             CaptureManager.FrameCreated += LoadCropSettings;
-            CaptureManager.ToggleCrop += ToggleCropping;
+            ProcessManager.OBSOpenedEvent += ChangeComparisonReference;
+            ProcessManager.OBSClosedEvent += ChangeComparisonReference;
+            CaptureManager.ToggleUIElement += ToggleCropping;
+            SplitManager.OnSplit += ChangeComparisonReference;
             CaptureManager.Init();
             ProcessManager.Init();
             SplitManager.Init();
@@ -36,18 +39,18 @@ namespace HobbitAutosplitter
             obsPreview.Source = ((Bitmap)Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Assets\\obs_offline.jpg")).ToBitmapImage();
         }
 
-        public void ShowPreview(SmartInvokeArgs frameArgs)
+        public void ShowPreview(SmartInvokeArgs args)
         {
-            obsPreview.Source = ((Bitmap)frameArgs.frame).ToBitmapImage();
-            GC.Collect();
+            obsPreview.Source = ((Bitmap)args.frame).ToBitmapImage();
         }
 
-        public void ChangeComparisonReference(Bitmap image)
+        public void ChangeComparisonReference(SmartInvokeArgs args)
         {
-            splitReference.Source = image.ToBitmapImage();
+            if (splitReference.Source == null) splitReference.Source = SplitManager.currentComparison.GetImage().ToBitmapImage();
+            else splitReference.Source = null;
         }
 
-        public void ToggleCropping(SmartInvokeArgs frameArgs)
+        public void ToggleCropping(SmartInvokeArgs args)
         {
             x.IsEnabled = !x.IsEnabled;
             y.IsEnabled = !y.IsEnabled;
@@ -63,7 +66,7 @@ namespace HobbitAutosplitter
             pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
         }
 
-        private void LoadCropSettings(SmartInvokeArgs frameArgs)
+        private void LoadCropSettings(SmartInvokeArgs args)
         {
             if (!cropSettingsSet)
             {
