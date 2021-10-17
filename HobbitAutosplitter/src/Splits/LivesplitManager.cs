@@ -19,10 +19,10 @@ namespace HobbitAutosplitter
             unsplit = Settings.Default.unsplit;
             reset = Settings.Default.reset;
             pause = Settings.Default.pause;
-            SplitManager.OnSplit += (s, e) => Split();
-            SplitManager.OnUnsplit += (s, e) => Unsplit();
-            SplitManager.OnReset += (s, e) => Reset();
-            SplitManager.OnPause += (s, e) => Pause();
+            SplitManager.OnSplit += (e) => Split();
+            SplitManager.OnUnsplit += (e) => Unsplit();
+            SplitManager.OnReset += (e) => Reset();
+            SplitManager.OnPause += (e) => Pause();
         }
 
         public static void Split()

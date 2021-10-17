@@ -10,17 +10,17 @@ namespace HobbitAutosplitter
     {
         private static Process obs;
 
-        public static event EventHandler OBSProcessFoundEvent;
-        public static event EventHandler OBSOpenedEvent;
-        public static event EventHandler OBSClosedEvent;
+        public static event SmartEventHandler OBSProcessFoundEvent;
+        public static event SmartEventHandler OBSOpenedEvent;
+        public static event SmartEventHandler OBSClosedEvent;
 
         public static bool obsRunning;
 
         public static void Init()
         {
-            OBSProcessFoundEvent += (s,e) => WaitForOBS();
-            OBSOpenedEvent += (s,e) => IsOBSRunning();
-            CaptureManager.DoneCapturingEvent += (s, e) => FindOBS();
+            OBSProcessFoundEvent += WaitForOBS;
+            OBSOpenedEvent += IsOBSRunning;
+            CaptureManager.DoneCapturingEvent += (e) => FindOBS();
             _ = Task.Factory.StartNew(() => FindOBS());
         }
 
@@ -37,20 +37,20 @@ namespace HobbitAutosplitter
                 if (obsProcess != null)
                 {
                     obs = obsProcess;
-                    OBSProcessFoundEvent?.SmartInvoke(null, new SmartInvokeArgs());
+                    OBSProcessFoundEvent?.SmartInvoke(new SmartInvokeArgs(InvokeMode.SYNC));
                     return;
                 }
             }
         }
 
-        private static void WaitForOBS()
+        private static void WaitForOBS(SmartInvokeArgs frameArgs)
         {
             while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
             obsRunning = true;
-            OBSOpenedEvent?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.ASYNC));
+            OBSOpenedEvent?.SmartInvoke(new SmartInvokeArgs(InvokeMode.ASYNC));
         }
 
-        private static void IsOBSRunning()
+        private static void IsOBSRunning(SmartInvokeArgs frameArgs)
         {
             while (obsRunning)
             {
@@ -62,7 +62,7 @@ namespace HobbitAutosplitter
                 {
                     obsRunning = false;
                     obs = null;
-                    OBSClosedEvent?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.ASYNC));
+                    OBSClosedEvent?.SmartInvoke(new SmartInvokeArgs(InvokeMode.ASYNC));
                 }
             }
         }

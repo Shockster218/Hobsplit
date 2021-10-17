@@ -2,20 +2,13 @@
 
 namespace HobbitAutosplitter
 {
+    public delegate void SmartEventHandler(SmartInvokeArgs args);
     public class SmartInvokeArgs : EventArgs
     {
         public InvokeMode mode { get; set; }
-
-        public SmartInvokeArgs(InvokeMode mode = InvokeMode.SYNC)
-        {
-            this.mode = mode;
-        }
-    }
-    public class FrameEventArgs : SmartInvokeArgs
-    {
         public Object frame { get; set; }
 
-        public FrameEventArgs(Object frame, InvokeMode mode = InvokeMode.UI) : base(mode)
+        public SmartInvokeArgs(InvokeMode mode, Object frame = null) 
         {
             this.mode = mode;
             this.frame = frame;

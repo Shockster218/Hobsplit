@@ -7,16 +7,19 @@ namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-        public static event EventHandler<FrameEventArgs> FrameCreated;
-        public static event EventHandler ToggleCrop;
-        public static event EventHandler DoneCapturingEvent;
+
+        public static event SmartEventHandler FrameCreated;
+        public static event SmartEventHandler ToggleCrop;
+        public static event SmartEventHandler DoneCapturingEvent;
+
+
         public static RECT crop;
         public static void Init()
         {
-            ProcessManager.OBSOpenedEvent += (s,e) => CaptureApplication();
+            ProcessManager.OBSOpenedEvent += CaptureApplication;
         }
 
-        public static void CaptureApplication()
+        public static void CaptureApplication(SmartInvokeArgs frameArgs)
         {
             HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
             RECT rc;
@@ -28,7 +31,7 @@ namespace HobbitAutosplitter
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
 
-            ToggleCrop?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.UI));
+            ToggleCrop?.SmartInvoke(new SmartInvokeArgs(InvokeMode.UI));
             SplitManager.SetSplitReference();
 
             while (ProcessManager.obsRunning)
@@ -43,17 +46,17 @@ namespace HobbitAutosplitter
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
                     Bitmap cropped = bmp.Crop(crop);
-                    FrameCreated?.SmartInvoke(null, new FrameEventArgs(cropped.Clone()));
+                    FrameCreated?.SmartInvoke(new SmartInvokeArgs(InvokeMode.UI, cropped.Clone()));
 
                     gfxBmp.Dispose();
                     bmp.Dispose();
                     cropped.Dispose();
                 }
-                catch{}
+                catch {}
             }
 
-            ToggleCrop?.SmartInvoke(null, new SmartInvokeArgs(InvokeMode.UI));
-            DoneCapturingEvent?.SmartInvoke(null, new SmartInvokeArgs());
+            ToggleCrop?.SmartInvoke(new SmartInvokeArgs(InvokeMode.UI));
+            DoneCapturingEvent?.SmartInvoke(new SmartInvokeArgs(InvokeMode.SYNC));
         }
 
         #region Imports

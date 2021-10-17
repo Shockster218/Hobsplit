@@ -8,10 +8,10 @@ namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
-        public static EventHandler OnSplit;
-        public static EventHandler OnUnsplit;
-        public static EventHandler OnReset;
-        public static EventHandler OnPause;
+        public static SmartEventHandler OnSplit;
+        public static SmartEventHandler OnUnsplit;
+        public static SmartEventHandler OnReset;
+        public static SmartEventHandler OnPause;
 
         public static SplitData currentComparison;
         public static SplitData previousComparison;
@@ -30,7 +30,7 @@ namespace HobbitAutosplitter
 
         public static void Init()
         {
-            OnSplit += (s,e) => SetSplitReference();
+            OnSplit += (e) => SetSplitReference();
             CaptureManager.FrameCreated += CheckLoadFrames;
             PopulateSplitData();
         }
@@ -82,7 +82,7 @@ namespace HobbitAutosplitter
             Application.Current.Dispatcher.Invoke(() => MainWindow.instance.ChangeComparisonReference(currentComparison.GetImage()));
         }
 
-        public static void CheckLoadFrames(object sender, FrameEventArgs frameArgs)
+        public static void CheckLoadFrames(SmartInvokeArgs frameArgs)
         {
 
         }

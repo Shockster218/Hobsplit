@@ -16,67 +16,50 @@ namespace HobbitAutosplitter
             else return val;
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, object sender, SmartInvokeArgs args)
+        public static void SmartInvoke(this MulticastDelegate multicast, SmartInvokeArgs args)
         {
-            switch (args.mode)
+            MulticastDelegate multiDel = multicast;
+            if (multiDel != null)
             {
-                case InvokeMode.SYNC:
-                    SyncInvoke(multicast, sender, args);
-                    break;
-                case InvokeMode.ASYNC:
-                    AsyncInvoke(multicast, sender, args);
-                    break;
-                case InvokeMode.UI:
-                    UIInvoke(multicast, sender, args);
-                    break;
-            }
-        }
+                var invocationList = multiDel.GetInvocationList();
 
-        public static void SyncInvoke(MulticastDelegate multicast, object sender, EventArgs args)
-        {
-            MulticastDelegate handler = multicast;
-            if (handler != null)
-            {
-                Delegate[] invocationList = handler.GetInvocationList();
-
-                foreach (EventHandler h in invocationList)
+                foreach (SmartEventHandler handler in invocationList)
                 {
-                    h.Invoke(sender, args);
-                }
-            }
-        }
-
-        public static void AsyncInvoke(MulticastDelegate multicast, object sender, EventArgs args)
-        {
-            MulticastDelegate handler = multicast;
-            if (handler != null)
-            {
-                Delegate[] invocationList = handler.GetInvocationList();
-
-                foreach (EventHandler h in invocationList)
-                {
-                    Task.Factory.StartNew(() =>
+                    switch (args.mode)
                     {
-                        h.Invoke(sender, args);
-                    });
-                }
-            }
-        }
-
-        public static void UIInvoke(MulticastDelegate multicast, object sender, EventArgs args)
-        {
-            MulticastDelegate handler = multicast;
-            if (handler != null)
-            {
-                Delegate[] invocationList = handler.GetInvocationList();
-                foreach (Delegate del in invocationList)
-                {
-                    DispatcherObject dispatcherTarget = del.Target as DispatcherObject;
-                    if (dispatcherTarget != null && !dispatcherTarget.Dispatcher.CheckAccess())
-                    {
-                        dispatcherTarget.Dispatcher.BeginInvoke(del, sender, args);
+                        case InvokeMode.SYNC:
+                            SyncInvoke(handler, args);
+                            break;
+                        case InvokeMode.ASYNC:
+                            AsyncInvoke(handler, args);
+                            break;
+                        case InvokeMode.UI:
+                            UIInvoke(handler, args);
+                            break;
                     }
                 }
+            }
+        }
+
+        public static void SyncInvoke(SmartEventHandler handler, SmartInvokeArgs args)
+        {
+            handler.Invoke(args);
+        }
+
+        public static void AsyncInvoke(SmartEventHandler handler, SmartInvokeArgs args)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                handler.Invoke(args);
+            });
+        }
+
+        public static void UIInvoke(SmartEventHandler handler, SmartInvokeArgs args)
+        {
+            DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+            if (dispatcherTarget != null && !dispatcherTarget.Dispatcher.CheckAccess())
+            {
+                dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
             }
         }
 

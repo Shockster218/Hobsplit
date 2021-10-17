@@ -22,8 +22,8 @@ namespace HobbitAutosplitter
             InitializeComponent();
             instance = this;
             CaptureManager.FrameCreated += ShowPreview;
-            CaptureManager.FrameCreated += (s, e) => LoadCropSettings();
-            CaptureManager.ToggleCrop += (s, e) => ToggleCropping();
+            CaptureManager.FrameCreated += LoadCropSettings;
+            CaptureManager.ToggleCrop += ToggleCropping;
             CaptureManager.Init();
             ProcessManager.Init();
             SplitManager.Init();
@@ -36,7 +36,7 @@ namespace HobbitAutosplitter
             obsPreview.Source = ((Bitmap)Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Assets\\obs_offline.jpg")).ToBitmapImage();
         }
 
-        public void ShowPreview(Object sender, FrameEventArgs frameArgs)
+        public void ShowPreview(SmartInvokeArgs frameArgs)
         {
             obsPreview.Source = ((Bitmap)frameArgs.frame).ToBitmapImage();
             GC.Collect();
@@ -47,7 +47,7 @@ namespace HobbitAutosplitter
             splitReference.Source = image.ToBitmapImage();
         }
 
-        public void ToggleCropping()
+        public void ToggleCropping(SmartInvokeArgs frameArgs)
         {
             x.IsEnabled = !x.IsEnabled;
             y.IsEnabled = !y.IsEnabled;
@@ -63,7 +63,7 @@ namespace HobbitAutosplitter
             pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
         }
 
-        private void LoadCropSettings()
+        private void LoadCropSettings(SmartInvokeArgs frameArgs)
         {
             if (!cropSettingsSet)
             {
