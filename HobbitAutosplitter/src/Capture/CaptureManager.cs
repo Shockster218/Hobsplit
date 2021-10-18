@@ -44,7 +44,7 @@ namespace HobbitAutosplitter
                     PrintWindow(hwnd.Handle, hdcBitmap, 0);
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
-                    Bitmap cropped = bmp.Crop(crop);
+                    Bitmap cropped = bmp.Crop(crop).Resize();
                     FrameCreated?.SmartInvoke(new SmartInvokeArgs(cropped.Clone()));
 
                     gfxBmp.Dispose();
@@ -78,6 +78,8 @@ namespace HobbitAutosplitter
         private int _Top;
         private int _Right;
         private int _Bottom;
+
+        public static RECT Default { get => Default; private set => new RECT(0, 0, 0, 0); }
 
         public RECT(RECT Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
         {

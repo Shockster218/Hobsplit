@@ -32,12 +32,17 @@ namespace HobbitAutosplitter
                 graphics.Dispose();
             }
 
-            Rectangle destRect = new Rectangle(0, 0, Constants.width, Constants.height);
-            Bitmap destImage = new Bitmap(Constants.width, Constants.height);
+            return cropped;
+        }
 
-            destImage.SetResolution(cropped.HorizontalResolution, cropped.VerticalResolution);
+        public static Bitmap Resize(this Bitmap source)
+        {
+            Rectangle resizeRect = new Rectangle(0, 0, Constants.width, Constants.height);
+            Bitmap resize = new Bitmap(Constants.width, Constants.height);
 
-            using (Graphics graphics = Graphics.FromImage(destImage))
+            resize.SetResolution(source.HorizontalResolution, source.VerticalResolution);
+
+            using (Graphics graphics = Graphics.FromImage(resize))
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
                 graphics.CompositingQuality = CompositingQuality.HighQuality;
@@ -45,11 +50,11 @@ namespace HobbitAutosplitter
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                graphics.DrawImage(cropped, destRect, 0, 0, cropped.Width, cropped.Height, GraphicsUnit.Pixel);
+                graphics.DrawImage(source, resizeRect, 0, 0, source.Width, source.Height, GraphicsUnit.Pixel);
                 graphics.Dispose();
             }
 
-            return destImage;
+            return resize;
         }
     }
 }

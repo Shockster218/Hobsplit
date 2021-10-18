@@ -46,7 +46,7 @@ namespace HobbitAutosplitter
 
         public void ChangeComparisonReference(SmartInvokeArgs args)
         {
-            if (splitReference.Source == null) splitReference.Source = SplitManager.currentComparison.GetImage().ToBitmapImage();
+            if (splitReference.Source == null) splitReference.Source = SplitManager.currentComparison?.GetImage().ToBitmapImage();
             else splitReference.Source = null;
         }
 

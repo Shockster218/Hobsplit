@@ -4,9 +4,9 @@ namespace HobbitAutosplitter
 {
     public delegate void SmartEventHandler(SmartInvokeArgs args);
     public class SmartInvokeArgs : EventArgs
-    { 
+    {
         public Object frame { get; set; }
-        public static SmartInvokeArgs Default { get => new SmartInvokeArgs(null); private set { } }
+        public static SmartInvokeArgs Default { get => Default; set { new SmartInvokeArgs(null); } }
 
         public SmartInvokeArgs(Object frame) 
         {
