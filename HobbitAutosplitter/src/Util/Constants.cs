@@ -24,24 +24,7 @@
             "Clouds Burst",
         };
 
-        public static readonly RECT?[] splitCrops =
-        {
-            new RECT(160,310,width-175,height-100),           // Main Menu
-            new RECT(200,200,width,height),           // Dream World   ==
-            new RECT(200,200,width,height),           // AUP           ====
-            new RECT(200,200,width,height),           // RM            ======
-            new RECT(200,200,width,height),           // Troll hole    =======
-            new RECT(200,200,width,height),           // Over hill     =========
-            new RECT(200,200,width,height),           // Riddles       ==========
-            new RECT(200,200,width,height),           // FaS           ===========  All the Same
-            new RECT(200,200,width,height),           // BooB          ==========
-            new RECT(200,200,width,height),           // AWW           =========
-            new RECT(200,200,width,height),           // Thief         =======
-            new RECT(200,200,width,height),           // Inside Info   ======
-            new RECT(200,200,width,height),           // GOTC          ====
-            new RECT(200,200,width,height),           // Clouds Burst  ==
-            new RECT(200,200,width,height)            // Finished
-        };
+        public static readonly RECT crop = new RECT(160, 120, 480, 360);
     }
 
     public enum SplitState
@@ -50,6 +33,7 @@
         WAITING,
         LOADING,
         NEWLEVEL,
+        STARTUP
     }
 
     public enum InvokeMode

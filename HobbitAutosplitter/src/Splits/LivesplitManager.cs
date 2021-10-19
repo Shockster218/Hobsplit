@@ -27,22 +27,22 @@ namespace HobbitAutosplitter
 
         public static void Split()
         {
-            sim.Keyboard.KeyPress(split);
+            sim.Keyboard.KeyDown(split);
         }
 
         public static void Unsplit()
         {
-            sim.Keyboard.KeyPress(unsplit);
+            sim.Keyboard.KeyDown(unsplit);
         }
 
         public static void Reset()
         {
-            sim.Keyboard.KeyPress(reset);
+            sim.Keyboard.KeyDown(reset);
         }
 
         public static void Pause()
         {
-            sim.Keyboard.KeyPress(pause);
+            sim.Keyboard.KeyDown(pause);
         }
     }
 }

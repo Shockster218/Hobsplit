@@ -9,15 +9,13 @@ namespace HobbitAutosplitter
         private string name;
         private Bitmap image;
         private Bitmap cropped;
-        private RECT crop;
         private Digest digest;
 
-        public SplitData(string name, string imagePath, RECT? crop = null)
+        public SplitData(string name, string imagePath, int splitIndex)
         {
             image = SetImage(imagePath);
             this.name = name;
-            this.crop = crop == null ? new RECT(0, 0, image.Width, image.Height) : (RECT)crop;
-            cropped = image.Crop(this.crop);
+            cropped = image.Crop(Constants.crop);
             digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 
@@ -25,7 +23,6 @@ namespace HobbitAutosplitter
         {
             image = data.GetImage();
             name = data.GetSplitName();
-            crop = data.GetCrop();
             cropped = data.GetImageCropped();
             digest = data.GetDigest();
         }
@@ -40,8 +37,6 @@ namespace HobbitAutosplitter
         public Bitmap GetImageCropped() { return cropped; }
 
         public string GetSplitName() { return name; }
-
-        public RECT GetCrop() { return crop; }
 
         public Digest GetDigest() { return digest; }
     }

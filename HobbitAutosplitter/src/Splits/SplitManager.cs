@@ -19,13 +19,14 @@ namespace HobbitAutosplitter
 
         public static float swag;
 
-        private static SplitData nextSplit;
+        private static SplitData nextComparison;
         private static SplitData currentComparison;
         private static SplitData previousSplitData;
+        private static SplitData resetComparison;
 
         private static string[] splitImagePaths;
 
-        private static SplitState splitState = SplitState.IDLE;
+        private static SplitState splitState = SplitState.STARTUP;
 
         private static float universalSimilarity;
         private static int splitIndex;
@@ -35,17 +36,13 @@ namespace HobbitAutosplitter
             CaptureManager.FrameCreated += DigestIncomingFrame;
             DigestCompleted += CompareFrames;
             PopulateSplitData();
-
-            OnSplit += IncrementSplitIndex;
-            OnUnsplit += DeincrementSplitIndex;
-            OnReset += ResetSplitIndex;
         }
 
-        public static void IncrementSplitIndex(SmartInvokeArgs args) { splitIndex++; SetSplitData(); }
+        public static void IncrementSplitIndex() { splitIndex++; SetSplitData(); }
 
-        public static void DeincrementSplitIndex(SmartInvokeArgs args) { splitIndex--; SetSplitData(); }
+        public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
 
-        public static void ResetSplitIndex(SmartInvokeArgs args) { splitIndex = 0; SetSplitData(); }
+        public static void ResetSplitIndex() { splitIndex = 0; SetSplitData(); }
 
         public static float GetUniversalSimilarity() { return universalSimilarity; }
 
@@ -55,9 +52,9 @@ namespace HobbitAutosplitter
 
         private static void SetSplitData() 
         {
-            nextSplit = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], Constants.splitCrops[splitIndex + 1]) : null;
-            currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex], Constants.splitCrops[splitIndex]);
-            previousSplitData = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], Constants.splitCrops[splitIndex - 1]) : new SplitData("Main Menu", splitImagePaths[0]);
+            nextComparison = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], splitIndex + 1) : null;
+            currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex], splitIndex);
+            previousSplitData = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], splitIndex - 1) : new SplitData("Main Menu", splitImagePaths[0], 0);
         }
 
         private static void PopulateSplitData()
@@ -70,34 +67,41 @@ namespace HobbitAutosplitter
             }
 
             SetSplitData();
+            resetComparison = currentComparison;
         }
 
         private static void DigestIncomingFrame(SmartInvokeArgs args)
         {
             Bitmap frame = args.frameBM;
-            Digest digest = ImagePhash.ComputeDigest(frame.Crop(currentComparison.GetCrop()).ToLuminanceImage());
+            Digest digest = ImagePhash.ComputeDigest(frame.Crop(Constants.crop).ToLuminanceImage());
             frame.Dispose();
             DigestCompleted?.SmartInvoke(new DigestInvokeArgs(digest));
         }
 
         public static void CompareFrames(DigestInvokeArgs args)
         {
-            bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), args.digest) >= universalSimilarity;
+            Digest d = args.digest;
+            bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= universalSimilarity;
+            bool n = ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity;
+            bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= universalSimilarity;
 
-            if (splitState == SplitState.IDLE)
+            if (r && splitState > SplitState.IDLE)
             {
-                if (c)
-                {
-                    splitState = SplitState.WAITING;
-                    OnSplit?.SmartInvoke(SmartInvokeArgs.Default);
-                }
+                splitState = SplitState.IDLE;
+                ResetSplitIndex();
+                OnReset?.SmartInvoke(SmartInvokeArgs.Default);
+            }
+
+            if (c)
+            {
             }
             else
             {
-                if (c)
+                if (splitState == SplitState.IDLE)
                 {
-                    splitState = SplitState.IDLE;
-                    OnReset?.SmartInvoke(SmartInvokeArgs.Default);
+                    splitState = SplitState.WAITING;
+                    IncrementSplitIndex();
+                    OnSplit?.SmartInvoke(SmartInvokeArgs.Default);
                 }
             }
         }

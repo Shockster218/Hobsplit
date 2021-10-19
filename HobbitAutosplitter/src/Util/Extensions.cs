@@ -30,10 +30,7 @@ namespace HobbitAutosplitter
                     {
                         if (dispatcherTarget.GetType() == typeof(MainWindow))
                         {
-                            if (!dispatcherTarget.Dispatcher.CheckAccess())
-                            {
-                                dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
-                            }
+                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
                         }
                     }
                     else

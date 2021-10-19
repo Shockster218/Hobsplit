@@ -26,6 +26,8 @@ namespace HobbitAutosplitter
             ProcessManager.OBSClosedEvent += ChangeComparisonReference;
             CaptureManager.ToggleUIElement += ToggleCropping;
             SplitManager.OnSplit += ChangeComparisonReference;
+            SplitManager.OnReset += ChangeComparisonReference;
+            SplitManager.OnUnsplit += ChangeComparisonReference;
             CaptureManager.Init();
             ProcessManager.Init();
             SplitManager.Init();
@@ -45,7 +47,7 @@ namespace HobbitAutosplitter
 
         public void ChangeComparisonReference(SmartInvokeArgs args)
         {
-            if (splitReference.Source == null) splitReference.Source = SplitManager.GetCurrentComparison().GetImageCropped().ToBitmapImage();
+            if (splitReference.Source == null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             else splitReference.Source = null;
         }
 
@@ -150,6 +152,7 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.split = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 splitButton.Content = e.Key.ToString();
+                Keyboard.ClearFocus();
             }
         }
 
@@ -159,6 +162,7 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.pause = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 pauseButton.Content = e.Key.ToString();
+                Keyboard.ClearFocus();
             }
         }
 
@@ -168,6 +172,7 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 resetButton.Content = e.Key.ToString();
+                Keyboard.ClearFocus();
             }
         }
 
@@ -177,6 +182,7 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 unsplitButton.Content = e.Key.ToString();
+                Keyboard.ClearFocus();
             }
         }
 

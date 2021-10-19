@@ -13,10 +13,10 @@ namespace HobbitAutosplitter
         public BitmapImage frameBMI { get; set; }
         public static SmartInvokeArgs Default { get => new SmartInvokeArgs(null); set { } }
 
-        public SmartInvokeArgs(Object frame) 
+        public SmartInvokeArgs(Object frame, bool async = true) 
         {
-            this.frameBM = (Bitmap)frame;
-            this.frameBMI = frame == null ? null : frameBM.ToBitmapImage(); ;
+            frameBM = (Bitmap)frame;
+            frameBMI = frame == null ? null : frameBM.ToBitmapImage();
         }
     }
 
