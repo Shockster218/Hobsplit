@@ -37,7 +37,7 @@ namespace HobbitAutosplitter
 
         public void OBSOffline()
         {
-            obsPreview.Source = ((Bitmap)Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Assets\\obs_offline.jpg")).ToBitmapImage();
+            obsPreview.Source = ((Bitmap)Image.FromFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
         }
 
         public void ShowPreview(SmartInvokeArgs args)
