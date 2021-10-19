@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
 using System.Drawing;
+using System.Windows.Media.Imaging;
 using System.Windows;
-using System.Windows.Threading;
 using System.Windows.Input;
 using WindowsInput.Native;
 
@@ -41,12 +40,12 @@ namespace HobbitAutosplitter
 
         public void ShowPreview(SmartInvokeArgs args)
         {
-            obsPreview.Source = ((Bitmap)args.frame).ToBitmapImage();
+            obsPreview.Source = args.frameBMI;
         }
 
         public void ChangeComparisonReference(SmartInvokeArgs args)
         {
-            if (splitReference.Source == null) splitReference.Source = SplitManager.currentComparison?.GetImage().ToBitmapImage();
+            if (splitReference.Source == null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             else splitReference.Source = null;
         }
 

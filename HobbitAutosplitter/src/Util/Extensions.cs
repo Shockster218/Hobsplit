@@ -38,11 +38,32 @@ namespace HobbitAutosplitter
                     }
                     else
                     {
-                        Task.Factory.StartNew(() =>
+                        if(args.mode == InvokeMode.ASYNC)
+                        {
+                            Task.Factory.StartNew(() =>
+                            {
+                                handler.Invoke(args);
+                            });
+                        }
+                        else
                         {
                             handler.Invoke(args);
-                        });
+                        }
                     }
+                }
+            }
+        }
+
+        public static void SmartInvoke(this MulticastDelegate multicast, DigestInvokeArgs args)
+        {
+            MulticastDelegate multiDel = multicast;
+            if (multiDel != null)
+            {
+                var invocationList = multiDel.GetInvocationList();
+
+                foreach (DigestEventHandler handler in invocationList)
+                {
+                    handler.Invoke(args);
                 }
             }
         }

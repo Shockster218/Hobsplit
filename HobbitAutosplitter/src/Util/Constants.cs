@@ -25,12 +25,17 @@
         };
     }
 
-    public enum States
+    public enum SplitState
     {
-        READYTOSTART,
-        STARTED,
-        GAMEPLAY,
+        IDLE,
+        WAITING,
         LOADING,
-        FINISHED
+        NEWLEVEL,
+    }
+
+    public enum InvokeMode
+    {
+        SYNC,
+        ASYNC
     }
 }

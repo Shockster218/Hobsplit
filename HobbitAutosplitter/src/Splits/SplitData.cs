@@ -6,32 +6,28 @@ namespace HobbitAutosplitter
 {
     public class SplitData
     {
-        protected string name;
-        protected Bitmap image;
-        protected RECT crop;
+        private string name;
+        private Bitmap image;
+        private Bitmap cropped;
+        private RECT crop;
+        private Digest digest;
 
         public SplitData(string name, string imagePath, RECT? crop = null)
         {
             image = SetImage(imagePath);
             this.name = name;
             this.crop = crop == null ? new RECT(0, 0, image.Width, image.Height) : (RECT)crop;
+            cropped = image.Crop(this.crop);
+            digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 
-        public bool IsFrameSimilar(Bitmap incoming)
+        public SplitData(SplitData data)
         {
-            Bitmap f1 = GetImageCropped();
-            Bitmap f2 = incoming.Crop(crop);
-
-            if (CalculateFrameSimilarity(f1, f2) >= SplitManager.GetUniversalSimilarity()) return true;
-            else return false;
-        }
-
-        private float CalculateFrameSimilarity(Bitmap f1, Bitmap f2)
-        {
-            Digest d1 = ImagePhash.ComputeDigest(f1.ToLuminanceImage());
-            Digest d2 = ImagePhash.ComputeDigest(f2.ToLuminanceImage());
-
-            return ImagePhash.GetCrossCorrelation(d1, d2);
+            image = data.GetImage();
+            name = data.GetSplitName();
+            crop = data.GetCrop();
+            cropped = data.GetImageCropped();
+            digest = data.GetDigest();
         }
         private Bitmap SetImage(string path) 
         {
@@ -41,8 +37,12 @@ namespace HobbitAutosplitter
 
         public Bitmap GetImage() { return image; }
 
-        public Bitmap GetImageCropped() { return image.Crop(crop); }
+        public Bitmap GetImageCropped() { return cropped; }
 
         public string GetSplitName() { return name; }
+
+        public RECT GetCrop() { return crop; }
+
+        public Digest GetDigest() { return digest; }
     }
 }

@@ -1,13 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
 {
     public static class ImageProcessor
     {
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
         public static BitmapImage ToBitmapImage(this Bitmap bitmap)
         {
             MemoryStream ms = new MemoryStream();
@@ -17,9 +21,9 @@ namespace HobbitAutosplitter
             ms.Seek(0, SeekOrigin.Begin);
             image.StreamSource = ms;
             image.EndInit();
-
+        
             image.Freeze();
-
+        
             return image;
         }
 

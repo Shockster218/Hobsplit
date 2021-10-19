@@ -12,7 +12,6 @@ namespace HobbitAutosplitter
         public static event SmartEventHandler ToggleUIElement;
         public static event SmartEventHandler DoneCapturingEvent;
 
-
         public static RECT crop;
         public static void Init()
         {
@@ -47,9 +46,9 @@ namespace HobbitAutosplitter
                     Bitmap cropped = bmp.Crop(crop).Resize();
                     FrameCreated?.SmartInvoke(new SmartInvokeArgs(cropped.Clone()));
 
+                    cropped.Dispose();
                     gfxBmp.Dispose();
                     bmp.Dispose();
-                    cropped.Dispose();
                 }
                 catch {}
             }
