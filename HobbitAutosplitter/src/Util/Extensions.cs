@@ -38,17 +38,10 @@ namespace HobbitAutosplitter
                     }
                     else
                     {
-                        if(args.mode == InvokeMode.ASYNC)
-                        {
-                            Task.Factory.StartNew(() =>
-                            {
-                                handler.Invoke(args);
-                            });
-                        }
-                        else
+                        Task.Factory.StartNew(() =>
                         {
                             handler.Invoke(args);
-                        }
+                        });
                     }
                 }
             }

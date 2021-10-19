@@ -12,7 +12,7 @@ namespace HobbitAutosplitter
         public static event SmartEventHandler ToggleUIElement;
         public static event SmartEventHandler DoneCapturingEvent;
 
-        public static RECT crop;
+        public static RECT previewCrop;
         public static void Init()
         {
             ProcessManager.OBSOpenedEvent += CaptureApplication;
@@ -23,7 +23,7 @@ namespace HobbitAutosplitter
             HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
             RECT rc;
             GetWindowRect(hwnd, out rc);
-            crop = new RECT(
+            previewCrop = new RECT(
                 Settings.Default.cropLeft,
                 Settings.Default.cropTop,
                 Settings.Default.cropRight != 0 ? Settings.Default.cropRight : rc.Right,
@@ -43,7 +43,7 @@ namespace HobbitAutosplitter
                     PrintWindow(hwnd.Handle, hdcBitmap, 0);
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
-                    Bitmap cropped = bmp.Crop(crop).Resize();
+                    Bitmap cropped = bmp.Crop(previewCrop).Resize();
                     FrameCreated?.SmartInvoke(new SmartInvokeArgs(cropped.Clone()));
 
                     cropped.Dispose();

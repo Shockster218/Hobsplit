@@ -55,9 +55,9 @@ namespace HobbitAutosplitter
 
         private static void SetSplitData() 
         {
-            nextSplit = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1]) : null;
-            currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex]);
-            previousSplitData = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1]) : new SplitData("Main Menu", splitImagePaths[0]);
+            nextSplit = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], Constants.splitCrops[splitIndex + 1]) : null;
+            currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex], Constants.splitCrops[splitIndex]);
+            previousSplitData = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], Constants.splitCrops[splitIndex - 1]) : new SplitData("Main Menu", splitImagePaths[0]);
         }
 
         private static void PopulateSplitData()
@@ -75,7 +75,7 @@ namespace HobbitAutosplitter
         private static void DigestIncomingFrame(SmartInvokeArgs args)
         {
             Bitmap frame = args.frameBM;
-            Digest digest = ImagePhash.ComputeDigest(frame.ToLuminanceImage());
+            Digest digest = ImagePhash.ComputeDigest(frame.Crop(currentComparison.GetCrop()).ToLuminanceImage());
             frame.Dispose();
             DigestCompleted?.SmartInvoke(new DigestInvokeArgs(digest));
         }
