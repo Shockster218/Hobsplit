@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Text.RegularExpressions;
@@ -44,16 +45,27 @@ namespace HobbitAutosplitter
             }
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, DigestInvokeArgs args)
+        public static void SmartInvoke(this MulticastDelegate multicast, PostComparisonArgs args)
         {
             MulticastDelegate multiDel = multicast;
             if (multiDel != null)
             {
                 var invocationList = multiDel.GetInvocationList();
 
-                foreach (DigestEventHandler handler in invocationList)
+                foreach (PostComparisonEventHandler handler in invocationList)
                 {
-                    handler.Invoke(args);
+                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+                    if (dispatcherTarget != null)
+                    {
+                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        {
+                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
+                        }
+                    }
+                    else
+                    {
+                        QueueManager.Enqueue(handler, args);
+                    }
                 }
             }
         }

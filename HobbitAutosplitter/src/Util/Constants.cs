@@ -24,15 +24,14 @@
             "Clouds Burst",
         };
 
-        public static readonly RECT crop = new RECT(160, 120, 480, 360);
+        public static readonly RECT crop = new RECT(180, 140, 460, 340);
     }
 
     public enum SplitState
     {
         IDLE,
-        WAITING,
+        GAMEPLAY,
         LOADING,
-        NEWLEVEL,
         STARTUP
     }
 

@@ -10,14 +10,12 @@ namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
-        public static SmartEventHandler OnSplit;
-        public static SmartEventHandler OnUnsplit;
-        public static SmartEventHandler OnReset;
-        public static SmartEventHandler OnPause;
+        public static PostComparisonEventHandler OnSplit;
+        public static PostComparisonEventHandler OnUnsplit;
+        public static PostComparisonEventHandler OnReset;
+        public static PostComparisonEventHandler OnPause;
 
-        public static DigestEventHandler DigestCompleted;
-
-        public static float swag;
+        public static PostComparisonEventHandler DigestCompleted;
 
         private static SplitData nextComparison;
         private static SplitData currentComparison;
@@ -45,8 +43,9 @@ namespace HobbitAutosplitter
         public static void ResetSplitIndex() { splitIndex = 0; SetSplitData(); }
 
         public static float GetUniversalSimilarity() { return universalSimilarity; }
-
         public static SplitData GetCurrentComparison() { return currentComparison; }
+
+        public static SplitState GetCurrentSplitState() { return splitState; }
 
         public static void SetUniversalSimilarity(float similarity) { universalSimilarity = similarity > 1 ? 1 : similarity; }
 
@@ -75,41 +74,32 @@ namespace HobbitAutosplitter
             Bitmap frame = args.frameBM;
             Digest digest = ImagePhash.ComputeDigest(frame.Crop(Constants.crop).ToLuminanceImage());
             frame.Dispose();
-            DigestCompleted?.SmartInvoke(new DigestInvokeArgs(digest));
+            DigestCompleted?.SmartInvoke(new PostComparisonArgs(digest));
         }
 
-        public static void CompareFrames(DigestInvokeArgs args)
+        public static void CompareFrames(PostComparisonArgs args)
         {
             Digest d = args.digest;
             bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= universalSimilarity;
             bool n = ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity;
             bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= universalSimilarity;
 
-            if (r && splitState > SplitState.IDLE)
+            if (r)
             {
-                splitState = SplitState.IDLE;
-                ResetSplitIndex();
-                OnReset?.SmartInvoke(SmartInvokeArgs.Default);
-            }
-
-            if (splitState >= SplitState.WAITING)
-            {
-                if (c)
+                if(splitState > SplitState.IDLE)
                 {
-
-                }
-                else if (n)
-                {
-
+                    splitState = SplitState.IDLE;
+                    ResetSplitIndex();
+                    OnReset?.SmartInvoke(PostComparisonArgs.Default);
                 }
             }
             else
             {
                 if (splitState == SplitState.IDLE)
                 {
-                    splitState = SplitState.WAITING;
+                    splitState = SplitState.LOADING;
                     IncrementSplitIndex();
-                    OnSplit?.SmartInvoke(SmartInvokeArgs.Default);
+                    OnSplit?.SmartInvoke(PostComparisonArgs.Default);
                 }
             }
         }

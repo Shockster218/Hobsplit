@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
-using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Input;
 using WindowsInput.Native;
@@ -32,6 +30,7 @@ namespace HobbitAutosplitter
             ProcessManager.Init();
             SplitManager.Init();
             LivesplitManager.Init();
+            QueueManager.Init();
             LoadSettings();
         }
 
@@ -44,6 +43,11 @@ namespace HobbitAutosplitter
         {
             obsPreview.Source = args.frameBMI;
         }
+
+        public void ChangeComparisonReference(PostComparisonArgs args)
+        {
+            if (splitReference.Source == null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
+            else splitReference.Source = null;        }
 
         public void ChangeComparisonReference(SmartInvokeArgs args)
         {

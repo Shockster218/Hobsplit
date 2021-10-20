@@ -95,6 +95,7 @@
     <Compile Include="src\Splits\LivesplitManager.cs" />
     <Compile Include="src\Splits\SplitData.cs" />
     <Compile Include="src\Splits\SplitManager.cs" />
+    <Compile Include="src\Util\QueueManager.cs" />
     <Compile Include="src\Util\Constants.cs" />
     <Compile Include="src\Util\EventHelper.cs" />
     <Compile Include="src\Util\Extensions.cs" />
