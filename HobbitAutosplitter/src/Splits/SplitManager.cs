@@ -59,7 +59,7 @@ namespace HobbitAutosplitter
 
         private static void PopulateSplitData()
         {
-            splitImagePaths = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\split_images").CustomSort().ToArray();
+            splitImagePaths = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Image\\Splits").CustomSort().ToArray();
             if (splitImagePaths.Length != 15)
             {
                 // Say not enough images found
@@ -92,8 +92,16 @@ namespace HobbitAutosplitter
                 OnReset?.SmartInvoke(SmartInvokeArgs.Default);
             }
 
-            if (c)
+            if (splitState >= SplitState.WAITING)
             {
+                if (c)
+                {
+
+                }
+                else if (n)
+                {
+
+                }
             }
             else
             {
