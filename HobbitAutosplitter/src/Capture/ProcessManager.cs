@@ -19,52 +19,34 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             OBSProcessFoundEvent += WaitForOBS;
-            OBSOpenedEvent += IsOBSRunning;
-            CaptureManager.DoneCapturingEvent += (e) => FindOBS();
-            _ = Task.Factory.StartNew(() => FindOBS());
+            CaptureManager.DoneCapturingEvent += FindOBSEntry;
+            FindOBSEntry();
+        }
+
+        private static void FindOBSEntry()
+        {
+            Task.Factory.StartNew(() => FindOBS());
         }
 
         private static void FindOBS()
         {
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                MainWindow.instance.OBSOffline();
-            });
-
             while (true)
             {
                 Process obsProcess = Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault(x => x.ProcessName.Any(char.IsDigit));
                 if (obsProcess != null)
                 {
                     obs = obsProcess;
-                    OBSProcessFoundEvent?.SmartInvoke(SmartInvokeArgs.Default);
+                    OBSProcessFoundEvent?.SmartInvoke();
                     return;
                 }
             }
         }
 
-        private static void WaitForOBS(SmartInvokeArgs args)
+        private static void WaitForOBS()
         {
             while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
             obsRunning = true;
-            OBSOpenedEvent?.SmartInvoke(SmartInvokeArgs.Default);
-        }
-
-        private static void IsOBSRunning(SmartInvokeArgs args)
-        {
-            while (obsRunning)
-            {
-                try
-                {
-                    Process.GetProcessById(obs.Id);
-                }
-                catch (ArgumentException)
-                {
-                    obsRunning = false;
-                    obs = null;
-                    OBSClosedEvent?.SmartInvoke(SmartInvokeArgs.Default);
-                }
-            }
+            OBSOpenedEvent?.SmartInvoke();
         }
 
         public static Process GetOBS()

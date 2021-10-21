@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace HobbitAutosplitter
@@ -17,7 +16,7 @@ namespace HobbitAutosplitter
             else return val;
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, SmartInvokeArgs args)
+        public static void SmartInvoke(this MulticastDelegate multicast)
         {
             MulticastDelegate multiDel = multicast;
             if (multiDel != null)
@@ -31,15 +30,37 @@ namespace HobbitAutosplitter
                     {
                         if (dispatcherTarget.GetType() == typeof(MainWindow))
                         {
+                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler);
+                        }
+                    }
+                    else
+                    {
+                        handler.Invoke();
+                    }
+                }
+            }
+        }
+
+        public static void SmartInvoke(this MulticastDelegate multicast, PreComparisonArgs args)
+        {
+            MulticastDelegate multiDel = multicast;
+            if (multiDel != null)
+            {
+                var invocationList = multiDel.GetInvocationList();
+
+                foreach (PreComparisonEventHandler handler in invocationList)
+                {
+                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+                    if (dispatcherTarget != null)
+                    {
+                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        {
                             if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
                         }
                     }
                     else
                     {
-                        Task.Factory.StartNew(() =>
-                        {
-                            handler.Invoke(args);
-                        });
+                        handler.Invoke(args);
                     }
                 }
             }
@@ -64,7 +85,7 @@ namespace HobbitAutosplitter
                     }
                     else
                     {
-                        QueueManager.Enqueue(handler, args);
+                        handler.Invoke(args);
                     }
                 }
             }

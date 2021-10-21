@@ -27,11 +27,11 @@ namespace HobbitAutosplitter
             SplitManager.OnReset += ChangeComparisonReference;
             SplitManager.OnUnsplit += ChangeComparisonReference;
             CaptureManager.Init();
-            ProcessManager.Init();
             SplitManager.Init();
             LivesplitManager.Init();
-            QueueManager.Init();
+            ProcessManager.Init();
             LoadSettings();
+            OBSOffline();
         }
 
         public void OBSOffline()
@@ -39,23 +39,22 @@ namespace HobbitAutosplitter
             obsPreview.Source = ((Bitmap)Image.FromFile(Environment.CurrentDirectory + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
         }
 
-        public void ShowPreview(SmartInvokeArgs args)
+        public void ShowPreview(PreComparisonArgs args)
         {
             obsPreview.Source = args.frameBMI;
         }
 
         public void ChangeComparisonReference(PostComparisonArgs args)
         {
-            if (splitReference.Source == null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
-            else splitReference.Source = null;        }
-
-        public void ChangeComparisonReference(SmartInvokeArgs args)
-        {
-            if (splitReference.Source == null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
-            else splitReference.Source = null;
+            splitReference.Source = SplitManager.GetCurrentComparison().GetImageCropped().ToBitmapImage();       
         }
 
-        public void ToggleCropping(SmartInvokeArgs args)
+        public void ChangeComparisonReference()
+        {
+            splitReference.Source = SplitManager.GetCurrentComparison().GetImageCropped().ToBitmapImage();
+        }
+
+        public void ToggleCropping()
         {
             x.IsEnabled = !x.IsEnabled;
             y.IsEnabled = !y.IsEnabled;
@@ -71,7 +70,7 @@ namespace HobbitAutosplitter
             pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
         }
 
-        private void LoadCropSettings(SmartInvokeArgs args)
+        private void LoadCropSettings(PreComparisonArgs args)
         {
             if (!cropSettingsSet)
             {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Collections.Generic;
 using Shipwreck.Phash;
 using Shipwreck.Phash.Bitmaps;
 
@@ -19,7 +19,7 @@ namespace HobbitAutosplitter
 
         private static SplitData nextComparison;
         private static SplitData currentComparison;
-        private static SplitData previousSplitData;
+        private static SplitData previousComparison;
         private static SplitData resetComparison;
 
         private static string[] splitImagePaths;
@@ -31,12 +31,12 @@ namespace HobbitAutosplitter
 
         public static void Init()
         {
+            PopulateSplitData();
             CaptureManager.FrameCreated += DigestIncomingFrame;
             DigestCompleted += CompareFrames;
-            PopulateSplitData();
         }
 
-        public static void IncrementSplitIndex() { splitIndex++; SetSplitData(); }
+        public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
 
         public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
 
@@ -51,15 +51,17 @@ namespace HobbitAutosplitter
 
         private static void SetSplitData() 
         {
-            nextComparison = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], splitIndex + 1) : null;
+            nextComparison = splitIndex <= 15 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], splitIndex + 1) : null;
             currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex], splitIndex);
-            previousSplitData = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], splitIndex - 1) : new SplitData("Main Menu", splitImagePaths[0], 0);
+            previousComparison = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], splitIndex - 1) : new SplitData("Main Menu", splitImagePaths[0], 0);
         }
 
         private static void PopulateSplitData()
         {
-            splitImagePaths = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Image\\Splits").CustomSort().ToArray();
-            if (splitImagePaths.Length != 15)
+            List<string> sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Image\\Splits").CustomSort().ToList();
+            sorted.Insert(11, sorted[9]);
+            splitImagePaths = sorted.ToArray();
+            if (splitImagePaths.Length != 16)
             {
                 // Say not enough images found
                 return;
@@ -69,7 +71,7 @@ namespace HobbitAutosplitter
             resetComparison = currentComparison;
         }
 
-        private static void DigestIncomingFrame(SmartInvokeArgs args)
+        private static void DigestIncomingFrame(PreComparisonArgs args)
         {
             Bitmap frame = args.frameBM;
             Digest digest = ImagePhash.ComputeDigest(frame.Crop(Constants.crop).ToLuminanceImage());
@@ -88,8 +90,8 @@ namespace HobbitAutosplitter
             {
                 if(splitState > SplitState.IDLE)
                 {
-                    splitState = SplitState.IDLE;
                     ResetSplitIndex();
+                    splitState = SplitState.IDLE;
                     OnReset?.SmartInvoke(PostComparisonArgs.Default);
                 }
             }
@@ -97,8 +99,55 @@ namespace HobbitAutosplitter
             {
                 if (splitState == SplitState.IDLE)
                 {
-                    splitState = SplitState.LOADING;
                     IncrementSplitIndex();
+                    splitState = SplitState.GAMEPLAY;
+                    OnSplit?.SmartInvoke(PostComparisonArgs.Default);               
+                }
+            }
+
+            if (c)
+            {
+                if (splitState == SplitState.GAMEPLAY)
+                {
+                    splitState = SplitState.LOADING;
+                    OnPause?.SmartInvoke(PostComparisonArgs.Default);
+                }
+            }
+            else
+            {
+                if(splitState == SplitState.LOADING)
+                {
+                    splitState = SplitState.GAMEPLAY;
+                    OnPause?.SmartInvoke(PostComparisonArgs.Default);
+                }
+            }
+
+            if (n)
+            {
+                if(splitIndex >= 1 && splitState == SplitState.GAMEPLAY)
+                {
+                    if(splitIndex == 9)
+                    {
+                        IncrementSplitIndex(2);
+                        OnSplit?.SmartInvoke(PostComparisonArgs.Default);
+                    }
+                    else
+                    {
+                        IncrementSplitIndex();
+                        splitState = SplitState.LOADING;
+                        OnSplit?.SmartInvoke(PostComparisonArgs.Default);
+                        OnPause?.SmartInvoke(PostComparisonArgs.Default);
+                    }
+                }
+            }
+
+            // Should only fire if it sees thief split again. Gonna add a double check for the split index but shouldnt be needed
+            if (splitIndex == 12)
+            {
+                bool p = ImagePhash.GetCrossCorrelation(previousComparison.GetDigest(), d) >= universalSimilarity;
+                if (p)
+                {
+                    OnUnsplit?.SmartInvoke(PostComparisonArgs.Default);
                     OnSplit?.SmartInvoke(PostComparisonArgs.Default);
                 }
             }

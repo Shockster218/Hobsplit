@@ -5,16 +5,15 @@ using Shipwreck.Phash;
 
 namespace HobbitAutosplitter
 {
-    public delegate void SmartEventHandler(SmartInvokeArgs args);
+    public delegate void SmartEventHandler();
+    public delegate void PreComparisonEventHandler(PreComparisonArgs args);
     public delegate void PostComparisonEventHandler(PostComparisonArgs args);
-    public class SmartInvokeArgs : EventArgs
+    public class PreComparisonArgs : EventArgs
     {
         public Bitmap frameBM { get; set; }
         public BitmapImage frameBMI { get; set; }
 
-        public static readonly SmartInvokeArgs Default = new SmartInvokeArgs(null);
-
-        public SmartInvokeArgs(Object frame) 
+        public PreComparisonArgs(Object frame) 
         {
             frameBM = (Bitmap)frame;
             frameBMI = frame == null ? null : frameBM.ToBitmapImage();

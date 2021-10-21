@@ -8,17 +8,18 @@ namespace HobbitAutosplitter
     public static class CaptureManager
     {
 
-        public static event SmartEventHandler FrameCreated;
+        public static event PreComparisonEventHandler FrameCreated;
         public static event SmartEventHandler ToggleUIElement;
         public static event SmartEventHandler DoneCapturingEvent;
 
         public static RECT previewCrop;
+
         public static void Init()
         {
             ProcessManager.OBSOpenedEvent += CaptureApplication;
         }
 
-        public static void CaptureApplication(SmartInvokeArgs frameArgs)
+        public static void CaptureApplication()
         {
             HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
             RECT rc;
@@ -30,7 +31,7 @@ namespace HobbitAutosplitter
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
 
-            ToggleUIElement?.SmartInvoke(SmartInvokeArgs.Default);
+            ToggleUIElement?.SmartInvoke();
 
             while (ProcessManager.obsRunning)
             {
@@ -44,17 +45,16 @@ namespace HobbitAutosplitter
                     gfxBmp.ReleaseHdc(hdcBitmap);
 
                     Bitmap cropped = bmp.Crop(previewCrop).Resize();
-                    FrameCreated?.SmartInvoke(new SmartInvokeArgs(cropped.Clone()));
-
-                    cropped.Dispose();
                     gfxBmp.Dispose();
                     bmp.Dispose();
+                    FrameCreated?.SmartInvoke(new PreComparisonArgs(cropped.Clone()));
+                    cropped.Dispose();
                 }
                 catch {}
             }
 
-            ToggleUIElement?.SmartInvoke(SmartInvokeArgs.Default);
-            DoneCapturingEvent?.SmartInvoke(SmartInvokeArgs.Default);
+            ToggleUIElement?.SmartInvoke();
+            DoneCapturingEvent?.SmartInvoke();
         }
 
         #region Imports

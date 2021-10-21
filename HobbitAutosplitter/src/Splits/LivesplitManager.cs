@@ -28,7 +28,6 @@ namespace HobbitAutosplitter
         public static void Split()
         {
             sim.Keyboard.KeyDown(split);
-            //if (SplitManager.GetCurrentSplitState() == SplitState.GAMEPLAY) sim.Keyboard.KeyDown(pause);
         }
 
         public static void Unsplit()
