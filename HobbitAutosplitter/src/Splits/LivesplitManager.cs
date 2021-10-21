@@ -5,9 +5,9 @@ namespace HobbitAutosplitter
 {
     public static class LivesplitManager
     {
-        public static PostComparisonEventHandler OnSplit;
-        public static PostComparisonEventHandler OnUnsplit;
-        public static PostComparisonEventHandler OnReset;
+        public static DigestEventHandler OnSplit;
+        public static DigestEventHandler OnUnsplit;
+        public static DigestEventHandler OnReset;
 
         private static InputSimulator sim;
 
@@ -28,19 +28,19 @@ namespace HobbitAutosplitter
         public static void Split()
         {
             sim.Keyboard.KeyDown(split);
-            OnSplit?.SmartInvoke(PostComparisonArgs.Default);
+            OnSplit?.SmartInvoke(DigestArgs.Default);
         }
 
         public static void Unsplit()
         {
             sim.Keyboard.KeyDown(unsplit);
-            OnUnsplit?.SmartInvoke(PostComparisonArgs.Default);
+            OnUnsplit?.SmartInvoke(DigestArgs.Default);
         }
 
         public static void Reset()
         {
             sim.Keyboard.KeyDown(reset);
-            OnReset?.SmartInvoke(PostComparisonArgs.Default);
+            OnReset?.SmartInvoke(DigestArgs.Default);
         }
 
         public static void Pause()

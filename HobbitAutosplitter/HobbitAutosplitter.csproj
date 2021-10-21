@@ -98,6 +98,7 @@
     <Compile Include="src\Util\Constants.cs" />
     <Compile Include="src\Util\EventHelper.cs" />
     <Compile Include="src\Util\Extensions.cs" />
+    <Compile Include="src\Util\QueueManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

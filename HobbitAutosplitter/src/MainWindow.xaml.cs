@@ -41,10 +41,10 @@ namespace HobbitAutosplitter
 
         public void ShowPreview(PreComparisonArgs args)
         {
-            obsPreview.Source = args.frameBMI;
+            obsPreview.Source = ((Bitmap)args.frame).ToBitmapImage();
         }
 
-        public void ChangeComparisonReference(PostComparisonArgs args)
+        public void ChangeComparisonReference(DigestArgs args)
         {
             splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             SetLevelText();

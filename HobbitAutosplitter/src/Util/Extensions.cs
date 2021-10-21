@@ -35,7 +35,7 @@ namespace HobbitAutosplitter
                     }
                     else
                     {
-                        handler.Invoke();
+                        Task.Run(() => handler.Invoke());
                     }
                 }
             }
@@ -60,20 +60,20 @@ namespace HobbitAutosplitter
                     }
                     else
                     {
-                        handler.Invoke(args);
+                        Task.Run(() => handler.Invoke(args));
                     }
                 }
             }
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, PostComparisonArgs args)
+        public static void SmartInvoke(this MulticastDelegate multicast, DigestArgs args)
         {
             MulticastDelegate multiDel = multicast;
             if (multiDel != null)
             {
                 var invocationList = multiDel.GetInvocationList();
 
-                foreach (PostComparisonEventHandler handler in invocationList)
+                foreach (DigestEventHandler handler in invocationList)
                 {
                     DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
                     if (dispatcherTarget != null)
@@ -85,7 +85,7 @@ namespace HobbitAutosplitter
                     }
                     else
                     {
-                        handler.Invoke(args);
+                        QueueManager.Enqueue(handler, args);                    
                     }
                 }
             }

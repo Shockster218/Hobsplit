@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using System.Drawing;
 using System.Collections.Generic;
 using Shipwreck.Phash;
-using Shipwreck.Phash.Bitmaps;
 
 namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
-        public static PostComparisonEventHandler DigestCompleted;
-
         private static SplitData nextComparison;
         private static SplitData currentComparison;
         private static SplitData previousComparison;
@@ -27,8 +23,7 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             PopulateSplitData();
-            CaptureManager.FrameCreated += DigestIncomingFrame;
-            DigestCompleted += CompareFrames;
+            CaptureManager.DigestCompleted += CompareFrames;
         }
 
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
@@ -66,15 +61,7 @@ namespace HobbitAutosplitter
             resetComparison = currentComparison;
         }
 
-        private static void DigestIncomingFrame(PreComparisonArgs args)
-        {
-            Bitmap frame = args.frameBM;
-            Digest digest = ImagePhash.ComputeDigest(frame.Crop(Constants.crop).ToLuminanceImage());
-            frame.Dispose();
-            DigestCompleted?.SmartInvoke(new PostComparisonArgs(digest));
-        }
-
-        public static void CompareFrames(PostComparisonArgs args)
+        public static void CompareFrames(DigestArgs args)
         {
             Digest d = args.digest;
             bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= universalSimilarity;
@@ -131,6 +118,7 @@ namespace HobbitAutosplitter
                         IncrementSplitIndex();
                         splitState = SplitState.LOADING;
                         LivesplitManager.Split();
+                        LivesplitManager.Pause();
                     }
                 }
             }

@@ -1,32 +1,28 @@
 ﻿using System;
-using System.Drawing;
-using System.Windows.Media.Imaging;
 using Shipwreck.Phash;
 
 namespace HobbitAutosplitter
 {
     public delegate void SmartEventHandler();
     public delegate void PreComparisonEventHandler(PreComparisonArgs args);
-    public delegate void PostComparisonEventHandler(PostComparisonArgs args);
+    public delegate void DigestEventHandler(DigestArgs args);
     public class PreComparisonArgs : EventArgs
     {
-        public Bitmap frameBM { get; set; }
-        public BitmapImage frameBMI { get; set; }
+        public object frame { get; set; }
 
         public PreComparisonArgs(Object frame) 
         {
-            frameBM = (Bitmap)frame;
-            frameBMI = frame == null ? null : frameBM.ToBitmapImage();
+            this.frame = frame;
         }
     }
 
-    public class PostComparisonArgs: EventArgs
+    public class DigestArgs: EventArgs
     {
         public Digest digest { get; set; }
 
-        public static readonly PostComparisonArgs Default = new PostComparisonArgs(null);
+        public static readonly DigestArgs Default = new DigestArgs(null);
 
-        public PostComparisonArgs(Digest digest)
+        public DigestArgs(Digest digest)
         {
             this.digest = digest;
         }

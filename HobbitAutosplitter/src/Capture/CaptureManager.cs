@@ -2,15 +2,17 @@
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using Shipwreck.Phash;
+using Shipwreck.Phash.Bitmaps;
 
 namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-
-        public static event PreComparisonEventHandler FrameCreated;
         public static event SmartEventHandler ToggleUIElement;
         public static event SmartEventHandler DoneCapturingEvent;
+        public static event PreComparisonEventHandler FrameCreated;
+        public static event DigestEventHandler DigestCompleted;
 
         public static RECT previewCrop;
 
@@ -47,6 +49,8 @@ namespace HobbitAutosplitter
                     Bitmap cropped = bmp.Crop(previewCrop).Resize();
                     gfxBmp.Dispose();
                     bmp.Dispose();
+                    Digest digest = ImagePhash.ComputeDigest(cropped.Crop(Constants.crop).ToLuminanceImage());
+                    DigestCompleted?.Invoke(new DigestArgs(digest));
                     FrameCreated?.SmartInvoke(new PreComparisonArgs(cropped.Clone()));
                     cropped.Dispose();
                 }
