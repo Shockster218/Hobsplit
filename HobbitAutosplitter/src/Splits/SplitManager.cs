@@ -10,11 +10,6 @@ namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
-        public static PostComparisonEventHandler OnSplit;
-        public static PostComparisonEventHandler OnUnsplit;
-        public static PostComparisonEventHandler OnReset;
-        public static PostComparisonEventHandler OnPause;
-
         public static PostComparisonEventHandler DigestCompleted;
 
         private static SplitData nextComparison;
@@ -51,7 +46,7 @@ namespace HobbitAutosplitter
 
         private static void SetSplitData() 
         {
-            nextComparison = splitIndex <= 15 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], splitIndex + 1) : null;
+            nextComparison = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], splitIndex + 1) : null;
             currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex], splitIndex);
             previousComparison = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], splitIndex - 1) : new SplitData("Main Menu", splitImagePaths[0], 0);
         }
@@ -83,7 +78,7 @@ namespace HobbitAutosplitter
         {
             Digest d = args.digest;
             bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= universalSimilarity;
-            bool n = ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity;
+            bool n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity : false;
             bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= universalSimilarity;
 
             if (r)
@@ -92,7 +87,7 @@ namespace HobbitAutosplitter
                 {
                     ResetSplitIndex();
                     splitState = SplitState.IDLE;
-                    OnReset?.SmartInvoke(PostComparisonArgs.Default);
+                    LivesplitManager.Reset();
                 }
             }
             else
@@ -101,7 +96,7 @@ namespace HobbitAutosplitter
                 {
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
-                    OnSplit?.SmartInvoke(PostComparisonArgs.Default);               
+                    LivesplitManager.Split();          
                 }
             }
 
@@ -110,7 +105,7 @@ namespace HobbitAutosplitter
                 if (splitState == SplitState.GAMEPLAY)
                 {
                     splitState = SplitState.LOADING;
-                    OnPause?.SmartInvoke(PostComparisonArgs.Default);
+                    LivesplitManager.Pause();
                 }
             }
             else
@@ -118,7 +113,7 @@ namespace HobbitAutosplitter
                 if(splitState == SplitState.LOADING)
                 {
                     splitState = SplitState.GAMEPLAY;
-                    OnPause?.SmartInvoke(PostComparisonArgs.Default);
+                    LivesplitManager.Pause();
                 }
             }
 
@@ -129,26 +124,25 @@ namespace HobbitAutosplitter
                     if(splitIndex == 9)
                     {
                         IncrementSplitIndex(2);
-                        OnSplit?.SmartInvoke(PostComparisonArgs.Default);
+                        LivesplitManager.Split();
                     }
                     else
                     {
                         IncrementSplitIndex();
                         splitState = SplitState.LOADING;
-                        OnSplit?.SmartInvoke(PostComparisonArgs.Default);
-                        OnPause?.SmartInvoke(PostComparisonArgs.Default);
+                        LivesplitManager.Split();
                     }
                 }
             }
 
             // Should only fire if it sees thief split again. Gonna add a double check for the split index but shouldnt be needed
-            if (splitIndex == 12)
+            if (splitIndex == 11)
             {
                 bool p = ImagePhash.GetCrossCorrelation(previousComparison.GetDigest(), d) >= universalSimilarity;
                 if (p)
                 {
-                    OnUnsplit?.SmartInvoke(PostComparisonArgs.Default);
-                    OnSplit?.SmartInvoke(PostComparisonArgs.Default);
+                    LivesplitManager.Unsplit();
+                    LivesplitManager.Split();
                 }
             }
         }

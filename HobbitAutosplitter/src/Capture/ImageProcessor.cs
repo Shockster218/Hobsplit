@@ -9,21 +9,17 @@ namespace HobbitAutosplitter
 {
     public static class ImageProcessor
     {
-        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        public static extern bool DeleteObject(IntPtr hObject);
-
         public static BitmapImage ToBitmapImage(this Bitmap bitmap)
         {
+            BitmapImage image = new BitmapImage();
             MemoryStream ms = new MemoryStream();
             bitmap.Save(ms, ImageFormat.Bmp);
-            BitmapImage image = new BitmapImage();
             image.BeginInit();
             ms.Seek(0, SeekOrigin.Begin);
             image.StreamSource = ms;
             image.EndInit();
         
             image.Freeze();
-        
             return image;
         }
 

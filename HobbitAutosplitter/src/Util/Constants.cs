@@ -17,17 +17,18 @@
             "Riddles in the Dark",
             "Flies and Spiders",
             "Barrels out of Bond",
-            "A Warm Welcome - Pre Thief",
+            "A Warm Welcome \n Pre Thief",
             "Thief Split",
-            "A Warm Welcome - Post Thief",
-            "AWW - Post Thief",
+            "A Warm Welcome \n Post Thief",
             "Inside Information",
             "Gathering of the Clouds",
             "Clouds Burst",
+            "Finished"
         };
 
         public static readonly RECT crop = new RECT(180, 140, 460, 340);
 
+        // Might need individual split croppings in the future. Right now hardcoded but might allow user to set in future.
         public static readonly RECT[] splitCrops =
         {
             new RECT(0,0,640,480),

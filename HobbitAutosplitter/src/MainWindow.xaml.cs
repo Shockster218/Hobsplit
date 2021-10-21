@@ -23,9 +23,9 @@ namespace HobbitAutosplitter
             ProcessManager.OBSOpenedEvent += ChangeComparisonReference;
             ProcessManager.OBSClosedEvent += ChangeComparisonReference;
             CaptureManager.ToggleUIElement += ToggleCropping;
-            SplitManager.OnSplit += ChangeComparisonReference;
-            SplitManager.OnReset += ChangeComparisonReference;
-            SplitManager.OnUnsplit += ChangeComparisonReference;
+            LivesplitManager.OnSplit += ChangeComparisonReference;
+            LivesplitManager.OnReset += ChangeComparisonReference;
+            LivesplitManager.OnUnsplit += ChangeComparisonReference;
             CaptureManager.Init();
             SplitManager.Init();
             LivesplitManager.Init();
@@ -46,12 +46,14 @@ namespace HobbitAutosplitter
 
         public void ChangeComparisonReference(PostComparisonArgs args)
         {
-            splitReference.Source = SplitManager.GetCurrentComparison().GetImageCropped().ToBitmapImage();       
+            splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
+            SetLevelText();
         }
 
         public void ChangeComparisonReference()
         {
-            splitReference.Source = SplitManager.GetCurrentComparison().GetImageCropped().ToBitmapImage();
+            splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
+            SetLevelText();
         }
 
         public void ToggleCropping()
@@ -189,9 +191,9 @@ namespace HobbitAutosplitter
             }
         }
 
-        public void SetLevelText(int level)
+        public void SetLevelText()
         {
-            
+            levelLab.Content = SplitManager.GetCurrentComparison().GetSplitName();
         }
     }
 }
