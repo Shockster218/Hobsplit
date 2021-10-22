@@ -23,8 +23,8 @@ namespace HobbitAutosplitter
 
         public static void Init()
         {
-            PopulateSplitData();
             CaptureManager.DigestCompleted += CompareFrames;
+            PopulateSplitData();
         }
 
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
@@ -32,6 +32,7 @@ namespace HobbitAutosplitter
         public static void ResetSplitIndex() { splitIndex = 0; SetSplitData(); }
         public static float GetUniversalSimilarity() { return universalSimilarity; }
         public static SplitData GetCurrentComparison() { return currentComparison; }
+        public static SplitData GetNextComparison() { return nextComparison; }
         public static SplitState GetCurrentSplitState() { return splitState; }
         public static int GetSplitIndex() { return splitIndex; }
 
@@ -63,7 +64,7 @@ namespace HobbitAutosplitter
         {
             Digest d = args.digest;
             bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= universalSimilarity;
-            bool n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity : false;
+            ol n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity : false;
             bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= universalSimilarity;
 
             if (r)

@@ -24,11 +24,12 @@
         <Button x:Name="unsplitButton" Content="Set Key..." HorizontalAlignment="Left" Margin="163,67,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="unsplitButton_Click" KeyDown="unsplitButton_KeyDown" Height="25" FontSize="14"/>
         <Button x:Name="resetButton" Content="Set Key..." HorizontalAlignment="Left" Margin="163,143,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="resetButton_Click" KeyDown="resetButton_KeyDown" Height="25" FontSize="14"/>
         <Button x:Name="pauseButton" Content="Set Key..." HorizontalAlignment="Left" Margin="163,105,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="pauseButton_Click" KeyDown="pauseButton_KeyDown" Height="25" FontSize="14"/>
-        <Label x:Name="levelTitleLab" HorizontalContentAlignment="Center" Content="Current Comparison" HorizontalAlignment="Left" Margin="0,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="22" FontWeight="Bold" Width="290"/>
+        <Label x:Name="levelTitleLab" HorizontalContentAlignment="Center" Content="Current Level" HorizontalAlignment="Left" Margin="0,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="22" FontWeight="Bold" Width="290"/>
         <Label x:Name="levelLab" HorizontalContentAlignment="Center" Content="Start up..." HorizontalAlignment="Left" Margin="0,238,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="20" FontWeight="Bold" Width="295" Foreground="White" Height="97"/>
         <Image x:Name="splitReference" HorizontalAlignment="Left" Height="180" Margin="30,294,0,0" VerticalAlignment="Top" Width="240"/>
         <xctk:DecimalUpDown x:Name="similarity" HorizontalAlignment="Left" Margin="188,508,0,0" VerticalAlignment="Top" Height="25" Width="75" ValueChanged="similarity_ValueChanged" RenderTransformOrigin="0.114,0.579" Increment="0.01" ForceCursor="True" Maximum="1" Minimum="0" FormatString="F2" Text=""/>
         <Label x:Name="similiarityLabel" HorizontalContentAlignment="Right" Content="Frame Similarity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,503,0,0" RenderTransformOrigin="-0.196,0.871" Height="40" Width="145" FontSize="18"/>
         <Label x:Name="swag" Content="Label" HorizontalAlignment="Left" Margin="135,548,0,-2" VerticalAlignment="Top" Height="53" Width="108" FontSize="18"/>
+        <Label x:Name="lookingForLabel" Content="Looking for..." HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="30,440,0,0" VerticalAlignment="Top" Width="240" Height="34" FontSize="18"/>
     </Grid>
 </Window>

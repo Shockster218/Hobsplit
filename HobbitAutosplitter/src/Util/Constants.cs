@@ -2,8 +2,8 @@
 {
     public static class Constants
     {
-        public const int width = 640;
-        public const int height = 480;
+        public const int width = 800;
+        public const int height = 600;
         public const string loadingKeyword = "loading";
 
         public static readonly string[] splitNames =
@@ -26,7 +26,10 @@
             "Finished"
         };
 
-        public static readonly RECT crop = new RECT(40, 100, 460, 200);
+        public static readonly RECT crop = new RECT(50, 125, 575, 250);
+        //public static readonly RECT crop = new RECT(40, 100, 460, 200); 640x480
+        //public static readonly RECT crop = new RECT(50, 125, 575, 250); 800x600
+        //public static readonly RECT crop = new RECT(60, 150, 690, 300); 960x720
 
         // Might need individual split croppings in the future. Right now hardcoded but might allow user to set in future.
         // Edit: Split specific croppings wont work unless I create multiple digests for current, next, previous split which causes performance issues on UI thread. Keeping for reference.

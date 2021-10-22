@@ -46,13 +46,17 @@ namespace HobbitAutosplitter
 
         public void ChangeComparisonReference(DigestArgs args)
         {
-            splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
+            int splitIndex = SplitManager.GetSplitIndex();
+            if(splitIndex >= 1) splitReference.Source = SplitManager.GetNextComparison().GetImage().ToBitmapImage();
+            else splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             SetLevelText();
         }
 
         public void ChangeComparisonReference()
         {
-            splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
+            int splitIndex = SplitManager.GetSplitIndex();
+            if (splitIndex >= 1) splitReference.Source = SplitManager.GetNextComparison().GetImage().ToBitmapImage();
+            else splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             SetLevelText();
         }
 
