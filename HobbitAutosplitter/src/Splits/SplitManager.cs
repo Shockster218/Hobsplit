@@ -104,7 +104,7 @@ namespace HobbitAutosplitter
 
             if (n)
             {
-                if(splitIndex >= 1 && splitState == SplitState.STARTUP)
+                if(splitIndex >= 1 && splitState == SplitState.GAMEPLAY)
                 {
                     if(splitIndex == 9)
                     {
