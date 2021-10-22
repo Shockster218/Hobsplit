@@ -3,13 +3,14 @@ using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using Shipwreck.Phash;
+using Shipwreck.Phash.Bitmaps;
 
 namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
-        private static SplitData nextComparison;
         private static SplitData currentComparison;
+        private static SplitData nextComparison;
         private static SplitData previousComparison;
         private static SplitData resetComparison;
 
@@ -27,15 +28,12 @@ namespace HobbitAutosplitter
         }
 
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
-
         public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
-
         public static void ResetSplitIndex() { splitIndex = 0; SetSplitData(); }
-
         public static float GetUniversalSimilarity() { return universalSimilarity; }
         public static SplitData GetCurrentComparison() { return currentComparison; }
-
         public static SplitState GetCurrentSplitState() { return splitState; }
+        public static int GetSplitIndex() { return splitIndex; }
 
         public static void SetUniversalSimilarity(float similarity) { universalSimilarity = similarity > 1 ? 1 : similarity; }
 
@@ -106,7 +104,7 @@ namespace HobbitAutosplitter
 
             if (n)
             {
-                if(splitIndex >= 1 && splitState == SplitState.GAMEPLAY)
+                if(splitIndex >= 1 && splitState == SplitState.STARTUP)
                 {
                     if(splitIndex == 9)
                     {
