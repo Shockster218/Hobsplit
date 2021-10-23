@@ -19,7 +19,8 @@ namespace HobbitAutosplitter
         private static SplitState splitState = SplitState.STARTUP;
 
         private static float universalSimilarity;
-        private static int splitIndex;
+        private static int splitIndex = -1;
+
 
         public static void Init()
         {
@@ -34,6 +35,7 @@ namespace HobbitAutosplitter
         public static SplitData GetCurrentComparison() { return currentComparison; }
         public static SplitData GetNextComparison() { return nextComparison; }
         public static SplitState GetCurrentSplitState() { return splitState; }
+        public static RECT GetCrop() { return splitIndex <= 0 ? Constants.startCrop : Constants.crop; }
         public static int GetSplitIndex() { return splitIndex; }
 
         public static void SetUniversalSimilarity(float similarity) { universalSimilarity = similarity > 1 ? 1 : similarity; }
@@ -56,33 +58,32 @@ namespace HobbitAutosplitter
                 return;
             }
 
-            SetSplitData();
-            resetComparison = currentComparison;
+            resetComparison = new SplitData(Constants.splitNames[0], splitImagePaths[0]);
+            currentComparison = new SplitData("Start Up", splitImagePaths[0], start:true);
         }
 
         public static void CompareFrames(DigestArgs args)
         {
             Digest d = args.digest;
-            bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= universalSimilarity;
-            ol n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= universalSimilarity : false;
-            bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= universalSimilarity;
+            bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= GetUniversalSimilarity();
+            bool n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= GetUniversalSimilarity() : false;
+            bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= 0.97f;
 
             if (r)
             {
-                if(splitState > SplitState.IDLE)
-                {
-                    ResetSplitIndex();
-                    splitState = SplitState.IDLE;
-                    LivesplitManager.Reset();
-                }
+                ResetSplitIndex();
+                splitState = SplitState.WAITING;
+                LivesplitManager.Reset();
             }
-            else
+
+            if (splitState == SplitState.WAITING)
             {
-                if (splitState == SplitState.IDLE)
+                float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
+                if(sim <= 0.15f)
                 {
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
-                    LivesplitManager.Split();          
+                    LivesplitManager.Split();
                 }
             }
 
@@ -92,6 +93,12 @@ namespace HobbitAutosplitter
                 {
                     splitState = SplitState.LOADING;
                     LivesplitManager.Pause();
+                }
+                else if(splitState == SplitState.STARTUP)
+                {
+                    splitState = SplitState.WAITING;
+                    ResetSplitIndex();
+                    LivesplitManager.Reset();
                 }
             }
             else
@@ -105,9 +112,9 @@ namespace HobbitAutosplitter
 
             if (n)
             {
-                if(splitIndex >= 1 && splitState == SplitState.GAMEPLAY)
+                if(splitIndex >= 2 && splitState == SplitState.GAMEPLAY)
                 {
-                    if(splitIndex == 9)
+                    if(splitIndex == 10)
                     {
                         IncrementSplitIndex(2);
                         LivesplitManager.Split();

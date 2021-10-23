@@ -53,8 +53,24 @@ namespace HobbitAutosplitter
                 graphics.DrawImage(source, resizeRect, 0, 0, source.Width, source.Height, GraphicsUnit.Pixel);
                 graphics.Dispose();
             }
-
             return resize;
+        }
+
+        public static Bitmap RemoveColor(this Bitmap bitmap)
+        {
+            const float limit = 0.05f;
+            for (int i = 0; i < bitmap.Width; i++)
+            {
+                for (int j = 0; j < bitmap.Height; j++)
+                {
+                    Color c = bitmap.GetPixel(i, j);
+                    if (c.GetBrightness() > limit)
+                    {
+                        bitmap.SetPixel(i, j, Color.Transparent);
+                    }
+                }
+            }
+            return bitmap;
         }
     }
 }

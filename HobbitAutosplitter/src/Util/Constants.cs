@@ -2,8 +2,8 @@
 {
     public static class Constants
     {
-        public const int width = 800;
-        public const int height = 600;
+        public const int width = 640;
+        public const int height = 360;
         public const string loadingKeyword = "loading";
 
         public static readonly string[] splitNames =
@@ -26,7 +26,13 @@
             "Finished"
         };
 
-        public static readonly RECT crop = new RECT(50, 125, 575, 250);
+        public static readonly RECT crop = new RECT(40, 75, 460, 150);
+        public static readonly RECT startCrop = new RECT(100, 120, 460, 170);
+        //16:9
+        //public static readonly RECT crop = new RECT(40, 75, 460, 150); 640x360
+        //public static readonly RECT crop = new RECT(56, 105, 644, 210); 896x504
+
+        //4:3
         //public static readonly RECT crop = new RECT(40, 100, 460, 200); 640x480
         //public static readonly RECT crop = new RECT(50, 125, 575, 250); 800x600
         //public static readonly RECT crop = new RECT(60, 150, 690, 300); 960x720
@@ -57,10 +63,10 @@
 
     public enum SplitState
     {
-        IDLE,
+        STARTUP,
+        WAITING,
         GAMEPLAY,
-        LOADING,
-        STARTUP
+        LOADING
     }
 
     public enum InvokeMode

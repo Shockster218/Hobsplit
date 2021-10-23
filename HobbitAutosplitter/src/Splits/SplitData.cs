@@ -11,11 +11,12 @@ namespace HobbitAutosplitter
         private Bitmap cropped;
         private Digest digest;
 
-        public SplitData(string name, string imagePath, int splitIndex)
+        public SplitData(string name, string imagePath, int splitIndex = -1, bool start = false)
         {
             image = SetImage(imagePath);
             this.name = name;
-            cropped = image.Crop(Constants.crop);
+            cropped = image.Crop(splitIndex == 0 || start ? Constants.startCrop : Constants.crop);
+            if(splitIndex == 0) cropped.RemoveColor();
             digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 
