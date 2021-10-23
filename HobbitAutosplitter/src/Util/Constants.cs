@@ -8,6 +8,7 @@
 
         public static readonly string[] splitNames =
         {
+            "Start Up/ Reset",
             "Main Menu",
             "Dream World",
             "An Unexpected Party",

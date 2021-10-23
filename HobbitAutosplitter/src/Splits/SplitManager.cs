@@ -14,12 +14,12 @@ namespace HobbitAutosplitter
         private static SplitData previousComparison;
         private static SplitData resetComparison;
 
-        private static string[] splitImagePaths;
+        private static SplitData[] splits;
 
         private static SplitState splitState = SplitState.STARTUP;
 
         private static float universalSimilarity;
-        private static int splitIndex = -1;
+        private static int splitIndex = 0;
 
 
         public static void Init()
@@ -30,36 +30,55 @@ namespace HobbitAutosplitter
 
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
         public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
-        public static void ResetSplitIndex() { splitIndex = 0; SetSplitData(); }
+        public static void ResetSplitIndex() { splitIndex = 1; SetSplitData(); }
         public static float GetUniversalSimilarity() { return universalSimilarity; }
         public static SplitData GetCurrentComparison() { return currentComparison; }
         public static SplitData GetNextComparison() { return nextComparison; }
         public static SplitState GetCurrentSplitState() { return splitState; }
-        public static RECT GetCrop() { return splitIndex <= 0 ? Constants.startCrop : Constants.crop; }
+        public static RECT GetCrop() { return splitIndex == 1 ? Constants.startCrop : Constants.crop; }
         public static int GetSplitIndex() { return splitIndex; }
 
         public static void SetUniversalSimilarity(float similarity) { universalSimilarity = similarity > 1 ? 1 : similarity; }
 
         private static void SetSplitData() 
         {
-            nextComparison = splitIndex <= 14 ? new SplitData(Constants.splitNames[splitIndex + 1], splitImagePaths[splitIndex + 1], splitIndex + 1) : null;
-            currentComparison = new SplitData(Constants.splitNames[splitIndex], splitImagePaths[splitIndex], splitIndex);
-            previousComparison = splitIndex >= 1 ? new SplitData(Constants.splitNames[splitIndex - 1], splitImagePaths[splitIndex - 1], splitIndex - 1) : new SplitData("Main Menu", splitImagePaths[0], 0);
+            nextComparison = splitIndex <= splits.Length - 1 ? splits[splitIndex + 1]: null;
+            currentComparison = splits[splitIndex];
+            previousComparison = splitIndex >= 1 ? splits[splitIndex - 1] : splits[0];
         }
 
         private static void PopulateSplitData()
         {
-            List<string> sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Image\\Splits").CustomSort().ToList();
-            sorted.Insert(11, sorted[9]);
-            splitImagePaths = sorted.ToArray();
-            if (splitImagePaths.Length != 16)
+            string[] sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Image\\Splits").CustomSort().ToArray();
+            if (sorted.Length != 15)
             {
                 // Say not enough images found
                 return;
             }
 
-            resetComparison = new SplitData(Constants.splitNames[0], splitImagePaths[0]);
-            currentComparison = new SplitData("Start Up", splitImagePaths[0], start:true);
+            splits = new SplitData[17]
+            {
+                new SplitData("Start Up / Reset", sorted[0]),
+                new SplitData("Main Menu / Start", sorted[0], startCrop:true, removeColor:true),
+                new SplitData("Dream World", sorted[1]),
+                new SplitData("An Unexpected Party", sorted[2]),
+                new SplitData("Roast Mutton", sorted[3]),
+                new SplitData("Troll-Hole", sorted[4]),
+                new SplitData("Over Hill and Under Hill", sorted[5]),
+                new SplitData("Riddles in the Dark", sorted[6]),
+                new SplitData("Flies and Spiders", sorted[7]),
+                new SplitData("Barrels out of Bond", sorted[8]),
+                new SplitData("AWW - Pre Thief", sorted[9]),
+                new SplitData("Thief", sorted[10]),
+                new SplitData("AWW - Post Thief", sorted[9]),
+                new SplitData("Inside Information", sorted[11]),
+                new SplitData("Gathering of the Clouds", sorted[12]),
+                new SplitData("Clouds Burst", sorted[13]),
+                new SplitData("Finished", sorted[14])
+            };
+
+            currentComparison = splits[1];
+            resetComparison = splits[0];
         }
 
         public static void CompareFrames(DigestArgs args)
@@ -67,7 +86,7 @@ namespace HobbitAutosplitter
             Digest d = args.digest;
             bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= GetUniversalSimilarity();
             bool n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= GetUniversalSimilarity() : false;
-            bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= 0.97f;
+            bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= GetUniversalSimilarity();
 
             if (r)
             {
@@ -79,7 +98,7 @@ namespace HobbitAutosplitter
             if (splitState == SplitState.WAITING)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if(sim <= 0.15f)
+                if(sim <= 0.2f)
                 {
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;

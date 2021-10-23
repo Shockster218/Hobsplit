@@ -48,9 +48,10 @@ namespace HobbitAutosplitter
 
                     Bitmap previewCropped = bmp.Crop(previewCrop).Resize();
                     Bitmap finalCrop = previewCropped.Crop(SplitManager.GetCrop());
-                    if (SplitManager.GetSplitIndex() == 0) finalCrop.RemoveColor();
+                    if (SplitManager.GetSplitIndex() == 1) finalCrop.RemoveColor();
 
                     Digest digest = ImagePhash.ComputeDigest(finalCrop.ToLuminanceImage());
+                    finalCrop.Dispose();
                     
                     DigestCompleted?.Invoke(new DigestArgs(digest));
                     FrameCreated?.SmartInvoke(new PreComparisonArgs(previewCropped.Clone()));
@@ -58,7 +59,6 @@ namespace HobbitAutosplitter
                     previewCropped.Dispose();
                     gfxBmp.Dispose();
                     bmp.Dispose();
-                    finalCrop.Dispose();
                 }
                 catch {}
             }

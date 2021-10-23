@@ -27,7 +27,7 @@
       <Value Profile="(Default)">NONAME</Value>
     </Setting>
     <Setting Name="unisim" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">0.98</Value>
+      <Value Profile="(Default)">0.965</Value>
     </Setting>
   </Settings>
 </SettingsFile>

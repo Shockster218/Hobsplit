@@ -58,7 +58,7 @@ namespace HobbitAutosplitter
 
         public static Bitmap RemoveColor(this Bitmap bitmap)
         {
-            const float limit = 0.05f;
+            const float limit = 0.03f;
             for (int i = 0; i < bitmap.Width; i++)
             {
                 for (int j = 0; j < bitmap.Height; j++)
@@ -70,6 +70,7 @@ namespace HobbitAutosplitter
                     }
                 }
             }
+
             return bitmap;
         }
     }
