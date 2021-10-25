@@ -99,6 +99,7 @@
     <Compile Include="src\Util\Constants.cs" />
     <Compile Include="src\Util\EventHelper.cs" />
     <Compile Include="src\Util\Extensions.cs" />
+    <Compile Include="src\Util\MessageBoxManager.cs" />
     <Compile Include="src\Util\QueueManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,49 +165,49 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Image\Splits\0.png">
+    <None Include="Assets\Splits\0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\1.png">
+    <None Include="Assets\Splits\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\10.png">
+    <None Include="Assets\Splits\10.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\11.png">
+    <None Include="Assets\Splits\11.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\12.png">
+    <None Include="Assets\Splits\12.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\13.png">
+    <None Include="Assets\Splits\13.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\14.png">
+    <None Include="Assets\Splits\14.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\2.png">
+    <None Include="Assets\Splits\2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\3.png">
+    <None Include="Assets\Splits\3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\4.png">
+    <None Include="Assets\Splits\4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\5.png">
+    <None Include="Assets\Splits\5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\6.png">
+    <None Include="Assets\Splits\6.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\7.png">
+    <None Include="Assets\Splits\7.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\8.png">
+    <None Include="Assets\Splits\8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Image\Splits\9.png">
+    <None Include="Assets\Splits\9.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -214,6 +215,17 @@
     <Resource Include="Assets\Image\cubeit.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Image\github.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Image\hobbitspeedruns.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\hobbitspeedruns.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

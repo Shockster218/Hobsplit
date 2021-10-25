@@ -4035,7 +4035,7 @@
                                 <AdornerDecorator Margin="0,30,0,0">
                                     <ContentPresenter />
                                 </AdornerDecorator>
-                                <Grid Height="30" x:Name="titlebar"
+                                <Grid Height="40" x:Name="titlebar"
                                       Background="{TemplateBinding BorderBrush}"
                                       VerticalAlignment="Top" Margin="0">
                                     <DockPanel Margin="0,0,130,0">
@@ -4052,6 +4052,28 @@
                                     </DockPanel>
                                     <StackPanel Orientation="Horizontal"
                                         Grid.Column="0" HorizontalAlignment="Right">
+                                        <Button x:Name="btnGithub"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                Template="{DynamicResource GithubButton}"
+                                                Width="50"
+                                                WindowChrome.IsHitTestVisibleInChrome="True" 
+                                                Click="btnGithub_Click">
+                                            <StackPanel HorizontalAlignment="Stretch">
+                                                <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/github.png" Height="24" Width="24" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnHobbitSpeedruns"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                Template="{DynamicResource HobbitSpeedrunsButton}"
+                                                Width="50"
+                                                WindowChrome.IsHitTestVisibleInChrome="True" 
+                                                Click="btnHobbitSpeedruns_Click">
+                                            <StackPanel HorizontalAlignment="Stretch">
+                                                <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/hobbitspeedruns.png" Height="32" Width="32" />
+                                            </StackPanel>
+                                        </Button>
                                         <Button x:Name="btnMinimize"
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
@@ -4227,6 +4249,78 @@
             <Trigger Property="IsPressed" Value="true">
                 <Setter Property="Background" TargetName="border" Value="#FF940A14"/>
                 <Setter Property="BorderBrush" TargetName="border" Value="#FF940A14"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" TargetName="border" Value="{StaticResource ControlBrightDefaultBackground}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlBrightDefaultBorderBrush}"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ControlDisabledGlythColour}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="GithubButton" TargetType="{x:Type Button}">
+        <Border x:Name="border" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}" 
+                Background="{TemplateBinding Background}" 
+                SnapsToDevicePixels="true"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch">
+            <ContentPresenter x:Name="contentPresenter" 
+                              Focusable="False" 
+                              Margin="{TemplateBinding Padding}" 
+                              RecognizesAccessKey="True" 
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefaulted" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlMouseOverBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="#6e5494"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#6e5494"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="#6e5494"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#6e5494"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" TargetName="border" Value="{StaticResource ControlBrightDefaultBackground}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlBrightDefaultBorderBrush}"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ControlDisabledGlythColour}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="HobbitSpeedrunsButton" TargetType="{x:Type Button}">
+        <Border x:Name="border" 
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}" 
+                Background="{TemplateBinding Background}" 
+                SnapsToDevicePixels="true"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch">
+            <ContentPresenter x:Name="contentPresenter" 
+                              Focusable="False" 
+                              Margin="{TemplateBinding Padding}" 
+                              RecognizesAccessKey="True" 
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefaulted" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ControlMouseOverBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="#EEBC1D"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#EEBC1D"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="#EEBC1D"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#EEBC1D"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
                 <Setter Property="Background" TargetName="border" Value="{StaticResource ControlBrightDefaultBackground}"/>

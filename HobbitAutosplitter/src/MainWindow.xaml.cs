@@ -184,5 +184,22 @@ namespace HobbitAutosplitter
         {
             levelLab.Content = SplitManager.GetCurrentComparison().GetSplitName();
         }
+
+        public void ShowNotEnoughSplitsMessageBox()
+        {
+            MessageBoxManager.OK = "Retry";
+            MessageBoxManager.Cancel = "Exit";
+            MessageBoxManager.Register();
+            MessageBoxResult result = MessageBox.Show("Not enough split image files found. Please add them to Assets/Splits then click \"Retry\"", "Not enough split images", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            MessageBoxManager.Unregister();
+            if(result == MessageBoxResult.OK)
+            {
+                SplitManager.PopulateSplitData();
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

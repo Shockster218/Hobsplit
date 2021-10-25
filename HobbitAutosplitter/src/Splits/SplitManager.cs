@@ -40,13 +40,16 @@ namespace HobbitAutosplitter
             previousComparison = splitIndex >= 1 ? splits[splitIndex - 1] : splits[0];
         }
 
-        private static void PopulateSplitData()
+        public static void PopulateSplitData()
         {
-            string[] sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Image\\Splits").CustomSort().ToArray();
+            string[] sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Splits")
+                .Where(file => new string[] { ".jpg", ".jpeg", ".png", ".bmp" }
+                .Contains(Path.GetExtension(file)))
+                .CustomSort().ToArray();
+
             if (sorted.Length != 15)
             {
-                // Say not enough images found
-                return;
+                App.Current.Dispatcher.Invoke(() => MainWindow.instance.ShowNotEnoughSplitsMessageBox());
             }
 
             splits = new SplitData[17]
