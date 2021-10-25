@@ -7,10 +7,6 @@
         Style="{DynamicResource CustomWindowStyle}"
         mc:Ignorable="d" Height="660" Width="975" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" OpacityMask="Black">
     <Grid x:Name="grid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="59*"/>
-            <ColumnDefinition Width="908*"/>
-        </Grid.ColumnDefinitions>
         <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="480" Margin="236,21,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill" Grid.Column="1"/>
         <xctk:IntegerUpDown x:Name="x"  HorizontalAlignment="Left" Margin="710,517,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False" Grid.Column="1"/>
         <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="402,517,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False" Grid.Column="1"/>
