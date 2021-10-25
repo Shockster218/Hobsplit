@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using System.Collections.Generic;
 using Shipwreck.Phash;
-using Shipwreck.Phash.Bitmaps;
 
 namespace HobbitAutosplitter
 {
@@ -18,7 +16,6 @@ namespace HobbitAutosplitter
 
         private static SplitState splitState = SplitState.STARTUP;
 
-        private static float universalSimilarity;
         private static int splitIndex = 0;
 
 
@@ -31,15 +28,11 @@ namespace HobbitAutosplitter
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
         public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
         public static void ResetSplitIndex() { splitIndex = 1; SetSplitData(); }
-        public static float GetUniversalSimilarity() { return universalSimilarity; }
         public static SplitData GetCurrentComparison() { return currentComparison; }
         public static SplitData GetNextComparison() { return nextComparison; }
         public static SplitState GetCurrentSplitState() { return splitState; }
         public static RECT GetCrop() { return splitIndex == 1 ? Constants.startCrop : Constants.crop; }
         public static int GetSplitIndex() { return splitIndex; }
-
-        public static void SetUniversalSimilarity(float similarity) { universalSimilarity = similarity > 1 ? 1 : similarity; }
-
         private static void SetSplitData() 
         {
             nextComparison = splitIndex <= splits.Length - 1 ? splits[splitIndex + 1]: null;
@@ -69,7 +62,7 @@ namespace HobbitAutosplitter
                 new SplitData("Flies and Spiders", sorted[7]),
                 new SplitData("Barrels out of Bond", sorted[8]),
                 new SplitData("AWW - Pre Thief", sorted[9]),
-                new SplitData("Thief", sorted[10]),
+                new SplitData("Thief", sorted[10], similarity:0.98f),
                 new SplitData("AWW - Post Thief", sorted[9]),
                 new SplitData("Inside Information", sorted[11]),
                 new SplitData("Gathering of the Clouds", sorted[12]),
@@ -84,9 +77,9 @@ namespace HobbitAutosplitter
         public static void CompareFrames(DigestArgs args)
         {
             Digest d = args.digest;
-            bool c = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d) >= GetUniversalSimilarity();
-            bool n = null != nextComparison ? ImagePhash.GetCrossCorrelation(nextComparison.GetDigest(), d) >= GetUniversalSimilarity() : false;
-            bool r = ImagePhash.GetCrossCorrelation(resetComparison.GetDigest(), d) >= GetUniversalSimilarity();
+            bool c = currentComparison.IsDigestSimilar(d);
+            bool n = null != nextComparison ? nextComparison.IsDigestSimilar(d) : false;
+            bool r = resetComparison.IsDigestSimilar(d);
 
             if (r)
             {
@@ -138,6 +131,12 @@ namespace HobbitAutosplitter
                         IncrementSplitIndex(2);
                         LivesplitManager.Split();
                     }
+                    else if(splitIndex == 15)
+                    {
+                        ResetSplitIndex();
+                        splitState = SplitState.STARTUP;
+                        LivesplitManager.Split();
+                    }
                     else
                     {
                         IncrementSplitIndex();
@@ -149,9 +148,9 @@ namespace HobbitAutosplitter
             }
 
             // Should only fire if it sees thief split again. Gonna add a double check for the split index but shouldnt be needed
-            if (splitIndex == 11)
+            if (splitIndex == 12)
             {
-                bool p = ImagePhash.GetCrossCorrelation(previousComparison.GetDigest(), d) >= universalSimilarity;
+                bool p = previousComparison.IsDigestSimilar(d);
                 if (p)
                 {
                     LivesplitManager.Unsplit();

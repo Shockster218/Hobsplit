@@ -65,7 +65,6 @@ namespace HobbitAutosplitter
         }
         private void LoadSettings()
         {
-            similarity.Value = Settings.Default.unisim;
             splitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
             unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
             resetButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
@@ -119,16 +118,6 @@ namespace HobbitAutosplitter
             CaptureManager.previewCrop.Bottom = value;
             Settings.Default.cropBottom = value;
             h.Text = value.ToString();
-        }
-
-        private void similarity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            decimal value;
-            if (e.NewValue == null) value = 0;
-            else value = ((decimal)e.NewValue).Clamp(0, 1);
-            SplitManager.SetUniversalSimilarity((float)value);
-            Settings.Default.unisim = value;
-            similarity.Text = value.ToString();
         }
 
         private void splitButton_Click(object sender, RoutedEventArgs e)

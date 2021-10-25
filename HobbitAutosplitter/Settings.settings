@@ -26,8 +26,5 @@
     <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
       <Value Profile="(Default)">NONAME</Value>
     </Setting>
-    <Setting Name="unisim" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">0.965</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
