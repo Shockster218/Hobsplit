@@ -19,7 +19,6 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             OBSProcessFoundEvent += WaitForOBS;
-            CaptureManager.DoneCapturingEvent += FindOBSEntry;
             FindOBSEntry();
         }
 
@@ -36,6 +35,8 @@ namespace HobbitAutosplitter
                 if (obsProcess != null)
                 {
                     obs = obsProcess;
+                    obs.EnableRaisingEvents = true;
+                    obs.Exited += (s,e) => OBSClosed();
                     OBSProcessFoundEvent?.SmartInvoke();
                     return;
                 }
@@ -47,6 +48,14 @@ namespace HobbitAutosplitter
             while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
             obsRunning = true;
             OBSOpenedEvent?.SmartInvoke();
+        }
+
+        private static void OBSClosed()
+        {
+            obsRunning = false;
+            obs = null;
+            OBSClosedEvent?.SmartInvoke();
+            FindOBSEntry();
         }
 
         public static Process GetOBS()

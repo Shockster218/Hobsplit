@@ -21,7 +21,8 @@ namespace HobbitAutosplitter
             CaptureManager.FrameCreated += ShowPreview;
             CaptureManager.FrameCreated += LoadCropSettings;
             ProcessManager.OBSOpenedEvent += ChangeComparisonReference;
-            ProcessManager.OBSClosedEvent += ChangeComparisonReference;
+            ProcessManager.OBSClosedEvent += OBSOffline;
+            ProcessManager.OBSClosedEvent += ToggleCropping;
             CaptureManager.ToggleUIElement += ToggleCropping;
             LivesplitManager.OnSplit += ChangeComparisonReference;
             LivesplitManager.OnReset += ChangeComparisonReference;
@@ -37,6 +38,8 @@ namespace HobbitAutosplitter
         public void OBSOffline()
         {
             obsPreview.Source = ((Bitmap)Image.FromFile(Environment.CurrentDirectory + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
+            splitReference.Source = null;
+            levelLab.Content = "Start Up...";
         }
 
         public void ShowPreview(PreComparisonArgs args)

@@ -64,7 +64,6 @@ namespace HobbitAutosplitter
             }
 
             ToggleUIElement?.SmartInvoke();
-            DoneCapturingEvent?.SmartInvoke();
         }
 
         #region Imports
