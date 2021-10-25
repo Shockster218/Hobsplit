@@ -54,7 +54,7 @@ namespace HobbitAutosplitter
 
             splits = new SplitData[17]
             {
-                new SplitData("Start Up / Reset", sorted[0]),
+                new SplitData("Start Up / Reset", sorted[0], similarity:0.9f),
                 new SplitData("Main Menu / Start", sorted[0], startCrop:true, removeColor:true),
                 new SplitData("Dream World", sorted[1]),
                 new SplitData("An Unexpected Party", sorted[2]),
@@ -66,7 +66,7 @@ namespace HobbitAutosplitter
                 new SplitData("Barrels out of Bond", sorted[8]),
                 new SplitData("AWW - Pre Thief", sorted[9]),
                 new SplitData("Thief", sorted[10], similarity:0.98f),
-                new SplitData("AWW - Post Thief", sorted[9]),
+                new SplitData("AWW - Post Thief", sorted[9], similarity:0.98f),
                 new SplitData("Inside Information", sorted[11]),
                 new SplitData("Gathering of the Clouds", sorted[12]),
                 new SplitData("Clouds Burst", sorted[13]),
@@ -94,7 +94,7 @@ namespace HobbitAutosplitter
             if (splitState == SplitState.WAITING)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if(sim <= 0.2f)
+                if(sim <= 0.07f)
                 {
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
