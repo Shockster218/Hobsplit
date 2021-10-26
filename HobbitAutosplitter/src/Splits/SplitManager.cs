@@ -14,8 +14,7 @@ namespace HobbitAutosplitter
 
         private static SplitData[] splits;
 
-        private static SplitState splitState = SplitState.STARTUP;
-
+        private static SplitState splitState = SplitState.GAMEPLAY;
         private static int splitIndex = 0;
 
 
@@ -59,7 +58,7 @@ namespace HobbitAutosplitter
                 new SplitData("Dream World", sorted[1]),
                 new SplitData("An Unexpected Party", sorted[2]),
                 new SplitData("Roast Mutton", sorted[3]),
-                new SplitData("Troll-Hole", sorted[4]),
+                new SplitData("Troll-Hole", sorted[4], similarity:0.93f),
                 new SplitData("Over Hill and Under Hill", sorted[5]),
                 new SplitData("Riddles in the Dark", sorted[6]),
                 new SplitData("Flies and Spiders", sorted[7]),
