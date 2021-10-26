@@ -28,18 +28,21 @@ namespace HobbitAutosplitter
         public static void Split()
         {
             sim.Keyboard.KeyDown(split);
+            sim.Keyboard.KeyUp(split);
             OnSplit?.SmartInvoke(DigestArgs.Default);
         }
 
         public static void Unsplit()
         {
             sim.Keyboard.KeyDown(unsplit);
+            sim.Keyboard.KeyUp(unsplit);
             OnUnsplit?.SmartInvoke(DigestArgs.Default);
         }
 
         public static void Reset()
         {
             sim.Keyboard.KeyDown(reset);
+            sim.Keyboard.KeyUp(reset);
             OnReset?.SmartInvoke(DigestArgs.Default);
         }
 
