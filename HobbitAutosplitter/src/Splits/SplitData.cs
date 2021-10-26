@@ -22,13 +22,6 @@ namespace HobbitAutosplitter
             this.similarity = similarity;
         }
 
-        public SplitData(SplitData data)
-        {
-            image = data.GetImage();
-            name = data.GetSplitName();
-            cropped = data.GetImageCropped();
-            digest = data.GetDigest();
-        }
         private Bitmap SetImage(string path) 
         {
             Bitmap bm = new Bitmap(Image.FromFile(path));

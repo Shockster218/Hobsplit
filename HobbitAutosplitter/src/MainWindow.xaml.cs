@@ -12,18 +12,14 @@ namespace HobbitAutosplitter
     public partial class MainWindow
     {
         public static MainWindow instance;
-        private bool cropSettingsSet;
 
         public MainWindow()
         {
             InitializeComponent();
             instance = this;
             CaptureManager.FrameCreated += ShowPreview;
-            CaptureManager.FrameCreated += LoadCropSettings;
             ProcessManager.OBSOpenedEvent += ChangeComparisonReference;
             ProcessManager.OBSClosedEvent += OBSOffline;
-            ProcessManager.OBSClosedEvent += ToggleCropping;
-            CaptureManager.ToggleUIElement += ToggleCropping;
             LivesplitManager.OnSplit += ChangeComparisonReference;
             LivesplitManager.OnReset += ChangeComparisonReference;
             LivesplitManager.OnUnsplit += ChangeComparisonReference;
@@ -59,31 +55,17 @@ namespace HobbitAutosplitter
             SetLevelText();
         }
 
-        public void ToggleCropping()
-        {
-            x.IsEnabled = !x.IsEnabled;
-            y.IsEnabled = !y.IsEnabled;
-            w.IsEnabled = !w.IsEnabled;
-            h.IsEnabled = !h.IsEnabled;
-        }
         private void LoadSettings()
         {
             splitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
             unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
             resetButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
             pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
-        }
 
-        private void LoadCropSettings(PreComparisonArgs args)
-        {
-            if (!cropSettingsSet)
-            {
-                x.Value = Settings.Default.cropLeft;
-                y.Value = Settings.Default.cropTop;
-                w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : CaptureManager.previewCrop.Right;
-                h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : CaptureManager.previewCrop.Bottom;
-                cropSettingsSet = true;
-            }
+            x.Value = Settings.Default.cropLeft;
+            y.Value = Settings.Default.cropTop;
+            w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : CaptureManager.previewCrop.Right;
+            h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : CaptureManager.previewCrop.Bottom;
         }
 
         private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

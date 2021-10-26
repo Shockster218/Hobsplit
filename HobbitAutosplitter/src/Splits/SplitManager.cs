@@ -16,14 +16,11 @@ namespace HobbitAutosplitter
 
         private static SplitState splitState = SplitState.GAMEPLAY;
         private static int splitIndex = 0;
-
-
         public static void Init()
         {
             CaptureManager.DigestCompleted += CompareFrames;
             PopulateSplitData();
         }
-
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
         public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
         public static void ResetSplitIndex() { splitIndex = 1; SetSplitData(); }

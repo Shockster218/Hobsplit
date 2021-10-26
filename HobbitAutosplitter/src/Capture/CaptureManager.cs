@@ -9,7 +9,6 @@ namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-        public static event SmartEventHandler ToggleUIElement;
         public static event SmartEventHandler DoneCapturingEvent;
         public static event PreComparisonEventHandler FrameCreated;
         public static event DigestEventHandler DigestCompleted;
@@ -32,8 +31,6 @@ namespace HobbitAutosplitter
                 Settings.Default.cropRight != 0 ? Settings.Default.cropRight : rc.Right,
                 Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
                 );
-
-            ToggleUIElement?.SmartInvoke();
 
             while (ProcessManager.obsRunning)
             {
@@ -62,8 +59,6 @@ namespace HobbitAutosplitter
                 }
                 catch {}
             }
-
-            ToggleUIElement?.SmartInvoke();
         }
 
         #region Imports

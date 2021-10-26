@@ -13,13 +13,15 @@ namespace HobbitAutosplitter
         {
             BitmapImage image = new BitmapImage();
             MemoryStream ms = new MemoryStream();
+
             bitmap.Save(ms, ImageFormat.Bmp);
             image.BeginInit();
             ms.Seek(0, SeekOrigin.Begin);
             image.StreamSource = ms;
+
             image.EndInit();
-        
             image.Freeze();
+
             return image;
         }
 
@@ -31,7 +33,6 @@ namespace HobbitAutosplitter
                 graphics.DrawImage(source, new Rectangle(0, 0, crop.Right, crop.Bottom), crop, GraphicsUnit.Pixel);
                 graphics.Dispose();
             }
-
             return cropped;
         }
 
@@ -70,7 +71,6 @@ namespace HobbitAutosplitter
                     }
                 }
             }
-
             return bitmap;
         }
     }
