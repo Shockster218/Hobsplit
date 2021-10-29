@@ -29,6 +29,13 @@ namespace HobbitAutosplitter
         public static SplitState GetCurrentSplitState() { return splitState; }
         public static RECT GetCrop() { return splitIndex == 1 ? Constants.startCrop : Constants.crop; }
         public static int GetSplitIndex() { return splitIndex; }
+        public static void UpdateSplitCroppings(double percentage)
+        {
+            foreach(SplitData split in splits)
+            {
+                split.UpdateImageCropping(percentage);
+            }
+        }
         private static void SetSplitData() 
         {
             nextComparison = splitIndex <= splits.Length - 1 ? splits[splitIndex + 1]: null;

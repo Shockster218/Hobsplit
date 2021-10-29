@@ -1,4 +1,5 @@
 ﻿using System;
+using Screen = System.Windows.Forms.Screen;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
@@ -12,7 +13,6 @@ namespace HobbitAutosplitter
     public partial class MainWindow
     {
         public static MainWindow instance;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +36,7 @@ namespace HobbitAutosplitter
             obsPreview.Source = ((Bitmap)Image.FromFile(Environment.CurrentDirectory + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
             splitReference.Source = null;
             levelLab.Content = "Start Up...";
+            ProcessManager.FindOBSEntry();
         }
 
         public void ShowPreview(PreComparisonArgs args)
@@ -64,15 +65,22 @@ namespace HobbitAutosplitter
 
             x.Value = Settings.Default.cropLeft;
             y.Value = Settings.Default.cropTop;
-            w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : CaptureManager.previewCrop.Right;
-            h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : CaptureManager.previewCrop.Bottom;
+            w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : 1920;
+            h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : 1080;
+            referenceCrop.Value = Settings.Default.referenceCropPercentage;
+
+            x.IsEnabled = true;
+            y.IsEnabled = true;
+            w.IsEnabled = true;
+            h.IsEnabled = true;
+            referenceCrop.IsEnabled = true;
         }
 
         private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             int value;
             if(e.NewValue == null) value = 0;
-            else value = ((int)e.NewValue).Clamp(0, 1920);
+            else value = ((int)e.NewValue).Clamp(0, 4000);
             CaptureManager.previewCrop.X = value;
             Settings.Default.cropLeft = value;
             x.Text = value.ToString();
@@ -81,7 +89,7 @@ namespace HobbitAutosplitter
         {
             int value;
             if (e.NewValue == null) value = 0;
-            else value = ((int)e.NewValue).Clamp(0, 1080);
+            else value = ((int)e.NewValue).Clamp(0, 4000);
             CaptureManager.previewCrop.Y = value;
             Settings.Default.cropTop = value;
             y.Text = value.ToString();
@@ -90,7 +98,7 @@ namespace HobbitAutosplitter
         {
             int value;
             if (e.NewValue == null) value = 0;
-            else value = ((int)e.NewValue).Clamp(0, 1920);
+            else value = ((int)e.NewValue).Clamp(0, 4000);
             CaptureManager.previewCrop.Right = value;
             Settings.Default.cropRight = value;
             w.Text = value.ToString();
@@ -99,7 +107,7 @@ namespace HobbitAutosplitter
         {
             int value;
             if (e.NewValue == null) value = 0;
-            else value = ((int)e.NewValue).Clamp(0, 1080);
+            else value = ((int)e.NewValue).Clamp(0, 4000);
             CaptureManager.previewCrop.Bottom = value;
             Settings.Default.cropBottom = value;
             h.Text = value.ToString();
@@ -184,6 +192,19 @@ namespace HobbitAutosplitter
             else
             {
                 Application.Current.Shutdown();
+            }
+        }
+
+        private void referenceCrop_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var swag = e.NewValue;
+            if(e.NewValue != null || (float)e.NewValue != 0)
+            {
+                double value = Math.Round((double)e.NewValue, 3);
+                Settings.Default.referenceCropPercentage = value;
+                SplitManager.UpdateSplitCroppings(value);
+                referenceCrop.Text = value.ToString();
+                if (splitReference.Source != null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             }
         }
     }

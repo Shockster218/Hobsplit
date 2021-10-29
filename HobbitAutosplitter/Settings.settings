@@ -26,5 +26,8 @@
     <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
       <Value Profile="(Default)">NONAME</Value>
     </Setting>
+    <Setting Name="referenceCropPercentage" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.285</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

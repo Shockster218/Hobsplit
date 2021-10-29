@@ -19,10 +19,9 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             OBSProcessFoundEvent += WaitForOBS;
-            FindOBSEntry();
         }
 
-        private static void FindOBSEntry()
+        public static void FindOBSEntry()
         {
             Task.Factory.StartNew(() => FindOBS());
         }
@@ -55,7 +54,6 @@ namespace HobbitAutosplitter
             obsRunning = false;
             obs = null;
             OBSClosedEvent?.SmartInvoke();
-            FindOBSEntry();
         }
 
         public static Process GetOBS()

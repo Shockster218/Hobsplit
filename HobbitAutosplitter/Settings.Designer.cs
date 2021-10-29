@@ -118,5 +118,17 @@ namespace HobbitAutosplitter {
                 this["pause"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.285")]
+        public double referenceCropPercentage {
+            get {
+                return ((double)(this["referenceCropPercentage"]));
+            }
+            set {
+                this["referenceCropPercentage"] = value;
+            }
+        }
     }
 }

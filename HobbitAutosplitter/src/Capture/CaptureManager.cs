@@ -9,12 +9,10 @@ namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-        public static event SmartEventHandler DoneCapturingEvent;
         public static event PreComparisonEventHandler FrameCreated;
         public static event DigestEventHandler DigestCompleted;
 
         public static RECT previewCrop;
-
         public static void Init()
         {
             ProcessManager.OBSOpenedEvent += CaptureApplication;
