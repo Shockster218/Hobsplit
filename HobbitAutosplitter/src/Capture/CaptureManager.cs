@@ -66,9 +66,6 @@ namespace HobbitAutosplitter
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
         #endregion
     }
 

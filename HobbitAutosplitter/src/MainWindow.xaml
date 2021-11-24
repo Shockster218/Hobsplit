@@ -8,10 +8,10 @@
         mc:Ignorable="d" Height="660" Width="975" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="grid">
         <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="480" Margin="306,21,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
-        <xctk:IntegerUpDown x:Name="x"  HorizontalAlignment="Left" Margin="803,516,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False" UpdateValueOnEnterKey="True"/>
-        <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="495,516,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False" UpdateValueOnEnterKey="True"/>
-        <xctk:IntegerUpDown x:Name="w" HorizontalAlignment="Left" Margin="803,570,0,-11" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="w_ValueChanged" RenderTransformOrigin="-3.113,0.427" IsEnabled="False" UpdateValueOnEnterKey="True"/>
-        <xctk:IntegerUpDown x:Name="h" HorizontalAlignment="Left" Margin="495,570,0,-11" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="h_ValueChanged" IsEnabled="False" UpdateValueOnEnterKey="True"/>
+        <xctk:IntegerUpDown x:Name="x"  HorizontalAlignment="Left" Margin="803,516,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="495,516,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="w" HorizontalAlignment="Left" Margin="803,570,0,-11" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="w_ValueChanged" RenderTransformOrigin="-3.113,0.427" IsEnabled="False"/>
+        <xctk:IntegerUpDown x:Name="h" HorizontalAlignment="Left" Margin="495,570,0,-11" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="h_ValueChanged" IsEnabled="False"/>
         <Label x:Name="YLabel" HorizontalContentAlignment="Right" Content="Crop Top" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,516,0,0" RenderTransformOrigin="-0.196,0.871" Height="37" Width="116" FontSize="18"/>
         <Label x:Name="XLabel" HorizontalContentAlignment="Right" Content="Crop Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="684,516,0,0" Height="37" Width="111" FontSize="18"/>
         <Label x:Name="WidthLabel" HorizontalContentAlignment="Right" Content="Crop Right" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="661,570,0,-8" Height="37" Width="134"/>
