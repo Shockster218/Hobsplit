@@ -139,6 +139,7 @@ namespace HobbitAutosplitter
                     {
                         IncrementSplitIndex(3);
                         LivesplitManager.Split();
+                        LivesplitManager.Pause();
                     }
                     else if(splitIndex == 10)
                     {

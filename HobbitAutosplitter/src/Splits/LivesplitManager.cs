@@ -47,6 +47,7 @@ namespace HobbitAutosplitter
         public static void Pause()
         {
             sim.Keyboard.KeyDown(pause);
+            sim.Keyboard.KeyUp(pause);
         }
     }
 }
