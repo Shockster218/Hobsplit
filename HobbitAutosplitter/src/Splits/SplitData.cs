@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
+using System.Drawing;
 using Shipwreck.Phash;
 using Shipwreck.Phash.Bitmaps;
 
 namespace HobbitAutosplitter
 {
-    public class SplitData
+    public class SplitData : IDisposable
     {
         private string name;
         private Bitmap baseImage;
@@ -13,6 +16,7 @@ namespace HobbitAutosplitter
         private Digest digest;
         private float similarity;
         bool startCrop;
+        private bool _disposedValue;
 
         public SplitData(string name, string imagePath, bool startCrop = false, bool removeColor = false, float similarity = 0.965f)
         {
@@ -43,10 +47,26 @@ namespace HobbitAutosplitter
 
         public Digest GetDigest() { return digest; }
 
-        public void UpdateImageCropping(double percent)
+        public void UpdateImageCropping(double value)
         {
-            preview = baseImage.Crop(new RECT((int)(percent * baseImage.Width), 0, baseImage.Width, baseImage.Height));
+            preview = baseImage.Crop(new RECT((int)(value / 100 * baseImage.Width), 0, baseImage.Width, baseImage.Height));
             cropped = preview.Crop(startCrop ? Constants.startCrop : Constants.crop);
+        }
+
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+        public void Dispose() => Dispose(true);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _safeHandle.Dispose();
+                }
+
+                _disposedValue = true;
+            }
         }
     }
 }

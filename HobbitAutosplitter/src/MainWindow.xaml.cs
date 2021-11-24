@@ -35,6 +35,7 @@ namespace HobbitAutosplitter
         {
             obsPreview.Source = ((Bitmap)Image.FromFile(Environment.CurrentDirectory + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
             splitReference.Source = null;
+            changeComparison.IsEnabled = false;
             levelLab.Content = "Start Up...";
             ProcessManager.FindOBSEntry();
         }
@@ -42,6 +43,7 @@ namespace HobbitAutosplitter
         public void ShowPreview(PreComparisonArgs args)
         {
             obsPreview.Source = ((Bitmap)args.frame).ToBitmapImage();
+            if(!changeComparison.IsEnabled) changeComparison.IsEnabled = true;
         }
 
         public void ChangeComparisonReference(DigestArgs args)
@@ -67,13 +69,11 @@ namespace HobbitAutosplitter
             y.Value = Settings.Default.cropTop;
             w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : 1920;
             h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : 1080;
-            referenceCrop.Value = Settings.Default.referenceCropPercentage;
 
             x.IsEnabled = true;
             y.IsEnabled = true;
             w.IsEnabled = true;
             h.IsEnabled = true;
-            referenceCrop.IsEnabled = true;
         }
 
         private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -195,17 +195,11 @@ namespace HobbitAutosplitter
             }
         }
 
-        private void referenceCrop_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void changeComparison_Click(object sender, RoutedEventArgs e)
         {
-            var swag = e.NewValue;
-            if(e.NewValue != null || (float)e.NewValue != 0)
-            {
-                double value = Math.Round((double)e.NewValue, 3);
-                Settings.Default.referenceCropPercentage = value;
-                SplitManager.UpdateSplitCroppings(value);
-                referenceCrop.Text = value.ToString();
-                if (splitReference.Source != null) splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
-            }
+            ComparisonCropWindow myOwnedWindow = new ComparisonCropWindow();
+            myOwnedWindow.Owner = this;
+            myOwnedWindow.Show();
         }
     }
 }

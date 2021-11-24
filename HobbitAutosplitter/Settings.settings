@@ -27,7 +27,7 @@
       <Value Profile="(Default)">NONAME</Value>
     </Setting>
     <Setting Name="referenceCropPercentage" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.285</Value>
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

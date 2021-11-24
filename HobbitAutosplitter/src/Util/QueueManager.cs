@@ -12,6 +12,7 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             Thread queueThread = new Thread(DoQueueWork);
+            queueThread.IsBackground = true;
             queueThread.Start();
         }
 

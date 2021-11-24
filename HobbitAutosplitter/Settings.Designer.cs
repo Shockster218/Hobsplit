@@ -121,7 +121,7 @@ namespace HobbitAutosplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.285")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public double referenceCropPercentage {
             get {
                 return ((double)(this["referenceCropPercentage"]));

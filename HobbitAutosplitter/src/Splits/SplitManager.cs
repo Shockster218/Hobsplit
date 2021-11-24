@@ -29,11 +29,11 @@ namespace HobbitAutosplitter
         public static SplitState GetCurrentSplitState() { return splitState; }
         public static RECT GetCrop() { return splitIndex == 1 ? Constants.startCrop : Constants.crop; }
         public static int GetSplitIndex() { return splitIndex; }
-        public static void UpdateSplitCroppings(double percentage)
+        public static void UpdateSplitCroppings(double value)
         {
             foreach(SplitData split in splits)
             {
-                split.UpdateImageCropping(percentage);
+                split.UpdateImageCropping(value);
             }
         }
         private static void SetSplitData() 
@@ -68,8 +68,8 @@ namespace HobbitAutosplitter
                 new SplitData("Flies and Spiders", sorted[7]),
                 new SplitData("Barrels out of Bond", sorted[8]),
                 new SplitData("AWW - Pre Thief", sorted[9]),
-                new SplitData("Thief", sorted[10], similarity:0.98f),
-                new SplitData("AWW - Post Thief", sorted[9], similarity:0.98f),
+                new SplitData("Thief", sorted[10], similarity:0.975f),
+                new SplitData("AWW - Post Thief", sorted[9]),
                 new SplitData("Inside Information", sorted[11]),
                 new SplitData("Gathering of the Clouds", sorted[12]),
                 new SplitData("Clouds Burst", sorted[13]),
