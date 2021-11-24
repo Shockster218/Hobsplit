@@ -7,11 +7,11 @@
         xmlns:local="clr-namespace:HobbitAutosplitter"
         mc:Ignorable="d"
         Style="{DynamicResource MainWindowStyle}"
-        Title="ComparisonCropWindow" Height="568.851" Width="661" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="#FF0080FF" WindowStyle="None">
+        Title="ComparisonCropWindow" Height="568.851" Width="661" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
         <Image x:Name="splitReference" HorizontalAlignment="Left" Height="480" Margin="7,10,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
         <xctk:DoubleUpDown x:Name="referenceCrop" HorizontalAlignment="Left" Margin="356,0,0,21" VerticalAlignment="Bottom" Height="35" Width="100" ValueChanged="referenceCrop_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False"/>
-        <Slider x:Name="referenceSlider" HorizontalAlignment="Left" Margin="7,521,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="1" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSlider_ValueChanged"/>
+        <Slider x:Name="referenceSlider" HorizontalAlignment="Left" Margin="7,521,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="0.1" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSlider_ValueChanged" TickFrequency="0.1"/>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="481,515,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16"/>
         <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="573,515,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16"/>
     </Grid>

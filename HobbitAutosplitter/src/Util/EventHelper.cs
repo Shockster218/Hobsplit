@@ -4,6 +4,7 @@ using Shipwreck.Phash;
 namespace HobbitAutosplitter
 {
     public delegate void SmartEventHandler();
+    public delegate void LivesplitActionEventHandler(LivesplitAction action = LivesplitAction.NONE);
     public delegate void PreComparisonEventHandler(PreComparisonArgs args);
     public delegate void DigestEventHandler(DigestArgs args);
     public class PreComparisonArgs : EventArgs

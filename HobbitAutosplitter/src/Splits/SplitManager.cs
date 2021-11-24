@@ -16,11 +16,14 @@ namespace HobbitAutosplitter
 
         private static SplitState splitState = SplitState.GAMEPLAY;
         private static int splitIndex = 0;
+        private static bool useThiefSplit = true;
         public static void Init()
         {
             CaptureManager.DigestCompleted += CompareFrames;
             PopulateSplitData();
         }
+        public static void SetThiefSplit(bool value) { useThiefSplit = value; }
+        public static bool GetThiefSplit() { return useThiefSplit; }
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
         public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
         public static void ResetSplitIndex() { splitIndex = 1; SetSplitData(); }
@@ -69,7 +72,7 @@ namespace HobbitAutosplitter
                 new SplitData("Barrels out of Bond", sorted[8]),
                 new SplitData("AWW - Pre Thief", sorted[9]),
                 new SplitData("Thief", sorted[10], similarity:0.975f),
-                new SplitData("AWW - Post Thief", sorted[9]),
+                new SplitData("A Warm Welcome", sorted[9]),
                 new SplitData("Inside Information", sorted[11]),
                 new SplitData("Gathering of the Clouds", sorted[12]),
                 new SplitData("Clouds Burst", sorted[13]),
@@ -132,7 +135,12 @@ namespace HobbitAutosplitter
             {
                 if(splitIndex >= 2 && splitState == SplitState.GAMEPLAY)
                 {
-                    if(splitIndex == 10)
+                    if(splitIndex == 9 && !useThiefSplit)
+                    {
+                        IncrementSplitIndex(3);
+                        LivesplitManager.Split();
+                    }
+                    else if(splitIndex == 10)
                     {
                         IncrementSplitIndex(2);
                         LivesplitManager.Split();
@@ -154,7 +162,7 @@ namespace HobbitAutosplitter
             }
 
             // Should only fire if it sees thief split again. Gonna add a double check for the split index but shouldnt be needed
-            if (splitIndex == 12)
+            if (splitIndex == 12 && useThiefSplit)
             {
                 bool p = previousComparison.IsDigestSimilar(d);
                 if (p)

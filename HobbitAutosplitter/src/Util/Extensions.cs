@@ -91,6 +91,31 @@ namespace HobbitAutosplitter
             }
         }
 
+        public static void SmartInvoke(this MulticastDelegate multicast, LivesplitAction action)
+        {
+            MulticastDelegate multiDel = multicast;
+            if (multiDel != null)
+            {
+                var invocationList = multiDel.GetInvocationList();
+
+                foreach (LivesplitActionEventHandler handler in invocationList)
+                {
+                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+                    if (dispatcherTarget != null)
+                    {
+                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        {
+                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, action);
+                        }
+                    }
+                    else
+                    {
+                        Task.Run(() => handler.Invoke(action));
+                    }
+                }
+            }
+        }
+
         public static IEnumerable<string> CustomSort(this IEnumerable<string> list)
         {
             int maxLen = list.Select(s => s.Length).Max();

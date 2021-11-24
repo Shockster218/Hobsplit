@@ -4013,7 +4013,8 @@
         <Setter Property="BorderBrush" Value="{StaticResource WindowBorderColour}" />
         <Setter Property="Background" Value="{StaticResource BackgroundColour}" />
         <Setter Property="Foreground" Value="{StaticResource ControlDefaultForeground}"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#FF0080FF"/>
         <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
         <Setter Property="WindowChrome.WindowChrome">
@@ -4038,7 +4039,7 @@
                                     <ContentPresenter />
                                 </AdornerDecorator>
                                 <Grid Height="40" x:Name="titlebar"
-                                      Background="{TemplateBinding BorderBrush}"
+                                      Background="#151515"
                                       VerticalAlignment="Top" Margin="0">
                                     <DockPanel Margin="0,0,130,0">
                                         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,4,0,0" 

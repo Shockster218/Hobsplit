@@ -25,6 +25,15 @@ namespace HobbitAutosplitter
             catch { }
         }
 
+        public static void Enqueue(LivesplitActionEventHandler handler, LivesplitAction action)
+        {
+            try
+            {
+                comparisonQueue.Enqueue(() => handler.Invoke(action));
+            }
+            catch { }
+        }
+
         private static void DoQueueWork()
         {
             while (true)

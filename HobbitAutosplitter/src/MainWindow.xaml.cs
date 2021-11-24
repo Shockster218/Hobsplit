@@ -20,9 +20,9 @@ namespace HobbitAutosplitter
             CaptureManager.FrameCreated += ShowPreview;
             ProcessManager.OBSOpenedEvent += ChangeComparisonReference;
             ProcessManager.OBSClosedEvent += OBSOffline;
-            LivesplitManager.OnSplit += ChangeComparisonReference;
-            LivesplitManager.OnReset += ChangeComparisonReference;
-            LivesplitManager.OnUnsplit += ChangeComparisonReference;
+            LivesplitManager.OnLivesplitAction += ChangeComparisonReference;
+            LivesplitManager.OnLivesplitAction += ChangeComparisonReference;
+            LivesplitManager.OnLivesplitAction += ToggleThiefSplit;
             CaptureManager.Init();
             SplitManager.Init();
             LivesplitManager.Init();
@@ -46,7 +46,20 @@ namespace HobbitAutosplitter
             if(!changeComparison.IsEnabled) changeComparison.IsEnabled = true;
         }
 
-        public void ChangeComparisonReference(DigestArgs args)
+        public void ToggleThiefSplit(LivesplitAction action)
+        {
+            switch (action)
+            {
+                case LivesplitAction.SPLIT:
+                    thiefCheckbox.IsEnabled = false;
+                    break;
+                case LivesplitAction.RESET:
+                    thiefCheckbox.IsEnabled = true;
+                    break;
+            }
+        }
+
+        public void ChangeComparisonReference(LivesplitAction action)
         {
             splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             SetLevelText();
@@ -60,6 +73,10 @@ namespace HobbitAutosplitter
 
         private void LoadSettings()
         {
+            bool useThief = Settings.Default.useThief;
+            SplitManager.SetThiefSplit(useThief);
+            thiefCheckbox.IsChecked = useThief;
+
             splitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
             unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
             resetButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
@@ -200,6 +217,12 @@ namespace HobbitAutosplitter
             ComparisonCropWindow myOwnedWindow = new ComparisonCropWindow();
             myOwnedWindow.Owner = this;
             myOwnedWindow.Show();
+        }
+
+        private void thiefCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            SplitManager.SetThiefSplit((bool)thiefCheckbox.IsChecked);
+            Settings.Default.useThief = (bool)thiefCheckbox.IsChecked;
         }
     }
 }
