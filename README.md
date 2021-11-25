@@ -1,6 +1,6 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
+[![Commits Activity][commits-shield]][commits-url]
+[![Forks][forks-shield]][]
+[![Stargazers][stars-shield]][]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
@@ -62,3 +62,16 @@ This is an example of how you may give instructions on setting up your project l
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[commits-shield]: https://img.shields.io/github/commit-activity/m/shockster218/Hobbit-Autosplitter/main?style=for-the-badge
+[commits-url]: https://github.com/Shockster218/Hobbit-Autosplitter/commits/main
+[forks-shield]: https://img.shields.io/github/forks/Shockster218/Hobbit-Autosplitter?style=for-the-badge
+[forks-url]: https://github.com/Shockster218/Hobbit-Autosplitter/network/members
+[stars-shield]: https://img.shields.io/github/stars/Shockster218/Hobbit-Autosplitter?style=for-the-badge
+[stars-url]: https://github.com/Shockster218/Hobbit-Autosplitter/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Shockster218/Hobbit-Autosplitter?style=for-the-badge
+[issues-url]: https://github.com/Shockster218/Hobbit-Autosplitter/issues
+[license-shield]: https://img.shields.io/github/license/shockster218/Hobbit-Autosplitter?style=for-the-badge
+[license-url]: https://github.com/Shockster218/Hobbit-Autosplitter/blob/main/LICENSE
