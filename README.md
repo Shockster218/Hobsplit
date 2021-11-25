@@ -1,6 +1,6 @@
 [![Commits Activity][commits-shield]][commits-url]
-[![Forks][forks-shield]][]
-[![Stargazers][stars-shield]][]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][shields-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
