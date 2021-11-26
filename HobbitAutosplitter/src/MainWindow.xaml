@@ -27,7 +27,7 @@
         <Label x:Name="levelTitleLab" HorizontalContentAlignment="Center" Content="Current Level" HorizontalAlignment="Left" Margin="33,226,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="22" FontWeight="Bold" Width="240"/>
         <Label x:Name="levelLab" HorizontalContentAlignment="Center" Content="" HorizontalAlignment="Left" Margin="33,265,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="20" FontWeight="Bold" Width="240" Foreground="White" Height="45"/>
         <Image x:Name="splitReference" HorizontalAlignment="Left" Height="180" Margin="33,323,0,0" VerticalAlignment="Top" Width="240"/>
-        <Button x:Name="changeComparison" Content="Change Compairson Cropping" HorizontalAlignment="Left" Margin="33,496,0,0" VerticalAlignment="Top" Width="240" Height="43" FontSize="16" Click="changeComparison_Click" IsEnabled="False"/>
+        <Button x:Name="changeComparison" Content="Change Comparison Cropping" HorizontalAlignment="Left" Margin="33,496,0,0" VerticalAlignment="Top" Width="240" Height="43" FontSize="16" Click="changeComparison_Click" IsEnabled="False"/>
         <CheckBox x:Name="thiefCheckbox" Content="Use Thief Split? (For NMG)" HorizontalAlignment="Left" Margin="39,569,0,0" VerticalAlignment="Top" Height="29" Width="234" FontSize="18" Click="thiefCheckbox_Click" IsEnabled="False"/>
     </Grid>
 </Window>
