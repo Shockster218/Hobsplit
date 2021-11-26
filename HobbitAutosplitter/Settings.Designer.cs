@@ -122,12 +122,12 @@ namespace HobbitAutosplitter {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double referenceCropPercentage {
+        public double referenceCropPercentageLeft {
             get {
-                return ((double)(this["referenceCropPercentage"]));
+                return ((double)(this["referenceCropPercentageLeft"]));
             }
             set {
-                this["referenceCropPercentage"] = value;
+                this["referenceCropPercentageLeft"] = value;
             }
         }
         
@@ -140,6 +140,18 @@ namespace HobbitAutosplitter {
             }
             set {
                 this["useThief"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double referenceCropPercentageRight {
+            get {
+                return ((double)(this["referenceCropPercentageRight"]));
+            }
+            set {
+                this["referenceCropPercentageRight"] = value;
             }
         }
     }

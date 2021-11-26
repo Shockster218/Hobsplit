@@ -26,11 +26,14 @@
     <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
       <Value Profile="(Default)">NONAME</Value>
     </Setting>
-    <Setting Name="referenceCropPercentage" Type="System.Double" Scope="User">
+    <Setting Name="referenceCropPercentageLeft" Type="System.Double" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="useThief" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="referenceCropPercentageRight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

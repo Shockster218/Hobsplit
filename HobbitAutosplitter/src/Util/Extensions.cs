@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Threading;
@@ -118,15 +119,23 @@ namespace HobbitAutosplitter
 
         public static IEnumerable<string> CustomSort(this IEnumerable<string> list)
         {
-            int maxLen = list.Select(s => s.Length).Max();
-
-            return list.Select(s => new
+            if(list.Count() > 0)
             {
-                OrgStr = s,
-                SortStr = Regex.Replace(s, @"(\d+)|(\D+)", m => m.Value.PadLeft(maxLen, char.IsDigit(m.Value[0]) ? ' ' : '\xffff'))
-            })
-            .OrderBy(x => x.SortStr)
-            .Select(x => x.OrgStr);
+                if(list.All(s => Path.GetFileNameWithoutExtension(s).All(char.IsDigit)))
+                {
+                    int maxLen = list.Select(s => s.Length).Max();
+
+                    return list.Select(s => new
+                    {
+                        OrgStr = s,
+                        SortStr = Regex.Replace(s, @"(\d+)|(\D+)", m => m.Value.PadLeft(maxLen, char.IsDigit(m.Value[0]) ? ' ' : '\xffff'))
+                    })
+                    .OrderBy(x => x.SortStr)
+                    .Select(x => x.OrgStr);
+                }
+            }
+
+            return Enumerable.Empty<string>();
         }
     }
 }

@@ -4,15 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:HobbitAutosplitter"
         mc:Ignorable="d"
         Style="{DynamicResource MainWindowStyle}"
-        Title="ComparisonCropWindow" Height="568.851" Width="661" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="ComparisonCropWindow" Height="626.351" Width="661" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
         <Image x:Name="splitReference" HorizontalAlignment="Left" Height="480" Margin="7,10,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
-        <xctk:DoubleUpDown x:Name="referenceCrop" HorizontalAlignment="Left" Margin="356,0,0,21" VerticalAlignment="Bottom" Height="35" Width="100" ValueChanged="referenceCrop_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False"/>
-        <Slider x:Name="referenceSlider" HorizontalAlignment="Left" Margin="7,521,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="0.1" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSlider_ValueChanged" TickFrequency="0.1"/>
-        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="481,515,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16"/>
-        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="573,515,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16"/>
+        <xctk:DoubleUpDown x:Name="referenceCropLeft" HorizontalAlignment="Left" Margin="458,513,0,0" VerticalAlignment="Top" Height="35" Width="100" ValueChanged="referenceCropLeft_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False"/>
+        <Slider x:Name="referenceSliderLeft" HorizontalAlignment="Left" Margin="103,521,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSliderLeft_ValueChanged" TickFrequency="0.1" IsDirectionReversed="True"/>
+        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="572,521,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16"/>
+        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="573,562,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16"/>
+        <xctk:DoubleUpDown x:Name="referenceCropRight" HorizontalAlignment="Left" Margin="458,565,0,0" VerticalAlignment="Top" Height="35" Width="100" ValueChanged="referenceCropRight_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False"/>
+        <Slider x:Name="referenceSliderRight" HorizontalAlignment="Left" Margin="103,573,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSliderRight_ValueChanged" TickFrequency="0.1"/>
+        <Label x:Name="left" Content="From Left" HorizontalAlignment="Left" Margin="10,514,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17"/>
+        <Label x:Name="right" Content="From Right" HorizontalAlignment="Left" Margin="10,566,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17"/>
     </Grid>
 </Window>

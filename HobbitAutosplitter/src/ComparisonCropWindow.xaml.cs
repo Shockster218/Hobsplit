@@ -4,7 +4,8 @@ namespace HobbitAutosplitter
 {
     public partial class ComparisonCropWindow : Window
     {
-        private double value = 0;
+        private double valueLeft = 0;
+        private double valueRight = 0;
         private SplitData reference = null;
         private bool settingCropValue = false;
         private bool settingSliderValue = false;
@@ -13,12 +14,15 @@ namespace HobbitAutosplitter
             InitializeComponent();
             reference = SplitManager.GetCurrentComparison();
             splitReference.Source = reference.GetImage().ToBitmapImage();
-            value = Settings.Default.referenceCropPercentage;
-            referenceCrop.Value = value;
-            referenceSlider.Value = value;
+            valueLeft = Settings.Default.referenceCropPercentageLeft;
+            valueRight = Settings.Default.referenceCropPercentageRight;
+            referenceCropLeft.Value = valueLeft;
+            referenceSliderLeft.Value = valueLeft;
+            referenceCropRight.Value = valueRight;
+            referenceSliderRight.Value = valueRight;
         }
 
-        private void referenceCrop_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void referenceCropLeft_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (!settingCropValue)
             {
@@ -31,8 +35,8 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(1, 100);
                         if (_value <= 0) _value = 0.1;
 
-                        referenceSlider.Value = _value;
-                        value = _value;
+                        referenceSliderLeft.Value = _value;
+                        valueLeft = _value;
                         HandleValueChanged();
                     }
                 }
@@ -40,7 +44,7 @@ namespace HobbitAutosplitter
             }
         }
 
-        private void referenceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void referenceSliderLeft_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!settingSliderValue)
             {
@@ -48,8 +52,46 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    referenceCrop.Value = _value;
-                    value = _value;
+                    referenceCropLeft.Value = _value;
+                    valueLeft = _value;
+                    HandleValueChanged();
+                }
+                finally { settingSliderValue = false; }
+            }
+        }
+
+        private void referenceCropRight_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (!settingCropValue)
+            {
+                settingCropValue = true;
+                try
+                {
+                    double _value;
+                    if (null != e.NewValue)
+                    {
+                        _value = ((double)e.NewValue).Clamp(1, 100);
+                        if (_value <= 0) _value = 0.1;
+
+                        referenceSliderRight.Value = _value;
+                        valueRight = _value;
+                        HandleValueChanged();
+                    }
+                }
+                finally { settingCropValue = false; }
+            }
+        }
+
+        private void referenceSliderRight_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!settingSliderValue)
+            {
+                settingSliderValue = true;
+                try
+                {
+                    double _value = e.NewValue;
+                    referenceCropRight.Value = _value;
+                    valueRight = _value;
                     HandleValueChanged();
                 }
                 finally { settingSliderValue = false; }
@@ -59,17 +101,18 @@ namespace HobbitAutosplitter
         private void HandleValueChanged()
         {
             if (null == reference) return;
-            reference.UpdateImageCropping(value);
+            reference.UpdateImageCropping(valueLeft, valueRight);
             splitReference.Source = reference.GetImage().ToBitmapImage();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Settings.Default.referenceCropPercentage = value;
-            SplitManager.UpdateSplitCroppings(value);
+            Settings.Default.referenceCropPercentageLeft = valueLeft;
+            Settings.Default.referenceCropPercentageRight = valueRight;
+            SplitManager.UpdateSplitCroppings(valueLeft, valueRight);
             App.Current.Dispatcher.Invoke(() => 
             {
-                MainWindow.instance.ChangeComparisonReference();
+                MainWindow.instance.ChangeComparisonReference(LivesplitAction.NONE);
             });
             reference.Dispose();
             Close();

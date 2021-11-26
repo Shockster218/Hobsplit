@@ -1,5 +1,5 @@
 ﻿using System;
-using Screen = System.Windows.Forms.Screen;
+using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
@@ -7,9 +7,6 @@ using WindowsInput.Native;
 
 namespace HobbitAutosplitter
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow
     {
         public static MainWindow instance;
@@ -18,7 +15,7 @@ namespace HobbitAutosplitter
             InitializeComponent();
             instance = this;
             CaptureManager.FrameCreated += ShowPreview;
-            ProcessManager.OBSOpenedEvent += ChangeComparisonReference;
+            ProcessManager.OBSOpenedEvent += OBSOpened;
             ProcessManager.OBSClosedEvent += OBSOffline;
             LivesplitManager.OnLivesplitAction += ChangeComparisonReference;
             LivesplitManager.OnLivesplitAction += ChangeComparisonReference;
@@ -33,17 +30,16 @@ namespace HobbitAutosplitter
 
         public void OBSOffline()
         {
-            obsPreview.Source = ((Bitmap)Image.FromFile(Environment.CurrentDirectory + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
             splitReference.Source = null;
-            changeComparison.IsEnabled = false;
-            levelLab.Content = "Start Up...";
-            ProcessManager.FindOBSEntry();
+            levelLab.Content = "Waiting for OBS...";
+            DisableButtons();
+            obsPreview.Source = ((Bitmap)Image.FromFile(Environment.CurrentDirectory + "\\Assets\\Image\\obs_offline.jpg")).ToBitmapImage();
+            Task.Factory.StartNew(() => ProcessManager.FindOBS());
         }
 
         public void ShowPreview(PreComparisonArgs args)
         {
             obsPreview.Source = ((Bitmap)args.frame).ToBitmapImage();
-            if(!changeComparison.IsEnabled) changeComparison.IsEnabled = true;
         }
 
         public void ToggleThiefSplit(LivesplitAction action)
@@ -65,10 +61,11 @@ namespace HobbitAutosplitter
             SetLevelText();
         }
 
-        public void ChangeComparisonReference()
+        public void OBSOpened()
         {
             splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
             SetLevelText();
+            EnableButtons();
         }
 
         private void LoadSettings()
@@ -86,11 +83,38 @@ namespace HobbitAutosplitter
             y.Value = Settings.Default.cropTop;
             w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : 1920;
             h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : 1080;
+        }
+
+        private void EnableButtons()
+        {
+            splitButton.IsEnabled = true;
+            unsplitButton.IsEnabled = true;
+            resetButton.IsEnabled = true;
+            pauseButton.IsEnabled = true;
+
+            changeComparison.IsEnabled = true;
+            thiefCheckbox.IsEnabled = true;
 
             x.IsEnabled = true;
             y.IsEnabled = true;
             w.IsEnabled = true;
             h.IsEnabled = true;
+        }
+
+        private void DisableButtons()
+        {
+            splitButton.IsEnabled = false;
+            unsplitButton.IsEnabled = false;
+            resetButton.IsEnabled = false;
+            pauseButton.IsEnabled = false;
+
+            changeComparison.IsEnabled = false;
+            thiefCheckbox.IsEnabled = false;
+
+            x.IsEnabled = false;
+            y.IsEnabled = false;
+            w.IsEnabled = false;
+            h.IsEnabled = false;
         }
 
         private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -200,7 +224,8 @@ namespace HobbitAutosplitter
             MessageBoxManager.OK = "Retry";
             MessageBoxManager.Cancel = "Exit";
             MessageBoxManager.Register();
-            MessageBoxResult result = MessageBox.Show("Not enough split image files found. Please add them to Assets/Splits then click \"Retry\"", "Not enough split images", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            MessageBoxResult result = MessageBox.Show("Incorrect number of split image files found or they are incorrectly named. Please add them to " +
+                "Assets/Splits or adjust the file names then click \"Retry\"", "Not enough split images", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             MessageBoxManager.Unregister();
             if(result == MessageBoxResult.OK)
             {
