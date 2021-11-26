@@ -56,6 +56,7 @@ namespace HobbitAutosplitter
             if (sorted.Length != 15)
             {
                 App.Current.Dispatcher.Invoke(() => MainWindow.instance.ShowNotEnoughSplitsMessageBox());
+                return;
             }
 
             splits = new SplitData[17]
