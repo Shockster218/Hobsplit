@@ -93,6 +93,7 @@ For images 0, 9 and 14 (the main menu, thief split and the end of clouds burst r
 
 ## Things to Remember
 Here are a few things to keep in mind when using the program.
+* **Do not minimize OBS**. You can have OBS in the background with other windows on top of it, but minimizing OBS disallows Hobbit Autosplitter to read from the screen region.
 * It is important to have this program open before reaching the Main Menu in The Hobbit. This is because of how Hobbit Autosplitter detects the menu for comparison to start. If you don't then Hobbit Autosplitter might not work as intended on the first run. However, this is completely fine! Upon entering dream world, simply exit back to the main menu. Hobbit Autosplitter should then detect the main menu properly!
 * If the autosplitter splits but does not pause upon entering a new level, take a look at <a href="#Important-settings-in-livesplit">important settings in livesplit</a>.
 * This is a community made project in my free time. If there's something wrong with the program, then please <a href="https://github.com/Shockster218/Hobbit-Autosplitter/issues">report the issue</a>.
