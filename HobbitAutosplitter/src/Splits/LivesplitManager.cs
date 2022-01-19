@@ -17,10 +17,23 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             sim = new InputSimulator();
-            split = Settings.Default.split;
-            unsplit = Settings.Default.unsplit;
-            reset = Settings.Default.reset;
-            pause = Settings.Default.pause;
+            SetKeybinds();
+        }
+
+        public static void SetSplitKeybind() { split = Settings.Default.split; }
+
+        public static void SetUnsplitKeybind() { unsplit = Settings.Default.unsplit; }
+
+        public static void SetResetKeybind() { reset = Settings.Default.reset; }
+
+        public static void SetPauseKeybind() { pause = Settings.Default.pause; }
+
+        public static void SetKeybinds()
+        {
+            SetSplitKeybind();
+            SetUnsplitKeybind();
+            SetResetKeybind();
+            SetPauseKeybind();
         }
 
         public static void Split()
