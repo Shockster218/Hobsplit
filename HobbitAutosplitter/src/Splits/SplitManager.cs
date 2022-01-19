@@ -2,6 +2,7 @@
 using System.Linq;
 using System.IO;
 using Shipwreck.Phash;
+using System.Drawing;
 
 namespace HobbitAutosplitter
 {
@@ -71,7 +72,7 @@ namespace HobbitAutosplitter
                 new SplitData("Riddles in the Dark", sorted[6]),
                 new SplitData("Flies and Spiders", sorted[7]),
                 new SplitData("Barrels out of Bond", sorted[8]),
-                new SplitData("AWW - Pre Thief", sorted[9]),
+                new SplitData("A Warm Welcome", sorted[9]),
                 new SplitData("Thief", sorted[10], similarity:0.975f),
                 new SplitData("A Warm Welcome", sorted[9]),
                 new SplitData("Inside Information", sorted[11]),
@@ -90,6 +91,28 @@ namespace HobbitAutosplitter
             bool c = currentComparison.IsDigestSimilar(d);
             bool n = null != nextComparison ? nextComparison.IsDigestSimilar(d) : false;
             bool r = resetComparison.IsDigestSimilar(d);
+
+            // Should only fire if it sees thief split again AFTER splitting.
+            if (useThiefSplit)
+            {
+                if(splitIndex == 12)
+                {
+                    bool p = previousComparison.IsDigestSimilar(d);
+                    if (p)
+                    {
+                        LivesplitManager.Unsplit();
+                        LivesplitManager.Split();
+                    }
+                }
+            }
+            else
+            {
+                if (splitIndex == 10)
+                {
+                    IncrementSplitIndex(2);
+                    LivesplitManager.OnLivesplitAction();
+                }
+            }
 
             if (r)
             {
@@ -136,41 +159,10 @@ namespace HobbitAutosplitter
             {
                 if(splitIndex >= 2 && splitState == SplitState.GAMEPLAY)
                 {
-                    if(splitIndex == 9 && !useThiefSplit)
-                    {
-                        IncrementSplitIndex(3);
-                        LivesplitManager.Split();
-                        LivesplitManager.Pause();
-                    }
-                    else if(splitIndex == 10)
-                    {
-                        IncrementSplitIndex(2);
-                        LivesplitManager.Split();
-                    }
-                    else if(splitIndex == 15)
-                    {
-                        ResetSplitIndex();
-                        splitState = SplitState.STARTUP;
-                        LivesplitManager.Split();
-                    }
-                    else
-                    {
-                        IncrementSplitIndex();
-                        splitState = SplitState.LOADING;
-                        LivesplitManager.Split();
-                        LivesplitManager.Pause();
-                    }
-                }
-            }
-
-            // Should only fire if it sees thief split again. Gonna add a double check for the split index but shouldnt be needed
-            if (splitIndex == 12 && useThiefSplit)
-            {
-                bool p = previousComparison.IsDigestSimilar(d);
-                if (p)
-                {
-                    LivesplitManager.Unsplit();
+                    IncrementSplitIndex();
+                    splitState = SplitState.LOADING;
                     LivesplitManager.Split();
+                    LivesplitManager.Pause();
                 }
             }
         }

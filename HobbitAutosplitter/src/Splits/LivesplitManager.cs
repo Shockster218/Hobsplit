@@ -21,11 +21,8 @@ namespace HobbitAutosplitter
         }
 
         public static void SetSplitKeybind() { split = Settings.Default.split; }
-
         public static void SetUnsplitKeybind() { unsplit = Settings.Default.unsplit; }
-
         public static void SetResetKeybind() { reset = Settings.Default.reset; }
-
         public static void SetPauseKeybind() { pause = Settings.Default.pause; }
 
         public static void SetKeybinds()

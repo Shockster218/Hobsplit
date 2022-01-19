@@ -51,6 +51,7 @@ namespace HobbitAutosplitter
         {
             preview = baseImage.Crop(new RECT(baseImage.Width - (int)(valueLeft / 100 * baseImage.Width), 0, (int)(valueRight / 100 * baseImage.Width), baseImage.Height));
             cropped = preview.Crop(startCrop ? Constants.startCrop : Constants.crop);
+            digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 
         private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
