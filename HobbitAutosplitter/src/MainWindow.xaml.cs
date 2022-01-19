@@ -180,26 +180,7 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.split = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 splitButton.Content = e.Key.ToString();
-                Keyboard.ClearFocus();
-            }
-        }
-
-        private void pauseButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (pauseButton.IsFocused)
-            {
-                Settings.Default.pause = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                pauseButton.Content = e.Key.ToString();
-                Keyboard.ClearFocus();
-            }
-        }
-
-        private void resetButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (resetButton.IsFocused)
-            {
-                Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                resetButton.Content = e.Key.ToString();
+                LivesplitManager.SetSplitKeybind();
                 Keyboard.ClearFocus();
             }
         }
@@ -210,6 +191,29 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 unsplitButton.Content = e.Key.ToString();
+                LivesplitManager.SetUnsplitKeybind();
+                Keyboard.ClearFocus();
+            }
+        }
+
+        private void resetButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (resetButton.IsFocused)
+            {
+                Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                resetButton.Content = e.Key.ToString();
+                LivesplitManager.SetResetKeybind();
+                Keyboard.ClearFocus();
+            }
+        }
+
+        private void pauseButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (pauseButton.IsFocused)
+            {
+                Settings.Default.pause = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                pauseButton.Content = e.Key.ToString();
+                LivesplitManager.SetPauseKeybind();
                 Keyboard.ClearFocus();
             }
         }
