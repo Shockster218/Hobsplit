@@ -180,29 +180,6 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.split = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 splitButton.Content = e.Key.ToString();
-                LivesplitManager.SetSplitKeybind();
-                Keyboard.ClearFocus();
-            }
-        }
-
-        private void unsplitButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (unsplitButton.IsFocused)
-            {
-                Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                unsplitButton.Content = e.Key.ToString();
-                LivesplitManager.SetUnsplitKeybind();
-                Keyboard.ClearFocus();
-            }
-        }
-
-        private void resetButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (resetButton.IsFocused)
-            {
-                Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                resetButton.Content = e.Key.ToString();
-                LivesplitManager.SetResetKeybind();
                 Keyboard.ClearFocus();
             }
         }
@@ -213,7 +190,26 @@ namespace HobbitAutosplitter
             {
                 Settings.Default.pause = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
                 pauseButton.Content = e.Key.ToString();
-                LivesplitManager.SetPauseKeybind();
+                Keyboard.ClearFocus();
+            }
+        }
+
+        private void resetButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (resetButton.IsFocused)
+            {
+                Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                resetButton.Content = e.Key.ToString();
+                Keyboard.ClearFocus();
+            }
+        }
+
+        private void unsplitButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (unsplitButton.IsFocused)
+            {
+                Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
+                unsplitButton.Content = e.Key.ToString();
                 Keyboard.ClearFocus();
             }
         }
