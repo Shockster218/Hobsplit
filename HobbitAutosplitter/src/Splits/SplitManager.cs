@@ -2,7 +2,7 @@
 using System.Linq;
 using System.IO;
 using Shipwreck.Phash;
-using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
 {
@@ -78,7 +78,7 @@ namespace HobbitAutosplitter
                 new SplitData("Inside Information", sorted[11]),
                 new SplitData("Gathering of the Clouds", sorted[12]),
                 new SplitData("Clouds Burst", sorted[13]),
-                new SplitData("Finished", sorted[14])
+                new SplitData("Finished", sorted[14], similarity:0.9f)
             };
 
             currentComparison = splits[1];
@@ -159,10 +159,22 @@ namespace HobbitAutosplitter
             {
                 if(splitIndex >= 2 && splitState == SplitState.GAMEPLAY)
                 {
-                    IncrementSplitIndex();
-                    splitState = SplitState.LOADING;
                     LivesplitManager.Split();
-                    LivesplitManager.Pause();
+                    if(splitIndex == 10)
+                    {
+                        IncrementSplitIndex(2);
+                    }
+                    else if(splitIndex == 16)
+                    {
+                        ResetSplitIndex();
+                        splitState = SplitState.WAITING;
+                    }
+                    else
+                    {
+                        IncrementSplitIndex(1);
+                        splitState = SplitState.LOADING;
+                        LivesplitManager.Pause();
+                    }
                 }
             }
         }

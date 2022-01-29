@@ -18,7 +18,6 @@ namespace HobbitAutosplitter
             ProcessManager.OBSOpenedEvent += OBSOpened;
             ProcessManager.OBSClosedEvent += OBSOffline;
             LivesplitManager.OnLivesplitAction += ChangeComparisonReference;
-            LivesplitManager.OnLivesplitAction += ChangeComparisonReference;
             LivesplitManager.OnLivesplitAction += ToggleThiefSplit;
             CaptureManager.Init();
             SplitManager.Init();
