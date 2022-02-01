@@ -69,7 +69,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Assets\Themes\DarkTheme.xaml.cs">
+    <Compile Include="Assets\Theme\DarkTheme.xaml.cs">
       <DependentUpon>DarkTheme.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.Designer.cs">
@@ -80,10 +80,10 @@
     <Compile Include="src\Capture\CaptureManager.cs" />
     <Compile Include="src\Capture\ImageProcessor.cs" />
     <Compile Include="src\Capture\ProcessManager.cs" />
-    <Compile Include="src\ComparisonCropWindow.xaml.cs">
+    <Compile Include="src\Windows\ComparisonCropWindow.xaml.cs">
       <DependentUpon>ComparisonCropWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\MainWindow.xaml.cs">
+    <Compile Include="src\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\Splits\LivesplitManager.cs" />
@@ -117,15 +117,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Assets\Themes\DarkTheme.xaml">
+    <Page Include="Assets\Theme\DarkTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="src\ComparisonCropWindow.xaml">
+    <Page Include="src\Windows\ComparisonCropWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\MainWindow.xaml">
+    <Page Include="src\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
