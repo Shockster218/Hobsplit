@@ -27,7 +27,7 @@
             "Finished"
         };
 
-        public static readonly RECT crop = new RECT(40, 75, 460, 150);
+        public static readonly RECT crop = new RECT(175, 75, 525, 150);
         public static readonly RECT startCrop = new RECT(100, 120, 460, 170);
         //16:9
         //public static readonly RECT crop = new RECT(40, 75, 460, 150); 640x360
