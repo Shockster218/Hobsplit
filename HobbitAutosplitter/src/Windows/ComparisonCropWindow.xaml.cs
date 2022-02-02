@@ -13,13 +13,13 @@ namespace HobbitAutosplitter
         {
             InitializeComponent();
             reference = SplitManager.GetCurrentComparison();
-            splitReference.Source = reference.GetImage().ToBitmapImage();
+            Split_Reference_Image.Source = reference.GetImage().ToBitmapImage();
             valueLeft = Settings.Default.referenceCropPercentageLeft;
             valueRight = Settings.Default.referenceCropPercentageRight;
-            referenceCropLeft.Value = valueLeft;
-            referenceSliderLeft.Value = valueLeft;
-            referenceCropRight.Value = valueRight;
-            referenceSliderRight.Value = valueRight;
+            Crop_Left_UpDown.Value = valueLeft;
+            Crop_Left_Slider.Value = valueLeft;
+            Crop_Right_UpDown.Value = valueRight;
+            Crop_Right_Slider.Value = valueRight;
         }
 
         private void referenceCropLeft_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -35,7 +35,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(1, 100);
                         if (_value <= 0) _value = 0.1;
 
-                        referenceSliderLeft.Value = _value;
+                        Crop_Left_Slider.Value = _value;
                         valueLeft = _value;
                         HandleValueChanged();
                     }
@@ -52,7 +52,7 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    referenceCropLeft.Value = _value;
+                    Crop_Left_Slider.Value = _value;
                     valueLeft = _value;
                     HandleValueChanged();
                 }
@@ -73,7 +73,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(1, 100);
                         if (_value <= 0) _value = 0.1;
 
-                        referenceSliderRight.Value = _value;
+                        Crop_Right_Slider.Value = _value;
                         valueRight = _value;
                         HandleValueChanged();
                     }
@@ -90,7 +90,7 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    referenceCropRight.Value = _value;
+                    Crop_Right_Slider.Value = _value;
                     valueRight = _value;
                     HandleValueChanged();
                 }
@@ -102,7 +102,7 @@ namespace HobbitAutosplitter
         {
             if (null == reference) return;
             reference.UpdateImageCropping(valueLeft, valueRight);
-            splitReference.Source = reference.GetImage().ToBitmapImage();
+            Split_Reference_Image.Source = reference.GetImage().ToBitmapImage();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
