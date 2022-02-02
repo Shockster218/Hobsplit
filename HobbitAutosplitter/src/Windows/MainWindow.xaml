@@ -55,7 +55,7 @@
                 <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/hobbitspeedruns.png" Width="35" Height="35" />
             </StackPanel>
         </Button>
-        <Image x:Name="Live_Feed_Image" Margin="5,10,10,10" Grid.RowSpan="3" Grid.Row="1" Grid.Column="1" IsEnabled="False" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill"/>
+        <Image x:Name="Live_Feed_Image" Margin="5,10,10,10" Grid.RowSpan="3" Grid.Row="1" Grid.Column="1" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill" IsEnabled="False"/>
         <TextBlock x:Name="Version_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Made by&#x0a;Shockster_" VerticalAlignment="Bottom" Grid.Row="2" Margin="10,0,0,10" Height="45" Width="103" FontSize="16" Grid.RowSpan="2"/>
     </Grid>
 </Window>

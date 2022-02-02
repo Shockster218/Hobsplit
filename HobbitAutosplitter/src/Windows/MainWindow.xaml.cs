@@ -24,17 +24,8 @@ namespace HobbitAutosplitter
         {
             DoubleAnimation anim = new DoubleAnimation();
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(250));
-            if (!isLiveFeed)
-            {
-                anim.From = 220;
-                anim.To = 870;
-            }
-            else
-            {
-                anim.From = 870;
-                anim.To = 220;
-            }
-
+            anim.From = isLiveFeed ? 773 : 220;
+            anim.To = isLiveFeed ? 220 : 773;
             Storyboard sb = new Storyboard();
             sb.Children.Add(anim);
             Storyboard.SetTargetName(anim, Name);
@@ -42,7 +33,8 @@ namespace HobbitAutosplitter
 
             sb.Completed += (s, e) =>
             {
-                if (!isLiveFeed) Live_Feed_Image.IsEnabled = true;
+                // if (!isLiveFeed) start sending frames
+                // else stop
             };
 
             sb.Begin(this);
