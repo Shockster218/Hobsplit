@@ -21,7 +21,6 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             CaptureManager.DigestCompleted += CompareFrames;
-            PopulateSplitData();
         }
         public static void SetThiefSplit(bool value) { useThiefSplit = value; }
         public static bool GetThiefSplit() { return useThiefSplit; }
@@ -47,43 +46,43 @@ namespace HobbitAutosplitter
             previousComparison = splitIndex >= 1 ? splits[splitIndex - 1] : splits[0];
         }
 
-        public static void PopulateSplitData()
-        {
-            string[] sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Splits")
-                .Where(file => new string[] { ".jpg", ".jpeg", ".png", ".bmp" }
-                .Contains(Path.GetExtension(file)))
-                .CustomSort().ToArray();
-
-            if (sorted.Length != 15)
-            {
-                App.Current.Dispatcher.Invoke(() => MainWindow.instance.ShowNotEnoughSplitsMessageBox());
-                return;
-            }
-
-            splits = new SplitData[17]
-            {
-                new SplitData("Start Up / Reset", sorted[0], similarity:0.9f),
-                new SplitData("Main Menu / Start", sorted[0], startCrop:true, removeColor:true),
-                new SplitData("Dream World", sorted[1]),
-                new SplitData("An Unexpected Party", sorted[2]),
-                new SplitData("Roast Mutton", sorted[3]),
-                new SplitData("Troll-Hole", sorted[4], similarity:0.93f),
-                new SplitData("Over Hill and Under Hill", sorted[5]),
-                new SplitData("Riddles in the Dark", sorted[6]),
-                new SplitData("Flies and Spiders", sorted[7]),
-                new SplitData("Barrels out of Bond", sorted[8]),
-                new SplitData("A Warm Welcome", sorted[9]),
-                new SplitData("Thief", sorted[10], similarity:0.975f),
-                new SplitData("A Warm Welcome", sorted[9]),
-                new SplitData("Inside Information", sorted[11]),
-                new SplitData("Gathering of the Clouds", sorted[12]),
-                new SplitData("Clouds Burst", sorted[13]),
-                new SplitData("Finished", sorted[14], similarity:0.9f)
-            };
-
-            currentComparison = splits[1];
-            resetComparison = splits[0];
-        }
+        //public static void PopulateSplitData()
+        //{
+        //    string[] sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Splits")
+        //        .Where(file => new string[] { ".jpg", ".jpeg", ".png", ".bmp" }
+        //        .Contains(Path.GetExtension(file)))
+        //        .CustomSort().ToArray();
+        //
+        //    if (sorted.Length != 15)
+        //    {
+        //        App.Current.Dispatcher.Invoke(() => MainWindow.instance.ShowNotEnoughSplitsMessageBox());
+        //        return;
+        //    }
+        //
+        //    splits = new SplitData[17]
+        //    {
+        //        new SplitData("Start Up / Reset", sorted[0], similarity:0.9f),
+        //        new SplitData("Main Menu / Start", sorted[0], startCrop:true, removeColor:true),
+        //        new SplitData("Dream World", sorted[1]),
+        //        new SplitData("An Unexpected Party", sorted[2]),
+        //        new SplitData("Roast Mutton", sorted[3]),
+        //        new SplitData("Troll-Hole", sorted[4], similarity:0.93f),
+        //        new SplitData("Over Hill and Under Hill", sorted[5]),
+        //        new SplitData("Riddles in the Dark", sorted[6]),
+        //        new SplitData("Flies and Spiders", sorted[7]),
+        //        new SplitData("Barrels out of Bond", sorted[8]),
+        //        new SplitData("A Warm Welcome", sorted[9]),
+        //        new SplitData("Thief", sorted[10], similarity:0.975f),
+        //        new SplitData("A Warm Welcome", sorted[9]),
+        //        new SplitData("Inside Information", sorted[11]),
+        //        new SplitData("Gathering of the Clouds", sorted[12]),
+        //        new SplitData("Clouds Burst", sorted[13]),
+        //        new SplitData("Finished", sorted[14], similarity:0.9f)
+        //    };
+        //
+        //    currentComparison = splits[1];
+        //    resetComparison = splits[0];
+        //}
 
         public static void CompareFrames(DigestArgs args)
         {

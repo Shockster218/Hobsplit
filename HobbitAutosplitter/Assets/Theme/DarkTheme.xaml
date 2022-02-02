@@ -4055,28 +4055,6 @@
                                     </DockPanel>
                                     <StackPanel Orientation="Horizontal"
                                         Grid.Column="0" HorizontalAlignment="Right">
-                                        <Button x:Name="btnGithub"
-                                                Background="Transparent"
-                                                BorderBrush="Transparent"
-                                                Template="{DynamicResource GithubButton}"
-                                                Width="50"
-                                                WindowChrome.IsHitTestVisibleInChrome="True" 
-                                                Click="btnGithub_Click">
-                                            <StackPanel HorizontalAlignment="Stretch">
-                                                <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/github.png" Height="24" Width="24" />
-                                            </StackPanel>
-                                        </Button>
-                                        <Button x:Name="btnHobbitSpeedruns"
-                                                Background="Transparent"
-                                                BorderBrush="Transparent"
-                                                Template="{DynamicResource HobbitSpeedrunsButton}"
-                                                Width="50"
-                                                WindowChrome.IsHitTestVisibleInChrome="True" 
-                                                Click="btnHobbitSpeedruns_Click">
-                                            <StackPanel HorizontalAlignment="Stretch">
-                                                <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/hobbitspeedruns.png" Height="32" Width="32" />
-                                            </StackPanel>
-                                        </Button>
                                         <Button x:Name="btnMinimize"
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
@@ -4089,23 +4067,6 @@
                                                        Margin="1 1 0 0" 
                                                        Stroke="{StaticResource ControlGlythColour}" 
                                                        StrokeThickness="2"/>
-                                        </Button>
-
-                                        <Button x:Name="btnRestore"
-                                                Background="Transparent"
-                                                BorderBrush="Transparent"
-                                                Width="40"
-                                                WindowChrome.IsHitTestVisibleInChrome="True" 
-                                                Click="AutoMinimize_Event">
-                                            <Grid Width="12" Height="12">
-                                                <Rectangle StrokeThickness="2" 
-                                                           Stroke="{StaticResource ControlGlythColour}"
-                                                           Margin="3,0,0,3"/>
-                                                <Rectangle StrokeThickness="2" 
-                                                           Fill="{TemplateBinding BorderBrush}"
-                                                           Stroke="{StaticResource ControlGlythColour}"
-                                                           Margin="0 3 3 0"/>
-                                            </Grid>
                                         </Button>
                                         <Button x:Name="btnClose"
                                                 Background="Transparent"

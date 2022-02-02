@@ -110,10 +110,6 @@ namespace HobbitAutosplitter
             Settings.Default.referenceCropPercentageLeft = valueLeft;
             Settings.Default.referenceCropPercentageRight = valueRight;
             SplitManager.UpdateSplitCroppings(valueLeft, valueRight);
-            App.Current.Dispatcher.Invoke(() => 
-            {
-                MainWindow.instance.ChangeComparisonReference(LivesplitAction.NONE);
-            });
             reference.Dispose();
             Close();
         }

@@ -5,29 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Style="{DynamicResource CustomWindowStyle}"
-        mc:Ignorable="d" Height="660" Width="975" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid x:Name="grid">
-        <Image x:Name="obsPreview" HorizontalAlignment="Left" Height="480" Margin="306,21,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill"/>
-        <xctk:IntegerUpDown x:Name="x"  HorizontalAlignment="Left" Margin="803,516,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="x_ValueChanged" IsEnabled="False"/>
-        <xctk:IntegerUpDown x:Name="y" HorizontalAlignment="Left" Margin="495,516,0,0" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="y_ValueChanged" RenderTransformOrigin="0.114,0.579" IsEnabled="False"/>
-        <xctk:IntegerUpDown x:Name="w" HorizontalAlignment="Left" Margin="803,570,0,-11" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="w_ValueChanged" RenderTransformOrigin="-3.113,0.427" IsEnabled="False"/>
-        <xctk:IntegerUpDown x:Name="h" HorizontalAlignment="Left" Margin="495,570,0,-11" VerticalAlignment="Top" Height="40" Width="120" ValueChanged="h_ValueChanged" IsEnabled="False"/>
-        <Label x:Name="YLabel" HorizontalContentAlignment="Right" Content="Crop Top" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,516,0,0" RenderTransformOrigin="-0.196,0.871" Height="37" Width="116" FontSize="18"/>
-        <Label x:Name="XLabel" HorizontalContentAlignment="Right" Content="Crop Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="684,516,0,0" Height="37" Width="111" FontSize="18"/>
-        <Label x:Name="WidthLabel" HorizontalContentAlignment="Right" Content="Crop Right" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="661,570,0,-8" Height="37" Width="134"/>
-        <Label x:Name="HeightLabel" HorizontalContentAlignment="Right" Content="Crop Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="295,569,0,-7" Height="37" Width="137"/>
-        <Label x:Name="split" HorizontalContentAlignment="Right" Content="Split Key" HorizontalAlignment="Left" Margin="49,43,0,0" VerticalAlignment="Top" FontSize="18" Height="35" Width="99" Grid.ColumnSpan="2"/>
-        <Label x:Name="unsplit" HorizontalContentAlignment="Right" Content="Unsplit Key" HorizontalAlignment="Left" Margin="48,83,0,0" VerticalAlignment="Top" FontSize="18" Height="33" Width="100" Grid.ColumnSpan="2"/>
-        <Label x:Name="pause" HorizontalContentAlignment="Right" Content="Pause Key" HorizontalAlignment="Left" Margin="49,121,0,0" VerticalAlignment="Top" FontSize="18" Height="33" Width="99" Grid.ColumnSpan="2"/>
-        <Label x:Name="reset" HorizontalContentAlignment="Right" Content="Reset Key" HorizontalAlignment="Left" Margin="50,159,0,0" VerticalAlignment="Top" FontSize="18" Height="35" Width="98" Grid.ColumnSpan="2"/>
-        <Button x:Name="splitButton" Content="Set Key..." HorizontalAlignment="Left" Margin="187,51,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="splitButton_Click" KeyDown="splitButton_KeyDown" Height="25" FontSize="14" IsEnabled="False"/>
-        <Button x:Name="unsplitButton" Content="Set Key..." HorizontalAlignment="Left" Margin="187,89,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="unsplitButton_Click" KeyDown="unsplitButton_KeyDown" Height="25" FontSize="14" IsEnabled="False"/>
-        <Button x:Name="resetButton" Content="Set Key..." HorizontalAlignment="Left" Margin="187,165,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="resetButton_Click" KeyDown="resetButton_KeyDown" Height="25" FontSize="14" IsEnabled="False"/>
-        <Button x:Name="pauseButton" Content="Set Key..." HorizontalAlignment="Left" Margin="187,127,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.022,-0.174" Click="pauseButton_Click" KeyDown="pauseButton_KeyDown" Height="25" FontSize="14" IsEnabled="False"/>
-        <Label x:Name="levelTitleLab" HorizontalContentAlignment="Center" Content="Current Level" HorizontalAlignment="Left" Margin="33,226,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="22" FontWeight="Bold" Width="240"/>
-        <Label x:Name="levelLab" HorizontalContentAlignment="Center" Content="" HorizontalAlignment="Left" Margin="33,265,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.079,-0.346" FontSize="20" FontWeight="Bold" Width="240" Foreground="White" Height="45"/>
-        <Image x:Name="splitReference" HorizontalAlignment="Left" Height="180" Margin="33,323,0,0" VerticalAlignment="Top" Width="240"/>
-        <Button x:Name="changeComparison" Content="Change Comparison Cropping" HorizontalAlignment="Left" Margin="33,496,0,0" VerticalAlignment="Top" Width="240" Height="43" FontSize="16" Click="changeComparison_Click" IsEnabled="False"/>
-        <CheckBox x:Name="thiefCheckbox" Content="Use Thief Split? (For NMG)" HorizontalAlignment="Left" Margin="39,569,0,0" VerticalAlignment="Top" Height="29" Width="234" FontSize="18" Click="thiefCheckbox_Click" IsEnabled="False"/>
+        mc:Ignorable="d" Height="500" Width="220" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="Grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition x:Name="Run_Information_Row" Height="190*"/>
+            <RowDefinition x:Name="Controls_Row" Height="190*"/>
+            <RowDefinition x:Name="Version_Control_Row" Height="50*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="Run_Info_and_Controls" Width="210"/>
+            <ColumnDefinition x:Name="Video_Column" Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="Run_Info_GroupBox" Header="Run Information" Margin="10,10,5,5" Grid.Row="1" FontSize="14">
+            <StackPanel>
+                <TextBlock x:Name="Current_Level_TextBlock" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="4"/>
+                <TextBlock x:Name="Segment_Timer_TextBlock" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="4"/>
+                <Button x:Name="Live_Feed_Button" Content="Show Live Feed" Padding="5" Margin="3,4" Height="31" Click="Live_Feed_Button_Click"/>
+
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="Controls_GroupBox" Header="Controls" Margin="10,5,5,10" Grid.Row="2" FontSize="14">
+            <StackPanel>
+                <Button x:Name="Settings_Button" Content="Settings" Padding="5" Margin="3"/>
+                <Button x:Name="Comparison_Similarity_Button" Content="Comparison Settings" Padding="5" Margin="3" FontSize="13"/>
+                <Button x:Name="Live_Feed_Crop_Button" Content="Crop Live Feed" Padding="5" Margin="3"/>
+                <Button x:Name="Comparison_Crop_Button" Content="Crop Comparison Image" Padding="5" Margin="3"/>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="btnGithub"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Template="{DynamicResource GithubButton}"
+                Width="35"
+                WindowChrome.IsHitTestVisibleInChrome="True" 
+                Click="btnGithub_Click" Grid.Row="3" Height="35" Margin="118,0,57,15">
+            <StackPanel HorizontalAlignment="Stretch">
+                <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/github.png" Width="28" Height="28" />
+            </StackPanel>
+        </Button>
+        <Button x:Name="btnHobbitSpeedruns" 
+                Background="Transparent" 
+                BorderBrush="Transparent" 
+                Template="{DynamicResource HobbitSpeedrunsButton}"
+                Width="35"
+                WindowChrome.IsHitTestVisibleInChrome="True" 
+                Click="btnHobbitSpeedruns_Click" Grid.Row="3" Margin="161,0,14,15" Height="35">
+            <StackPanel HorizontalAlignment="Stretch">
+                <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/hobbitspeedruns.png" Width="35" Height="35" />
+            </StackPanel>
+        </Button>
+        <Image x:Name="Live_Feed_Image" Margin="5,10,10,10" Grid.RowSpan="3" Grid.Row="1" Grid.Column="1" IsEnabled="False" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill"/>
+        <TextBlock x:Name="Version_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Made by&#x0a;Shockster_" VerticalAlignment="Bottom" Grid.Row="2" Margin="10,0,0,10" Height="45" Width="103" FontSize="16" Grid.RowSpan="2"/>
     </Grid>
 </Window>

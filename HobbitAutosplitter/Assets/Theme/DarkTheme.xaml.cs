@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Diagnostics;
 
 namespace REghZyFramework.Themes
 {
@@ -30,15 +29,5 @@ namespace REghZyFramework.Themes
                 window.WindowState = WindowState.Maximized;
         }
         public void MinimizeWind(Window window) => window.WindowState = WindowState.Minimized;
-
-        private void btnHobbitSpeedruns_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("https://hobbitspeedruns.com/");
-        }
-
-        private void btnGithub_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("https://github.com/Shockster218/Hobbit-Autosplitter");
-        }
     }
 }
