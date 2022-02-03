@@ -59,6 +59,13 @@ namespace HobbitAutosplitter
             myOwnedWindow.Show();
         }
 
+        private void Live_Feed_Crop_Button_Click(object sender, RoutedEventArgs e)
+        {
+            LivefeedCropWindow myOwnedWindow = new LivefeedCropWindow();
+            myOwnedWindow.Owner = this;
+            myOwnedWindow.Show();
+        }
+
         //public void OBSOffline()
         //{
         //    DisableButtons();

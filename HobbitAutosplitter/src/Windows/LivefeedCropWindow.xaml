@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Style="{DynamicResource MainWindowStyle}"
-        xmlns:local="clr-namespace:HobbitAutosplitter.src.Windows"
+        xmlns:local="clr-namespace:HobbitAutosplitter"
         mc:Ignorable="d"
         Title="LivefeedCropWindow" Height="950" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>

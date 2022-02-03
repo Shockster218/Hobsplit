@@ -28,8 +28,8 @@
         <GroupBox x:Name="Controls_GroupBox" Header="Controls" Margin="10,5,5,10" Grid.Row="2" FontSize="14">
             <StackPanel>
                 <Button x:Name="Settings_Button" Content="Settings" Padding="5" Margin="3"/>
-                <Button x:Name="Comparison_Similarity_Button" Content="Comparison Settings" Padding="5" Margin="3" FontSize="13"/>
-                <Button x:Name="Live_Feed_Crop_Button" Content="Crop Live Feed" Padding="5" Margin="3"/>
+                <Button x:Name="Comparison_Similarity_Button" Content="Comparison Similarity Settings" Padding="5" Margin="3" FontSize="12"/>
+                <Button x:Name="Live_Feed_Crop_Button" Content="Crop Live Feed" Padding="5" Margin="3" Click="Live_Feed_Crop_Button_Click"/>
                 <Button x:Name="Comparison_Crop_Button" Content="Crop Comparison Image" Padding="5" Margin="3" Click="Comparison_Crop_Button_Click"/>
             </StackPanel>
         </GroupBox>
