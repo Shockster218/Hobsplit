@@ -1,25 +1,26 @@
 ﻿using System.Windows;
+using System.Drawing;
 
 namespace HobbitAutosplitter
 {
-    public partial class ComparisonCropWindow : Window
+    public partial class LivefeedCropWindow : Window
     {
         private double valueLeft = 0;
         private double valueRight = 0;
         private double valueTop = 0;
         private double valueBottom = 0;
-        private SplitData reference = null;
         private bool settingCropValue = false;
         private bool settingSliderValue = false;
-        public ComparisonCropWindow()
+        private Bitmap frame;
+        public LivefeedCropWindow()
         {
             InitializeComponent();
-            reference = SplitManager.GetCurrentComparison();
-            Split_Reference_Image.Source = reference.GetImage().ToBitmapImage();
-            valueLeft = Settings.Default.refCropLeft;
-            valueRight = Settings.Default.refCropRight;
-            valueTop = Settings.Default.refCropTop;
-            valueBottom = Settings.Default.refCropBottom;
+            frame = CaptureManager.GetCurrentFrame();
+            SetGameplayImage();
+            valueLeft = Settings.Default.cropLeft;
+            valueRight = Settings.Default.cropRight;
+            valueTop = Settings.Default.cropTop;
+            valueBottom = Settings.Default.cropBottom;
             Crop_Left_UpDown.Value = valueLeft;
             Crop_Left_Slider.Value = valueLeft;
             Crop_Right_UpDown.Value = valueRight;
@@ -43,7 +44,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Left_Slider.Value = _value;
                         valueLeft = _value;
-                        HandleValueChanged();
+                        SetGameplayImage();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -60,7 +61,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Left_Slider.Value = _value;
                     valueLeft = _value;
-                    HandleValueChanged();
+                    SetGameplayImage();
                 }
                 finally { settingSliderValue = false; }
             }
@@ -79,7 +80,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Top_Slider.Value = _value;
                         valueTop = _value;
-                        HandleValueChanged();
+                        SetGameplayImage();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -96,7 +97,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Top_Slider.Value = _value;
                     valueTop = _value;
-                    HandleValueChanged();
+                    SetGameplayImage();
                 }
                 finally { settingSliderValue = false; }
             }
@@ -115,7 +116,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Right_Slider.Value = _value;
                         valueRight = _value;
-                        HandleValueChanged();
+                        SetGameplayImage();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -132,7 +133,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Right_Slider.Value = _value;
                     valueRight = _value;
-                    HandleValueChanged();
+                    SetGameplayImage();
                 }
                 finally { settingSliderValue = false; }
             }
@@ -151,7 +152,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Bottom_Slider.Value = _value;
                         valueBottom = _value;
-                        HandleValueChanged();
+                        SetGameplayImage();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -168,33 +169,39 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Bottom_Slider.Value = _value;
                     valueBottom = _value;
-                    HandleValueChanged();
+                    SetGameplayImage();
                 }
                 finally { settingSliderValue = false; }
             }
         }
 
-        private void HandleValueChanged()
+        private void SetGameplayImage()
         {
-            if (null == reference) return;
-            reference.UpdateImageCropping(valueLeft, valueRight, valueTop, valueBottom);
-            Split_Reference_Image.Source = reference.GetImage().ToBitmapImage();
+            Bitmap crop = (Bitmap)frame.Clone();
+            crop.Crop(new RECT(
+                (int)valueLeft / 100 * frame.Width,
+                (int)valueTop / 100 * frame.Height,
+                frame.Width - (int)(valueRight / 100 * frame.Width),
+                frame.Height - (int)(valueBottom / 100 * frame.Height)
+                ));
+            Gameplay_Image.Source = crop.ToBitmapImage();
+            crop.Dispose();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Settings.Default.refCropLeft = valueLeft;
-            Settings.Default.refCropTop = valueTop;
-            Settings.Default.refCropRight = valueRight;
-            Settings.Default.refCropBottom = valueBottom;
-            SplitManager.UpdateSplitCroppings(valueLeft, valueRight, valueTop, valueBottom);
-            reference.Dispose();
+            Settings.Default.cropLeft = valueLeft;
+            Settings.Default.cropTop = valueTop;
+            Settings.Default.cropRight = valueRight;
+            Settings.Default.cropBottom = valueBottom;
+            CaptureManager.SetPreviewCrop(valueLeft, valueRight, valueTop, valueBottom);
+            frame.Dispose();
             Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            reference.Dispose();
+            frame.Dispose();
             Close();
         }
     }

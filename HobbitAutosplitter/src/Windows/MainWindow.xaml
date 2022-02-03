@@ -30,7 +30,7 @@
                 <Button x:Name="Settings_Button" Content="Settings" Padding="5" Margin="3"/>
                 <Button x:Name="Comparison_Similarity_Button" Content="Comparison Settings" Padding="5" Margin="3" FontSize="13"/>
                 <Button x:Name="Live_Feed_Crop_Button" Content="Crop Live Feed" Padding="5" Margin="3"/>
-                <Button x:Name="Comparison_Crop_Button" Content="Crop Comparison Image" Padding="5" Margin="3"/>
+                <Button x:Name="Comparison_Crop_Button" Content="Crop Comparison Image" Padding="5" Margin="3" Click="Comparison_Crop_Button_Click"/>
             </StackPanel>
         </GroupBox>
         <Button x:Name="btnGithub"

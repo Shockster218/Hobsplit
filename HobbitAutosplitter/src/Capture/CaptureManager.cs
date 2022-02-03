@@ -18,11 +18,11 @@ namespace HobbitAutosplitter
         public static void Init()
         {
             ProcessManager.OBSOpenedEvent += CaptureApplication;
-            hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
         }
 
         public static void CaptureApplication()
         {
+            hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
             GetWindowRect(hwnd, out rc);
             SetPreviewCrop(Settings.Default.cropLeft, Settings.Default.cropRight, Settings.Default.cropTop, Settings.Default.cropBottom);
 
@@ -66,7 +66,7 @@ namespace HobbitAutosplitter
                 PrintWindow(hwnd.Handle, hdcBitmap, 0);
                 gfxBmp.ReleaseHdc(hdcBitmap);
 
-                return bmp.Crop(previewCrop).Resize();
+                return bmp.Resize();
             }
             catch { return null; }
         }

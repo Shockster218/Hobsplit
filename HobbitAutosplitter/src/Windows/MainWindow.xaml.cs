@@ -52,6 +52,13 @@ namespace HobbitAutosplitter
             Process.Start("https://github.com/Shockster218/Hobbit-Autosplitter");
         }
 
+        private void Comparison_Crop_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonCropWindow myOwnedWindow = new ComparisonCropWindow();
+            myOwnedWindow.Owner = this;
+            myOwnedWindow.Show();
+        }
+
         //public void OBSOffline()
         //{
         //    DisableButtons();

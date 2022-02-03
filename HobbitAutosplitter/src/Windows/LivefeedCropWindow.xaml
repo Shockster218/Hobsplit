@@ -1,21 +1,22 @@
-﻿<Window x:Class="HobbitAutosplitter.ComparisonCropWindow"
+﻿<Window x:Class="HobbitAutosplitter.LivefeedCropWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
         Style="{DynamicResource MainWindowStyle}"
-        Title="ComparisonCropWindow" Height="950" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        xmlns:local="clr-namespace:HobbitAutosplitter.src.Windows"
+        mc:Ignorable="d"
+        Title="LivefeedCropWindow" Height="950" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="161"/>
             <RowDefinition Height="500"/>
             <RowDefinition Height="113*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,9" Height="97" Width="636" FontSize="16"><Run Text="Use the controls below to adjust the cropping of your comparison image. You should aim to remove all elements of the image that isn't gameplay; such as a webcam, livesplit, or chat. It is very important you crop the reference image as close to your gameplay feed crop as possible for best accuracy. This change will apply to all reference images."/><LineBreak/><Run/></TextBlock>
-        <TextBlock x:Name="Comparison_Title_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Comparison Image Crop" VerticalAlignment="Center" Margin="10,10,0,113" Height="38" Width="636" FontSize="26" FontWeight="Bold"/>
-        <Image x:Name="Split_Reference_Image" HorizontalAlignment="Left" Height="480" Margin="10,10,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill" Grid.Row="1"/>
+        <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,9" Height="97" Width="636" FontSize="16"><Run Text="Use the controls below to adjust the cropping of your gameplay video. You should aim to remove all elements of the video that isn't gameplay; such as a webcam, livesplit, or chat. It is extremely important that you do this as precisely as possible because this will effect how accurate the program is overall. Make sure to crop the comparison image as well."/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="Comparison_Title_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Gameplay Video Crop" VerticalAlignment="Center" Margin="10,10,0,113" Height="38" Width="636" FontSize="26" FontWeight="Bold"/>
+        <Image x:Name="Gameplay_Image" HorizontalAlignment="Left" Height="480" Margin="10,10,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill" Grid.Row="1"/>
         <TextBlock x:Name="Crop_Explanation_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="Each slider corresponds to the stated side of the image. Each number is based on a percentage of the total image. For example, if every side is set to 100, the full image would be displayed because each side is set to it's maximum amount." Margin="10,0,0,202" Grid.Row="2" Height="74" Width="636" FontSize="16"/>
         <Label x:Name="Left_Label" Content="Left" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="16,95,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="65" Grid.Row="2"/>
         <Slider x:Name="Crop_Left_Slider" HorizontalAlignment="Left" Margin="93,101,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="Crop_Left_Slider_ValueChanged" TickFrequency="0.1" Height="20" Grid.Row="2" Value="51"/>

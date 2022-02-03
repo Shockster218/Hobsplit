@@ -83,6 +83,9 @@
     <Compile Include="src\Windows\ComparisonCropWindow.xaml.cs">
       <DependentUpon>ComparisonCropWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="src\Windows\LivefeedCropWindow.xaml.cs">
+      <DependentUpon>LivefeedCropWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="src\Windows\ComparisonCropWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\Windows\LivefeedCropWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
