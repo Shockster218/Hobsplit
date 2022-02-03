@@ -6,23 +6,30 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Style="{DynamicResource MainWindowStyle}"
-        Title="ComparisonCropWindow" Height="778" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="ComparisonCropWindow" Height="950" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="161*"/>
-            <RowDefinition Height="500*"/>
+            <RowDefinition Height="161"/>
+            <RowDefinition Height="500"/>
             <RowDefinition Height="113*"/>
         </Grid.RowDefinitions>
-        <Image x:Name="Split_Reference_Image" HorizontalAlignment="Left" Height="480" Margin="10,10,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill" Grid.Row="1"/>
-        <xctk:DoubleUpDown x:Name="Crop_Left_UpDown" HorizontalAlignment="Left" Margin="458,13,0,0" VerticalAlignment="Top" Height="36" Width="100" ValueChanged="referenceCropLeft_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False" Grid.Row="2"/>
-        <Slider x:Name="Crop_Left_Slider" HorizontalAlignment="Left" Margin="103,18,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSliderLeft_ValueChanged" TickFrequency="0.1" IsDirectionReversed="True" Height="20" Grid.Row="2"/>
-        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="572,18,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16" Grid.Row="2"/>
-        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="573,60,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16" Grid.Row="2"/>
-        <xctk:DoubleUpDown x:Name="Crop_Right_UpDown" HorizontalAlignment="Left" Margin="458,62,0,0" VerticalAlignment="Top" Height="36" Width="100" ValueChanged="referenceCropRight_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False" Grid.Row="2"/>
-        <Slider x:Name="Crop_Right_Slider" HorizontalAlignment="Left" Margin="103,70,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="referenceSliderRight_ValueChanged" TickFrequency="0.1" Height="20" Grid.Row="2"/>
-        <Label x:Name="Left_Label" Content="From Left" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="81" Grid.Row="2"/>
-        <Label x:Name="Right_Label" Content="From Right" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="93" Grid.Row="2"/>
         <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,9" Height="97" Width="636" FontSize="16"><Run Text="Use the controls below to adjust the cropping of your comparison reference image. You should aim to remove all elements of an image that isn't gameplay; such as a webcam, livesplit, or chat. It is extremely important you crop the reference image as close to the live feed cropping as possible for highest possible accuracy."/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="Comparison_Title_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Comparison Crop" VerticalAlignment="Center" Margin="10,10,0,113" Height="38" Width="636" FontSize="26" FontWeight="Bold"/>
+        <Image x:Name="Split_Reference_Image" HorizontalAlignment="Left" Height="480" Margin="10,10,0,0" VerticalAlignment="Top" Width="640" Stretch="Fill" Grid.Row="1"/>
+        <TextBlock x:Name="Crop_Explanation_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="Each slider corresponds to the stated side of the image. Each number is based on a percentage of the total image. For example, if every side is set to 100, the full image would be displayed because each side is set to it's maximum amount." Margin="10,0,0,202" Grid.Row="2" Height="74" Width="636" FontSize="16"/>
+        <Label x:Name="Left_Label" Content="Left" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="16,95,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="65" Grid.Row="2"/>
+        <Slider x:Name="Crop_Left_Slider" HorizontalAlignment="Left" Margin="93,101,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="Crop_Left_Slider_ValueChanged" TickFrequency="0.1" Height="20" Grid.Row="2" Value="51"/>
+        <xctk:DoubleUpDown x:Name="Crop_Left_UpDown" HorizontalAlignment="Left" Margin="448,93,0,0" VerticalAlignment="Top" Height="36" Width="100" ValueChanged="Crop_Left_UpDown_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False" Grid.Row="2"/>
+        <Label x:Name="Right_Label" Content="Right" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="16,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="65" Grid.Row="2"/>
+        <Slider x:Name="Crop_Right_Slider" HorizontalAlignment="Left" Margin="93,150,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="Crop_Right_Slider_ValueChanged" TickFrequency="0.1" Height="20" Grid.Row="2"/>
+        <xctk:DoubleUpDown x:Name="Crop_Right_UpDown" HorizontalAlignment="Left" Margin="448,142,0,0" VerticalAlignment="Top" Height="36" Width="100" ValueChanged="Crop_Right_UpDown_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False" Grid.Row="2"/>
+        <Label x:Name="Top_label" Content="Top" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="16,193,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="65" Grid.Row="2"/>
+        <Slider x:Name="Crop_Top_Slider" HorizontalAlignment="Left" Margin="93,199,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="Crop_Top_Slider_ValueChanged" TickFrequency="0.1" Height="20" Grid.Row="2" Value="51"/>
+        <xctk:DoubleUpDown x:Name="Crop_Top_UpDown" HorizontalAlignment="Left" Margin="448,191,0,0" VerticalAlignment="Top" Height="36" Width="100" ValueChanged="Crop_Top_UpDown_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False" Grid.Row="2"/>
+        <Label x:Name="Bottom_Label" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="16,242,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.077" FontSize="17" Height="32" Width="65" Grid.Row="2" Content="Bottom"/>
+        <Slider x:Name="Crop_Bottom_Slider" HorizontalAlignment="Left" Margin="93,248,0,0" VerticalAlignment="Top" Width="337" Maximum="100" Minimum="51" LargeChange="1" SmallChange="0.1" ValueChanged="Crop_Bottom_Slider_ValueChanged" TickFrequency="0.1" Height="20" Grid.Row="2"/>
+        <xctk:DoubleUpDown x:Name="Crop_Bottom_UpDown" HorizontalAlignment="Left" Margin="448,240,0,0" VerticalAlignment="Top" Height="36" Width="100" ValueChanged="Crop_Bottom_UpDown_ValueChanged" RenderTransformOrigin="0.114,0.579" Maximum="100" Minimum="1" FormatString="F1" Increment="0.1" IsUndoEnabled="False" Grid.Row="2"/>
+        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="563,194,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16" Grid.Row="2"/>
+        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="563,243,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16" Grid.Row="2"/>
     </Grid>
 </Window>

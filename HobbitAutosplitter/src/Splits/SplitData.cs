@@ -11,7 +11,7 @@ namespace HobbitAutosplitter
     {
         private string name;
         private Bitmap baseImage;
-        private Bitmap preview;
+        private Bitmap baseCrop;
         private Bitmap cropped;
         private Digest digest;
         private float similarity;
@@ -24,7 +24,7 @@ namespace HobbitAutosplitter
             this.similarity = similarity;
             this.startCrop = startCrop;
             baseImage = SetImage(imagePath);
-            UpdateImageCropping(Settings.Default.referenceCropPercentageLeft, Settings.Default.referenceCropPercentageRight);
+            UpdateImageCropping(Settings.Default.refCropLeft, Settings.Default.refCropRight, Settings.Default.refCropTop, Settings.Default.refCropTop);
             if(removeColor) cropped.RemoveColor();
             digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
@@ -39,7 +39,7 @@ namespace HobbitAutosplitter
             return ImagePhash.GetCrossCorrelation(digest, d) >= similarity;
         }
 
-        public Bitmap GetImage() { return preview; }
+        public Bitmap GetImage() { return baseCrop; }
 
         public Bitmap GetImageCropped() { return cropped; }
 
@@ -47,10 +47,15 @@ namespace HobbitAutosplitter
 
         public Digest GetDigest() { return digest; }
 
-        public void UpdateImageCropping(double valueLeft, double valueRight)
+        public void UpdateImageCropping(double left, double right, double top, double bottom)
         {
-            preview = baseImage.Crop(new RECT(baseImage.Width - (int)(valueLeft / 100 * baseImage.Width), 0, (int)(valueRight / 100 * baseImage.Width), baseImage.Height));
-            cropped = preview.Crop(startCrop ? Constants.startCrop : Constants.crop);
+            baseCrop = baseImage.Crop(new RECT(
+                (int)left / 100 * baseImage.Width,
+                (int)top / 100 * baseImage.Height,
+                baseImage.Width - (int)(right / 100 * baseImage.Width),
+                baseImage.Height - (int)(bottom / 100 * baseImage.Height)
+                ));
+            cropped = baseCrop.Crop(startCrop ? Constants.startCrop : Constants.crop);
             digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 

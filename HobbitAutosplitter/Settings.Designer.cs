@@ -25,10 +25,10 @@ namespace HobbitAutosplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int cropLeft {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double cropLeft {
             get {
-                return ((int)(this["cropLeft"]));
+                return ((double)(this["cropLeft"]));
             }
             set {
                 this["cropLeft"] = value;
@@ -37,10 +37,10 @@ namespace HobbitAutosplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int cropTop {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double cropTop {
             get {
-                return ((int)(this["cropTop"]));
+                return ((double)(this["cropTop"]));
             }
             set {
                 this["cropTop"] = value;
@@ -49,10 +49,10 @@ namespace HobbitAutosplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int cropRight {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double cropRight {
             get {
-                return ((int)(this["cropRight"]));
+                return ((double)(this["cropRight"]));
             }
             set {
                 this["cropRight"] = value;
@@ -61,10 +61,10 @@ namespace HobbitAutosplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int cropBottom {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double cropBottom {
             get {
-                return ((int)(this["cropBottom"]));
+                return ((double)(this["cropBottom"]));
             }
             set {
                 this["cropBottom"] = value;
@@ -122,12 +122,48 @@ namespace HobbitAutosplitter {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double referenceCropPercentageLeft {
+        public double refCropLeft {
             get {
-                return ((double)(this["referenceCropPercentageLeft"]));
+                return ((double)(this["refCropLeft"]));
             }
             set {
-                this["referenceCropPercentageLeft"] = value;
+                this["refCropLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double refCropRight {
+            get {
+                return ((double)(this["refCropRight"]));
+            }
+            set {
+                this["refCropRight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double refCropTop {
+            get {
+                return ((double)(this["refCropTop"]));
+            }
+            set {
+                this["refCropTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double refCropBottom {
+            get {
+                return ((double)(this["refCropBottom"]));
+            }
+            set {
+                this["refCropBottom"] = value;
             }
         }
         
@@ -140,18 +176,6 @@ namespace HobbitAutosplitter {
             }
             set {
                 this["useThief"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double referenceCropPercentageRight {
-            get {
-                return ((double)(this["referenceCropPercentageRight"]));
-            }
-            set {
-                this["referenceCropPercentageRight"] = value;
             }
         }
     }

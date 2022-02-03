@@ -2,17 +2,17 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HobbitAutosplitter" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="cropLeft" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="cropLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="cropTop" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="cropTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="cropRight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="cropRight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="cropBottom" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="cropBottom" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="split" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
       <Value Profile="(Default)">NONAME</Value>
@@ -26,14 +26,20 @@
     <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
       <Value Profile="(Default)">NONAME</Value>
     </Setting>
-    <Setting Name="referenceCropPercentageLeft" Type="System.Double" Scope="User">
+    <Setting Name="refCropLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="refCropRight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="refCropTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="refCropBottom" Type="System.Double" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="useThief" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="referenceCropPercentageRight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

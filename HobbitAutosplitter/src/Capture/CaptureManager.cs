@@ -12,23 +12,19 @@ namespace HobbitAutosplitter
         public static event PreComparisonEventHandler FrameCreated;
         public static event DigestEventHandler DigestCompleted;
 
-        public static RECT previewCrop;
+        private static RECT previewCrop;
+        private static RECT rc;
+        private static HandleRef hwnd;
         public static void Init()
         {
             ProcessManager.OBSOpenedEvent += CaptureApplication;
+            hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
         }
 
         public static void CaptureApplication()
         {
-            HandleRef hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
-            RECT rc;
             GetWindowRect(hwnd, out rc);
-            previewCrop = new RECT(
-                Settings.Default.cropLeft,
-                Settings.Default.cropTop,
-                Settings.Default.cropRight != 0 ? Settings.Default.cropRight : rc.Right,
-                Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : rc.Bottom
-                );
+            SetPreviewCrop(Settings.Default.cropLeft, Settings.Default.cropRight, Settings.Default.cropTop, Settings.Default.cropBottom);
 
             while (ProcessManager.obsRunning)
             {
@@ -57,6 +53,32 @@ namespace HobbitAutosplitter
                 }
                 catch {}
             }
+        }
+
+        public static Bitmap GetCurrentFrame()
+        {
+            try
+            {
+                Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+                Graphics gfxBmp = Graphics.FromImage(bmp);
+                IntPtr hdcBitmap = gfxBmp.GetHdc();
+
+                PrintWindow(hwnd.Handle, hdcBitmap, 0);
+                gfxBmp.ReleaseHdc(hdcBitmap);
+
+                return bmp.Crop(previewCrop).Resize();
+            }
+            catch { return null; }
+        }
+
+        public static void SetPreviewCrop(double left, double right, double top, double bottom)
+        {
+            previewCrop = new RECT(
+                (int)left / 100 * rc.Right,
+                (int)top / 100 * rc.Bottom,
+                rc.Right - (int)(right / 100 * rc.Right),
+                rc.Bottom - (int)(bottom / 100 * rc.Bottom)
+            );
         }
 
         #region Imports
