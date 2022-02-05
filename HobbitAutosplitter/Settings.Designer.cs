@@ -178,5 +178,221 @@ namespace HobbitAutosplitter {
                 this["useThief"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool manualSplit {
+            get {
+                return ((bool)(this["manualSplit"]));
+            }
+            set {
+                this["manualSplit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool playReadySound {
+            get {
+                return ((bool)(this["playReadySound"]));
+            }
+            set {
+                this["playReadySound"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool playThiefSound {
+            get {
+                return ((bool)(this["playThiefSound"]));
+            }
+            set {
+                this["playThiefSound"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string menuPath {
+            get {
+                return ((string)(this["menuPath"]));
+            }
+            set {
+                this["menuPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string dwPath {
+            get {
+                return ((string)(this["dwPath"]));
+            }
+            set {
+                this["dwPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string aupPath {
+            get {
+                return ((string)(this["aupPath"]));
+            }
+            set {
+                this["aupPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string rmPath {
+            get {
+                return ((string)(this["rmPath"]));
+            }
+            set {
+                this["rmPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string thPath {
+            get {
+                return ((string)(this["thPath"]));
+            }
+            set {
+                this["thPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ohPath {
+            get {
+                return ((string)(this["ohPath"]));
+            }
+            set {
+                this["ohPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string riddlesPath {
+            get {
+                return ((string)(this["riddlesPath"]));
+            }
+            set {
+                this["riddlesPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string fasPath {
+            get {
+                return ((string)(this["fasPath"]));
+            }
+            set {
+                this["fasPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string boobPath {
+            get {
+                return ((string)(this["boobPath"]));
+            }
+            set {
+                this["boobPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string awwPath {
+            get {
+                return ((string)(this["awwPath"]));
+            }
+            set {
+                this["awwPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string thiefPath {
+            get {
+                return ((string)(this["thiefPath"]));
+            }
+            set {
+                this["thiefPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string iiPath {
+            get {
+                return ((string)(this["iiPath"]));
+            }
+            set {
+                this["iiPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string gotcPath {
+            get {
+                return ((string)(this["gotcPath"]));
+            }
+            set {
+                this["gotcPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string tcbPath {
+            get {
+                return ((string)(this["tcbPath"]));
+            }
+            set {
+                this["tcbPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string finishPath {
+            get {
+                return ((string)(this["finishPath"]));
+            }
+            set {
+                this["finishPath"] = value;
+            }
+        }
     }
 }

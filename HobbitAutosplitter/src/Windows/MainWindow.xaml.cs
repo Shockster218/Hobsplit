@@ -13,10 +13,6 @@ namespace HobbitAutosplitter
         {
             InitializeComponent();
             instance = this;
-            CaptureManager.Init();
-            SplitManager.Init();
-            LivesplitManager.Init();
-            ProcessManager.Init();
         }
 
 
@@ -24,8 +20,8 @@ namespace HobbitAutosplitter
         {
             DoubleAnimation anim = new DoubleAnimation();
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(250));
-            anim.From = isLiveFeed ? 773 : 220;
-            anim.To = isLiveFeed ? 220 : 773;
+            anim.From = isLiveFeed ? 768 : 215;
+            anim.To = isLiveFeed ? 215 : 768;
             Storyboard sb = new Storyboard();
             sb.Children.Add(anim);
             Storyboard.SetTargetName(anim, Name);
@@ -62,6 +58,13 @@ namespace HobbitAutosplitter
         private void Live_Feed_Crop_Button_Click(object sender, RoutedEventArgs e)
         {
             LivefeedCropWindow myOwnedWindow = new LivefeedCropWindow();
+            myOwnedWindow.Owner = this;
+            myOwnedWindow.Show();
+        }
+
+        private void Settings_Button_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow myOwnedWindow = new SettingsWindow();
             myOwnedWindow.Owner = this;
             myOwnedWindow.Show();
         }
