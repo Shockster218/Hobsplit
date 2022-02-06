@@ -7,7 +7,7 @@
         xmlns:WPFToggleSwitch="clr-namespace:WPFToggleSwitch;assembly=WPFToggleSwitch" x:Name="Settings_Window" x:Class="HobbitAutosplitter.SettingsWindow"
         mc:Ignorable="d"
         Style="{DynamicResource CustomWindowStyle}"
-        Title="SettingsWindow" Height="268" Width="482" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FFFF9700">
+        Title="General Settings" Height="268" Width="482" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FFFF9700">
     <Grid x:Name="Grid">
         <Grid.RowDefinitions>
         </Grid.RowDefinitions>

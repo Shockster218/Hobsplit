@@ -7,7 +7,7 @@
         Style="{DynamicResource CustomWindowStyle}"
         xmlns:local="clr-namespace:HobbitAutosplitter"
         mc:Ignorable="d"
-        Title="LivefeedCropWindow" Height="975" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF700091">
+        Title="Gameplay Video Crop" Height="975" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF700091">
     <Grid x:Name="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="161"/>

@@ -27,8 +27,8 @@
         <GroupBox x:Name="Controls_GroupBox" Header="Controls" Margin="10,5,7,10" Grid.Row="1" FontSize="14">
             <StackPanel>
                 <Button x:Name="Settings_Button" Content="Settings" Padding="5" Margin="3" Click="Settings_Button_Click"/>
+                <Button x:Name="Comaprison_Settings_Button" Content="Comaprison Image Settings" Padding="5" Margin="3" Click="Comaprison_Settings_Button_Click"/>
                 <Button x:Name="Live_Feed_Crop_Button" Content="Crop Live Feed" Padding="5" Margin="3" Click="Live_Feed_Crop_Button_Click"/>
-                <Button x:Name="Comaprison_Settings_Button" Content="Comaprison Image Settings" Padding="5" Margin="3"/>
                 <Button x:Name="Comparison_Crop_Button" Content="Crop Comparison Image" Padding="5" Margin="3" Click="Comparison_Crop_Button_Click"/>
             </StackPanel>
         </GroupBox>

@@ -69,6 +69,13 @@ namespace HobbitAutosplitter
             myOwnedWindow.Show();
         }
 
+        private void Comaprison_Settings_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonSettingsWindow myOwnedWindow = new ComparisonSettingsWindow();
+            myOwnedWindow.Owner = this;
+            myOwnedWindow.Show();
+        }
+
         //public void OBSOffline()
         //{
         //    DisableButtons();

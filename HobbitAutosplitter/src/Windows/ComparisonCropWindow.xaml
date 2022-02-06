@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Style="{DynamicResource CustomWindowStyle}"
-        Title="ComparisonCropWindow" Height="975" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF17FF00">
+        Title="Comparison Image Crop" Height="975" Width="660" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF17FF00">
     <Grid x:Name="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="161"/>

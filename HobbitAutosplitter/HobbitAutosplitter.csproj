@@ -83,6 +83,9 @@
     <Compile Include="src\Windows\ComparisonCropWindow.xaml.cs">
       <DependentUpon>ComparisonCropWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="src\Windows\ComparisonSettingsWindow.xaml.cs">
+      <DependentUpon>ComparisonSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Windows\LivefeedCropWindow.xaml.cs">
       <DependentUpon>LivefeedCropWindow.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
     <Compile Include="src\Util\QueueManager.cs" />
     <Compile Include="src\Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\Windows\StartupWindow.xaml.cs">
+      <DependentUpon>StartupWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +137,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="src\Windows\ComparisonSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\Windows\LivefeedCropWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +150,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="src\Windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\Windows\StartupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
