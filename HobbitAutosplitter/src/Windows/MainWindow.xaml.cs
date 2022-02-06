@@ -20,8 +20,8 @@ namespace HobbitAutosplitter
         {
             DoubleAnimation anim = new DoubleAnimation();
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(250));
-            anim.From = isLiveFeed ? 768 : 215;
-            anim.To = isLiveFeed ? 215 : 768;
+            anim.From = isLiveFeed ? 830 : 225;
+            anim.To = isLiveFeed ? 225 : 830;
             Storyboard sb = new Storyboard();
             sb.Children.Add(anim);
             Storyboard.SetTargetName(anim, Name);

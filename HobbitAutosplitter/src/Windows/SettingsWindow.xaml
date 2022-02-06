@@ -7,17 +7,15 @@
         xmlns:WPFToggleSwitch="clr-namespace:WPFToggleSwitch;assembly=WPFToggleSwitch" x:Name="Settings_Window" x:Class="HobbitAutosplitter.SettingsWindow"
         mc:Ignorable="d"
         Style="{DynamicResource CustomWindowStyle}"
-        Title="SettingsWindow" Height="475" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FFFF9700">
+        Title="SettingsWindow" Height="268" Width="482" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FFFF9700">
     <Grid x:Name="Grid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="65*"/>
-            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="265"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="Controls_GroupBox" Header="General Settings" Margin="10,15,5,10" FontSize="14">
+        <GroupBox x:Name="Controls_GroupBox" Header="General Settings" Margin="10,20,5,10" FontSize="14">
             <StackPanel>
                 <WPFToggleSwitch:ToggleSwitch x:Name="Thief_Split_Toggle" Content="Enable Thief Split" Background="#01FFFFFF" Margin="5,5,5,7" Foreground="White"/>
                 <WPFToggleSwitch:ToggleSwitch x:Name="Manual_Controls_Toggle" Content="Manual Start and Reset" Background="#01FFFFFF" Margin="5,7" Foreground="White"/>
@@ -25,8 +23,25 @@
                 <WPFToggleSwitch:ToggleSwitch x:Name="Thief_Sound_Toggle" Content="Play Thief Split Sound" Background="#01FFFFFF" Margin="5,7,5,5" Foreground="White"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="Similarity_GroupBox" Header="Image Comparison Similarity Settings" Margin="5,15,10,10" FontSize="14" Grid.Column="1" d:IsLocked="True">
-            <StackPanel/>
+        <GroupBox x:Name="Keybinds_GroupBox" Header="Keybind Settings" Margin="5,20,3,10" FontSize="14" Grid.Column="1">
+            <StackPanel x:Name="Main_Stack_Panel" ForceCursor="True" Margin="0">
+                <StackPanel x:Name="Split_Stack_Panel" Margin="5,10,5,9" Orientation="Horizontal">
+                    <TextBlock x:Name="Split_TextBlock" Text="Split" Margin="0,0,20,0"/>
+                    <Button x:Name="Split_Button" Content="Button" Width="75" Margin="63,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                </StackPanel>
+                <StackPanel x:Name="Unsplit_Stack_Panel_Copy" Margin="5,10,5,9" Orientation="Horizontal">
+                    <TextBlock x:Name="Unsplit_TextBlock" Text="Unsplit" Margin="0,0,20,0"/>
+                    <Button x:Name="Unsplit_Button" Content="Button" Width="75" Margin="47,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                </StackPanel>
+                <StackPanel x:Name="Reset_Stack_Panel_Copy1" Margin="5,10,5,9" Orientation="Horizontal">
+                    <TextBlock x:Name="Reset_TextBlock" Text="Reset" Margin="0,0,20,0"/>
+                    <Button x:Name="Reset_Button" Content="Button" Width="75" Margin="57,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                </StackPanel>
+                <StackPanel x:Name="Pause_Stack_Panel_Copy2" Margin="5,10,5,9" Orientation="Horizontal">
+                    <TextBlock x:Name="Pause_TextBlock" Text="Pause" Margin="0,0,20,0"/>
+                    <Button x:Name="Pause_Button" Content="Button" Width="75" Margin="54,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </StackPanel>
         </GroupBox>
     </Grid>
 </Window>

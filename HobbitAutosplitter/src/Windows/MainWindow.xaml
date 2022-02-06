@@ -5,19 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Style="{DynamicResource CustomWindowStyle}"
-        mc:Ignorable="d" Height="500" Width="215" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid x:Name="Grid">
+        mc:Ignorable="d" Height="530" Width="225" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MinWidth="225" MinHeight="530">
+    <Grid x:Name="Grid" Margin="0,-26,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition x:Name="Run_Information_Row" Height="190*"/>
-            <RowDefinition x:Name="Controls_Row" Height="165*"/>
-            <RowDefinition x:Name="Version_Control_Row" Height="75*"/>
+            <RowDefinition x:Name="Run_Information_Row" Height="229"/>
+            <RowDefinition x:Name="Controls_Row" Height="205"/>
+            <RowDefinition x:Name="Version_Control_Row"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Run_Info_and_Controls" Width="210"/>
+            <ColumnDefinition x:Name="Run_Info_and_Controls" Width="220"/>
             <ColumnDefinition x:Name="Video_Column" Width="1*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="Run_Info_GroupBox" Header="Run Information" Margin="10,10,5,5" Grid.Row="1" FontSize="14">
+        <GroupBox x:Name="Run_Info_GroupBox" Header="Run Information" Margin="10,45,7,5" FontSize="14">
             <StackPanel>
                 <TextBlock x:Name="Current_Level_TextBlock" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="4"/>
                 <TextBlock x:Name="Segment_Timer_TextBlock" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="4"/>
@@ -25,10 +24,11 @@
 
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="Controls_GroupBox" Header="Controls" Margin="10,5,5,10" Grid.Row="2" FontSize="14">
+        <GroupBox x:Name="Controls_GroupBox" Header="Controls" Margin="10,5,7,10" Grid.Row="1" FontSize="14">
             <StackPanel>
                 <Button x:Name="Settings_Button" Content="Settings" Padding="5" Margin="3" Click="Settings_Button_Click"/>
                 <Button x:Name="Live_Feed_Crop_Button" Content="Crop Live Feed" Padding="5" Margin="3" Click="Live_Feed_Crop_Button_Click"/>
+                <Button x:Name="Comaprison_Settings_Button" Content="Comaprison Image Settings" Padding="5" Margin="3"/>
                 <Button x:Name="Comparison_Crop_Button" Content="Crop Comparison Image" Padding="5" Margin="3" Click="Comparison_Crop_Button_Click"/>
             </StackPanel>
         </GroupBox>
@@ -37,7 +37,7 @@
                 BorderBrush="Transparent"
                 Template="{DynamicResource GithubButton}"
                 WindowChrome.IsHitTestVisibleInChrome="True" 
-                Click="btnGithub_Click" Grid.Row="3" Margin="68,34,108,6" Width="35" Height="35">
+                Click="btnGithub_Click" Grid.Row="2" Margin="71,28,114,10" Height="35">
             <StackPanel HorizontalAlignment="Stretch">
                 <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/github.png" Width="28" Height="28" />
             </StackPanel>
@@ -47,12 +47,12 @@
                 BorderBrush="Transparent" 
                 Template="{DynamicResource HobbitSpeedrunsButton}"
                 WindowChrome.IsHitTestVisibleInChrome="True" 
-                Click="btnHobbitSpeedruns_Click" Grid.Row="3" Margin="116,34,58,6" Width="35">
+                Click="btnHobbitSpeedruns_Click" Grid.Row="2" Margin="111,28,74,10" Height="35">
             <StackPanel HorizontalAlignment="Stretch">
                 <Image HorizontalAlignment="Left"  Source="pack://application:,,,/Assets/Image/hobbitspeedruns.png" Width="35" Height="35" />
             </StackPanel>
         </Button>
-        <Image x:Name="Live_Feed_Image" Margin="5,10,10,10" Grid.RowSpan="3" Grid.Row="1" Grid.Column="1" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill" IsEnabled="False"/>
-        <TextBlock x:Name="Version_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Made by Shockster_" VerticalAlignment="Bottom" Grid.Row="3" Margin="10,0,0,46" Height="29" Width="192" FontSize="20"/>
+        <Image x:Name="Live_Feed_Image" Margin="7,44,10,10" Grid.RowSpan="3" Grid.Column="1" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill" IsEnabled="False"/>
+        <TextBlock x:Name="Version_TextBlock" TextWrapping="Wrap" TextAlignment="Center" Text="Made by Shockster_" Grid.Row="2" Margin="10,0,10,38" FontSize="20"/>
     </Grid>
 </Window>
