@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Media.Animation;
-using System.Diagnostics;
 using System.Windows;
 
 namespace HobbitAutosplitter
@@ -14,7 +13,6 @@ namespace HobbitAutosplitter
             InitializeComponent();
             instance = this;
         }
-
 
         private void Live_Feed_Button_Click(object sender, RoutedEventArgs events)
         {
@@ -36,16 +34,6 @@ namespace HobbitAutosplitter
             sb.Begin(this);
             Live_Feed_Button.Content = isLiveFeed ? "Show Live Feed" : "Hide Live Feed";
             isLiveFeed = !isLiveFeed;
-        }
-
-        private void btnHobbitSpeedruns_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("https://hobbitspeedruns.com/");
-        }
-
-        private void btnGithub_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("https://github.com/Shockster218/Hobbit-Autosplitter");
         }
 
         private void Comparison_Crop_Button_Click(object sender, RoutedEventArgs e)
@@ -119,10 +107,10 @@ namespace HobbitAutosplitter
         //    SplitManager.SetThiefSplit(useThief);
         //    thiefCheckbox.IsChecked = useThief;
         //
-        //    splitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
+        //    splitButton.Content =   KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
         //    unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
-        //    resetButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
-        //    pauseButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
+        //    resetButton.Content =   KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
+        //    pauseButton.Content =   KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
         //
         //    x.Value = Settings.Default.cropLeft;
         //    y.Value = Settings.Default.cropTop;
@@ -130,37 +118,6 @@ namespace HobbitAutosplitter
         //    h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : 1080;
         //}
         //
-        //private void EnableButtons()
-        //{
-        //    splitButton.IsEnabled = true;
-        //    unsplitButton.IsEnabled = true;
-        //    resetButton.IsEnabled = true;
-        //    pauseButton.IsEnabled = true;
-        //
-        //    changeComparison.IsEnabled = true;
-        //    thiefCheckbox.IsEnabled = true;
-        //
-        //    x.IsEnabled = true;
-        //    y.IsEnabled = true;
-        //    w.IsEnabled = true;
-        //    h.IsEnabled = true;
-        //}
-        //
-        //private void DisableButtons()
-        //{
-        //    splitButton.IsEnabled = false;
-        //    unsplitButton.IsEnabled = false;
-        //    resetButton.IsEnabled = false;
-        //    pauseButton.IsEnabled = false;
-        //
-        //    changeComparison.IsEnabled = false;
-        //    thiefCheckbox.IsEnabled = false;
-        //
-        //    x.IsEnabled = false;
-        //    y.IsEnabled = false;
-        //    w.IsEnabled = false;
-        //    h.IsEnabled = false;
-        //}
         //
         //private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         //{
@@ -197,66 +154,6 @@ namespace HobbitAutosplitter
         //    CaptureManager.previewCrop.Bottom = value;
         //    Settings.Default.cropBottom = value;
         //    h.Text = value.ToString();
-        //}
-        //
-        //private void splitButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    splitButton.Content = "Waiting...";
-        //}
-        //
-        //private void unsplitButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    unsplitButton.Content = "Waiting...";
-        //}
-        //
-        //private void pauseButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    pauseButton.Content = "Waiting...";
-        //}
-        //
-        //private void resetButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    resetButton.Content = "Waiting...";
-        //}
-        //
-        //private void splitButton_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (splitButton.IsFocused)
-        //    {
-        //        Settings.Default.split = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-        //        splitButton.Content = e.Key.ToString();
-        //        Keyboard.ClearFocus();
-        //    }
-        //}
-        //
-        //private void pauseButton_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (pauseButton.IsFocused)
-        //    {
-        //        Settings.Default.pause = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-        //        pauseButton.Content = e.Key.ToString();
-        //        Keyboard.ClearFocus();
-        //    }
-        //}
-        //
-        //private void resetButton_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (resetButton.IsFocused)
-        //    {
-        //        Settings.Default.reset = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-        //        resetButton.Content = e.Key.ToString();
-        //        Keyboard.ClearFocus();
-        //    }
-        //}
-        //
-        //private void unsplitButton_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (unsplitButton.IsFocused)
-        //    {
-        //        Settings.Default.unsplit = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-        //        unsplitButton.Content = e.Key.ToString();
-        //        Keyboard.ClearFocus();
-        //    }
         //}
         //
         //public void SetLevelText()

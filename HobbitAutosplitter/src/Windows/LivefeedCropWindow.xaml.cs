@@ -15,21 +15,24 @@ namespace HobbitAutosplitter
         public LivefeedCropWindow()
         {
             InitializeComponent();
-            frame = CaptureManager.GetCurrentFrame();
             SetGameplayImage();
-            valueLeft = Settings.Default.cropLeft;
-            valueRight = Settings.Default.cropRight;
-            valueTop = Settings.Default.cropTop;
-            valueBottom = Settings.Default.cropBottom;
-            Crop_Left_UpDown.Value = valueLeft;
-            Crop_Left_Slider.Value = valueLeft;
-            Crop_Right_UpDown.Value = valueRight;
-            Crop_Right_Slider.Value = valueRight;
-            Crop_Top_UpDown.Value = valueTop;
-            Crop_Top_Slider.Value = valueTop;
-            Crop_Bottom_UpDown.Value = valueBottom;
-            Crop_Bottom_Slider.Value = valueBottom;
+            SetInitialUIValues();
         }
+
+        private void SetGameplayImage()
+        {
+            frame = CaptureManager.GetCurrentFrame();
+            Bitmap crop = (Bitmap)frame.Clone();
+            crop.Crop(new RECT(
+                (int)valueLeft / 100 * frame.Width,
+                (int)valueTop / 100 * frame.Height,
+                frame.Width - (int)(valueRight / 100 * frame.Width),
+                frame.Height - (int)(valueBottom / 100 * frame.Height)
+                ));
+            Gameplay_Image.Source = crop.ToBitmapImage();
+            crop.Dispose();
+        }
+
 
         private void Crop_Left_UpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -175,19 +178,6 @@ namespace HobbitAutosplitter
             }
         }
 
-        private void SetGameplayImage()
-        {
-            Bitmap crop = (Bitmap)frame.Clone();
-            crop.Crop(new RECT(
-                (int)valueLeft / 100 * frame.Width,
-                (int)valueTop / 100 * frame.Height,
-                frame.Width - (int)(valueRight / 100 * frame.Width),
-                frame.Height - (int)(valueBottom / 100 * frame.Height)
-                ));
-            Gameplay_Image.Source = crop.ToBitmapImage();
-            crop.Dispose();
-        }
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.cropLeft = valueLeft;
@@ -203,6 +193,22 @@ namespace HobbitAutosplitter
         {
             frame.Dispose();
             Close();
+        }
+
+        private void SetInitialUIValues()
+        {
+            valueLeft = Settings.Default.cropLeft;
+            valueRight = Settings.Default.cropRight;
+            valueTop = Settings.Default.cropTop;
+            valueBottom = Settings.Default.cropBottom;
+            Crop_Left_UpDown.Value = valueLeft;
+            Crop_Left_Slider.Value = valueLeft;
+            Crop_Right_UpDown.Value = valueRight;
+            Crop_Right_Slider.Value = valueRight;
+            Crop_Top_UpDown.Value = valueTop;
+            Crop_Top_Slider.Value = valueTop;
+            Crop_Bottom_UpDown.Value = valueBottom;
+            Crop_Bottom_Slider.Value = valueBottom;
         }
     }
 }

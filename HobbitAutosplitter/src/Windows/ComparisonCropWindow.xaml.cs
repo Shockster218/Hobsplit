@@ -14,20 +14,7 @@ namespace HobbitAutosplitter
         public ComparisonCropWindow()
         {
             InitializeComponent();
-            reference = SplitManager.GetCurrentComparison();
-            Split_Reference_Image.Source = reference.GetImage().ToBitmapImage();
-            valueLeft = Settings.Default.refCropLeft;
-            valueRight = Settings.Default.refCropRight;
-            valueTop = Settings.Default.refCropTop;
-            valueBottom = Settings.Default.refCropBottom;
-            Crop_Left_UpDown.Value = valueLeft;
-            Crop_Left_Slider.Value = valueLeft;
-            Crop_Right_UpDown.Value = valueRight;
-            Crop_Right_Slider.Value = valueRight;
-            Crop_Top_UpDown.Value = valueTop;
-            Crop_Top_Slider.Value = valueTop;
-            Crop_Bottom_UpDown.Value = valueBottom;
-            Crop_Bottom_Slider.Value = valueBottom;
+            SetInitialUIValues();
         }
 
         private void Crop_Left_UpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -196,6 +183,24 @@ namespace HobbitAutosplitter
         {
             reference.Dispose();
             Close();
+        }
+
+        private void SetInitialUIValues()
+        {
+            reference = SplitManager.GetCurrentComparison();
+            Split_Reference_Image.Source = reference.GetImage().ToBitmapImage();
+            valueLeft = Settings.Default.refCropLeft;
+            valueRight = Settings.Default.refCropRight;
+            valueTop = Settings.Default.refCropTop;
+            valueBottom = Settings.Default.refCropBottom;
+            Crop_Left_UpDown.Value = valueLeft;
+            Crop_Left_Slider.Value = valueLeft;
+            Crop_Right_UpDown.Value = valueRight;
+            Crop_Right_Slider.Value = valueRight;
+            Crop_Top_UpDown.Value = valueTop;
+            Crop_Top_Slider.Value = valueTop;
+            Crop_Bottom_UpDown.Value = valueBottom;
+            Crop_Bottom_Slider.Value = valueBottom;
         }
     }
 }

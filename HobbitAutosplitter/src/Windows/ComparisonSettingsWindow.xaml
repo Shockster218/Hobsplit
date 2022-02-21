@@ -7,7 +7,27 @@
         xmlns:local="clr-namespace:HobbitAutosplitter"
         mc:Ignorable="d"
         Title="Image Comparison Settings" Height="450" Width="800" BorderBrush="#FF939300">
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" Margin="0,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="Similarity_GroupBox" Header="Split Image Similarity" Margin="10,10,7,10">
+            <StackPanel x:Name="Main_Stack_Panel">
+                <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Margin="5"><Run Text="Adjusting these settings are not recommended, but can be used to change the positive match threshold. For each respective split, if the algorithm detects a similarity over the current threshold, that means its a positive match and the autosplitter will split. All values are clamped from 0.8 (less strict) to 1 (very strict). "/></TextBlock>
+                <StackPanel x:Name="Loading_Stack_Panel" Height="100"/>
+            </StackPanel>
 
+        </GroupBox>
+        <Canvas x:Name="Example_Change_Image" Margin="81,88,214,189" Grid.Column="1" Width="96" Height="72" d:IsHidden="True">
+            <Border BorderThickness="1" Height="72" Width="96" BorderBrush="Black">
+                <Image Source="../../Assets/Image/hobbitspeedruns.png" Margin="0" Stretch="Fill"/>
+            </Border>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFEBEBEB" Canvas.Left="0" Canvas.Top="0" Content="Change" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="16" Height="72" Width="96">
+                <Button.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Button.Background>
+            </Button>
+        </Canvas>
     </Grid>
 </Window>
