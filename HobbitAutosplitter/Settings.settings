@@ -92,8 +92,20 @@
     <Setting Name="tcbPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="finishPath" Type="System.String" Scope="User">
+    <Setting Name="finalPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="loadsSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.935</Value>
+    </Setting>
+    <Setting Name="thiefSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.975</Value>
+    </Setting>
+    <Setting Name="finalSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
+    </Setting>
+    <Setting Name="resetSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
     </Setting>
   </Settings>
 </SettingsFile>

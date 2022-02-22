@@ -386,12 +386,60 @@ namespace HobbitAutosplitter {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string finishPath {
+        public string finalPath {
             get {
-                return ((string)(this["finishPath"]));
+                return ((string)(this["finalPath"]));
             }
             set {
-                this["finishPath"] = value;
+                this["finalPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.935")]
+        public double loadsSimilarity {
+            get {
+                return ((double)(this["loadsSimilarity"]));
+            }
+            set {
+                this["loadsSimilarity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.975")]
+        public double thiefSimilarity {
+            get {
+                return ((double)(this["thiefSimilarity"]));
+            }
+            set {
+                this["thiefSimilarity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9")]
+        public double finalSimilarity {
+            get {
+                return ((double)(this["finalSimilarity"]));
+            }
+            set {
+                this["finalSimilarity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.9")]
+        public double resetSimilarity {
+            get {
+                return ((double)(this["resetSimilarity"]));
+            }
+            set {
+                this["resetSimilarity"] = value;
             }
         }
     }

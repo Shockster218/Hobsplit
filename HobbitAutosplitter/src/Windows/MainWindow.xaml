@@ -31,5 +31,7 @@
             </StackPanel>
         </GroupBox>
         <Image x:Name="Live_Feed_Image" Margin="5,19,10,10" Grid.RowSpan="2" Grid.Column="1" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill" IsEnabled="False"/>
+        <TextBlock x:Name="Website_Textblock" Text="Hobbit Speedruns Website" Grid.Row="1" Margin="0,216,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16" TextDecorations="Underline" MouseDown="Website_Textblock_MouseDown"/>
+        <TextBlock x:Name="Github_Textblock" VerticalAlignment="Top" Grid.Row="1" Margin="16,253,39,0" Width="165" FontSize="16" TextDecorations="Underline" MouseDown="Github_Textblock_MouseDown" HorizontalAlignment="Center"><Run Text="Github Page"/></TextBlock>
     </Grid>
 </Window>

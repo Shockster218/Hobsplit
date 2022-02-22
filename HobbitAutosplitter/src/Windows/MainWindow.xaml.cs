@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Media.Animation;
 using System.Windows;
 
@@ -64,6 +65,16 @@ namespace HobbitAutosplitter
             myOwnedWindow.Show();
         }
 
+        private void Website_Textblock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process.Start("https://hobbitspeedruns.com/");
+        }
+
+        private void Github_Textblock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process.Start("https://github.com/Shockster218/Hobbit-Autosplitter");
+        }
+
         //public void OBSOffline()
         //{
         //    DisableButtons();
@@ -101,60 +112,6 @@ namespace HobbitAutosplitter
         //    EnableButtons();
         //}
         //
-        //private void LoadSettings()
-        //{
-        //    bool useThief = Settings.Default.useThief;
-        //    SplitManager.SetThiefSplit(useThief);
-        //    thiefCheckbox.IsChecked = useThief;
-        //
-        //    splitButton.Content =   KeyInterop.KeyFromVirtualKey((int)Settings.Default.split).ToString();
-        //    unsplitButton.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
-        //    resetButton.Content =   KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
-        //    pauseButton.Content =   KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
-        //
-        //    x.Value = Settings.Default.cropLeft;
-        //    y.Value = Settings.Default.cropTop;
-        //    w.Value = Settings.Default.cropRight != 0 ? Settings.Default.cropRight : 1920;
-        //    h.Value = Settings.Default.cropBottom != 0 ? Settings.Default.cropBottom : 1080;
-        //}
-        //
-        //
-        //private void x_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    int value;
-        //    if(e.NewValue == null) value = 0;
-        //    else value = ((int)e.NewValue).Clamp(0, 4000);
-        //    CaptureManager.previewCrop.X = value;
-        //    Settings.Default.cropLeft = value;
-        //    x.Text = value.ToString();
-        //}
-        //private void y_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    int value;
-        //    if (e.NewValue == null) value = 0;
-        //    else value = ((int)e.NewValue).Clamp(0, 4000);
-        //    CaptureManager.previewCrop.Y = value;
-        //    Settings.Default.cropTop = value;
-        //    y.Text = value.ToString();
-        //}
-        //private void w_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    int value;
-        //    if (e.NewValue == null) value = 0;
-        //    else value = ((int)e.NewValue).Clamp(0, 4000);
-        //    CaptureManager.previewCrop.Right = value;
-        //    Settings.Default.cropRight = value;
-        //    w.Text = value.ToString();
-        //}
-        //private void h_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    int value;
-        //    if (e.NewValue == null) value = 0;
-        //    else value = ((int)e.NewValue).Clamp(0, 4000);
-        //    CaptureManager.previewCrop.Bottom = value;
-        //    Settings.Default.cropBottom = value;
-        //    h.Text = value.ToString();
-        //}
         //
         //public void SetLevelText()
         //{

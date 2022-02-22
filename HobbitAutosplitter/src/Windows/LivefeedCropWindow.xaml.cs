@@ -62,7 +62,7 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    Crop_Left_Slider.Value = _value;
+                    Crop_Left_UpDown.Value = _value;
                     valueLeft = _value;
                     SetGameplayImage();
                 }
@@ -98,7 +98,7 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    Crop_Top_Slider.Value = _value;
+                    Crop_Top_UpDown.Value = _value;
                     valueTop = _value;
                     SetGameplayImage();
                 }
@@ -134,7 +134,7 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    Crop_Right_Slider.Value = _value;
+                    Crop_Right_UpDown.Value = _value;
                     valueRight = _value;
                     SetGameplayImage();
                 }
@@ -170,7 +170,7 @@ namespace HobbitAutosplitter
                 try
                 {
                     double _value = e.NewValue;
-                    Crop_Bottom_Slider.Value = _value;
+                    Crop_Bottom_UpDown.Value = _value;
                     valueBottom = _value;
                     SetGameplayImage();
                 }
