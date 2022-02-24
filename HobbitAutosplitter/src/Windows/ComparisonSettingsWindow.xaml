@@ -7,22 +7,28 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Name="Comparison_Settings_Window" x:Class="HobbitAutosplitter.ComparisonSettingsWindow"
         Style="{DynamicResource CustomWindowStyle}"
         mc:Ignorable="d"
-        Title="Image Comparison Settings" Height="400" Width="800" BorderBrush="#FF939300">
+        Title="Image Comparison Settings" Height="470" Width="974" BorderBrush="#FF939300">
     <Grid x:Name="Grid" Margin="0,0,0,0" Height="400">
         <Grid.RowDefinitions>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="95*"/>
-            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="119*"/>
+            <ColumnDefinition Width="122*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="Similarity_GroupBox" Header="Split Image Similarity" Margin="10,10,7,47" Grid.Row="1">
-            <StackPanel x:Name="Main_Stack_Panel">
+        <GroupBox x:Name="Similarity_GroupBox" Header="Split Image Similarity" Margin="7,5,10,10" Grid.Column="1">
+            <StackPanel x:Name="Similarity_Stack_Panel">
                 <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Margin="10,5,10,0" Height="130" Text="Adjusting these settings are not recommended, but can be used to change the positive match threshold. For each respective split, if the algorithm detects a similarity over the current threshold, that means its a positive match and the autosplitter will execute. All values are clamped from 0.7 (less strict) to 1 (very strict). "/>
                 <StackPanel x:Name="Reset_Screen_Stack_Panel" Height="42" Orientation="Horizontal">
                     <TextBlock x:Name="Reset_Screen_Textblock" Text="Reset Screen" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
                     <Slider x:Name="Reset_Screen_Slider" Width="131" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,10,0,10" LargeChange="0.1" Maximum="1" SmallChange="0.001" TickFrequency="0.001" ValueChanged="Reset_Screen_Slider_ValueChanged"/>
                     <xctk:DoubleUpDown x:Name="Reset_Screen_UpDown" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Width="66" Height="30" Increment="0.001" Maximum="1" Minimum="0.7" IsManipulationEnabled="True" ValueChanged="Reset_Screen_UpDown_ValueChanged" FormatString="F3"/>
                     <Button x:Name="Reset_Screen_Reset_Button" Content="Reset" Width="75" Height="30" Margin="20,0,0,0" FontSize="16" Click="Reset_Screen_Reset_Button_Click"/>
+                </StackPanel>
+                <StackPanel x:Name="Start_Stack_Panel" Height="42" Orientation="Horizontal">
+                    <TextBlock x:Name="Start_Textblock" Text="Start Screen" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
+                    <Slider x:Name="Start_Slider" Width="131" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="29,10,0,10" LargeChange="0.1" Maximum="1" SmallChange="0.001" TickFrequency="0.001" ValueChanged="Start_Slider_ValueChanged"/>
+                    <xctk:DoubleUpDown x:Name="Start_UpDown" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Width="66" Height="30" Increment="0.001" Maximum="1" Minimum="0.7" IsManipulationEnabled="True" FormatString="F3" ValueChanged="Start_UpDown_ValueChanged"/>
+                    <Button x:Name="Start_Reset_Button" Content="Reset" Width="75" Height="30" Margin="20,0,0,0" FontSize="16" Click="Start_Reset_Button_Click"/>
                 </StackPanel>
                 <StackPanel x:Name="Load_Screens_Stack_Panel" Height="42" Orientation="Horizontal">
                     <TextBlock x:Name="Load_Screens_Textblock" Text="Load Screens" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
@@ -45,11 +51,21 @@
             </StackPanel>
 
         </GroupBox>
-        <Canvas x:Name="Example_Change_Image" Margin="83,19,132,311" Grid.Column="1">
-            <Border BorderThickness="1" Height="72" Width="96" BorderBrush="Black">
-                <Image Source="../../Assets/Image/hobbitspeedruns.png" Margin="0" Stretch="Fill"/>
-            </Border>
-            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="0" Content="" BorderBrush="{x:Null}" FontWeight="Bold" FontSize="16" Height="72" Width="96" Foreground="{x:Null}" Background="{x:Null}"/>
-        </Canvas>
+        <GroupBox x:Name="Split_Images_GroupBox" Header="Split Images" Margin="10,5,10,10">
+            <StackPanel x:Name="Split_Main_Stack_Panel" HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="446" Margin="0">
+                <StackPanel x:Name="Split_Stack_Panel_One" Height="100" Margin="5" Orientation="Horizontal"/>
+                <StackPanel x:Name="Split_Stack_Panel_Two" Height="100" Margin="5" Orientation="Horizontal"/>
+                <StackPanel x:Name="Split_Stack_Panel_Three" Height="100" Margin="5" Orientation="Horizontal">
+                    <Canvas x:Name="Split_Item" Margin="0,0,0,5" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="95">
+                        <Border x:Name="Split_Image_Border" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
+                            <Image x:Name="Split_Image" Source="../../Assets/Image/hobbitspeedruns.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
+                        </Border>
+                        <Canvas x:Name="Hover" Height="75" Width="75" Background="#7F000000" IsHitTestVisible="False" Visibility="Hidden">
+                            <Label x:Name="Hover_Label" Content="Change" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="75" Width="75" Foreground="White" FontSize="16"/>
+                        </Canvas>
+                    </Canvas>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>

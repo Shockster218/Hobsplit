@@ -442,5 +442,17 @@ namespace HobbitAutosplitter {
                 this["resetSimilarity"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.945")]
+        public double startSimilarity {
+            get {
+                return ((double)(this["startSimilarity"]));
+            }
+            set {
+                this["startSimilarity"] = value;
+            }
+        }
     }
 }

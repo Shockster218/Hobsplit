@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 
 namespace HobbitAutosplitter
@@ -9,6 +10,7 @@ namespace HobbitAutosplitter
     public partial class ComparisonSettingsWindow : Window
     {
         private double valueReset = 0;
+        private double valueStart = 0;
         private double valueLoads = 0;
         private double valueThief = 0;
         private double valueFinal = 0;
@@ -25,6 +27,7 @@ namespace HobbitAutosplitter
         private void GetSimilarityValues()
         {
             valueReset = Settings.Default.resetSimilarity;
+            valueStart = Settings.Default.startSimilarity;
             valueLoads = Settings.Default.loadsSimilarity;
             valueThief = Settings.Default.thiefSimilarity;
             valueFinal = Settings.Default.finalSimilarity;
@@ -33,10 +36,12 @@ namespace HobbitAutosplitter
         private void SetSimilarityValues()
         {
             Reset_Screen_UpDown.Value = valueReset;
+            Start_UpDown.Value = valueStart;
             Load_Screens_UpDown.Value = valueLoads;
             Thief_Split_UpDown.Value = valueThief;
             Final_Split_UpDown.Value = valueFinal;
             Reset_Screen_Slider.Minimum = 0.7f;
+            Start_Slider.Minimum = 0.7f;
             Load_Screens_Slider.Minimum = 0.7f;
             Thief_Split_Slider.Minimum = 0.7f;
             Final_Split_Slider.Minimum = 0.7f;
@@ -71,6 +76,40 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Reset_Screen_UpDown.Value = _value;
                     valueReset = _value;
+                }
+                finally { settingSliderValue = false; }
+            }
+        }
+
+        private void Start_UpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (!settingCropValue)
+            {
+                settingCropValue = true;
+                try
+                {
+                    double _value;
+                    if (null != e.NewValue)
+                    {
+                        _value = ((double)e.NewValue).Clamp(0.7, 1);
+                        Start_Slider.Value = _value;
+                        valueStart = _value;
+                    }
+                }
+                finally { settingCropValue = false; }
+            }
+        }
+
+        private void Start_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!settingSliderValue)
+            {
+                settingSliderValue = true;
+                try
+                {
+                    double _value = e.NewValue;
+                    Start_UpDown.Value = _value;
+                    valueStart = _value;
                 }
                 finally { settingSliderValue = false; }
             }
@@ -184,6 +223,12 @@ namespace HobbitAutosplitter
             Reset_Screen_UpDown.Value = valueReset;
         }
 
+        private void Start_Reset_Button_Click(object sender, RoutedEventArgs e)
+        {
+            valueStart = 0.945f;
+            Start_UpDown.Value = valueStart;
+        }
+
         private void Load_Screens_Reset_Button_Click(object sender, RoutedEventArgs e)
         {
             valueLoads = 0.935f;
@@ -200,6 +245,18 @@ namespace HobbitAutosplitter
         {
             valueFinal = 0.9f;
             Final_Split_UpDown.Value = valueFinal;
+        }
+
+        private void Split_Item_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Canvas canvas = sender as Canvas;
+            canvas.Children[1].Visibility = Visibility.Visible;
+        }
+
+        private void Split_Item_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Canvas canvas = sender as Canvas;
+            canvas.Children[1].Visibility = Visibility.Hidden;
         }
     }
 }

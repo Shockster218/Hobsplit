@@ -123,7 +123,7 @@ namespace HobbitAutosplitter
             if (splitState == SplitState.WAITING)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if(sim <= 0.07f)
+                if(sim <= CalculateStartSimilarity())
                 {
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
@@ -177,5 +177,7 @@ namespace HobbitAutosplitter
                 }
             }
         }
+
+        private static float CalculateStartSimilarity() { return (float)Math.Round((1 - Settings.Default.startSimilarity + 0.1f * 4.5f) * 0.1f, 3);  }
     }
 }
