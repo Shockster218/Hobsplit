@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.IO;
 using Shipwreck.Phash;
-using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
 {
@@ -22,67 +19,58 @@ namespace HobbitAutosplitter
         {
             CaptureManager.DigestCompleted += CompareFrames;
         }
-        public static void SetThiefSplit(bool value) { useThiefSplit = value; }
-        public static bool GetThiefSplit() { return useThiefSplit; }
-        public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitData(); }
-        public static void DeincrementSplitIndex() { splitIndex--; SetSplitData(); }
-        public static void ResetSplitIndex() { splitIndex = 1; SetSplitData(); }
-        public static SplitData GetCurrentComparison() { return currentComparison; }
-        public static SplitData GetNextComparison() { return nextComparison; }
-        public static SplitState GetCurrentSplitState() { return splitState; }
-        public static RECT GetCrop() { return splitIndex == 1 ? Constants.startCrop : Constants.crop; }
-        public static int GetSplitIndex() { return splitIndex; }
-        public static void UpdateSplitCroppings(double left, double right, double top, double bottom)
-        {
-            foreach(SplitData split in splits)
-            {
-                split.UpdateImageCropping(left, right, top, bottom);
-            }
-        }
-        private static void SetSplitData() 
+        public static void SetThiefSplit(bool value) => useThiefSplit = value;
+        public static bool GetThiefSplit() => useThiefSplit;
+        public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; SetSplitComparisons(); }
+        public static void DeincrementSplitIndex() { splitIndex--; SetSplitComparisons(); }
+        public static void ResetSplitIndex() { splitIndex = 1; SetSplitComparisons(); }
+        public static SplitData GetCurrentComparison() => currentComparison;
+        public static SplitData GetNextComparison() => nextComparison;
+        public static SplitState GetCurrentSplitState() => splitState;
+        public static RECT GetCrop() => splitIndex == 1 ? Constants.startCrop : Constants.crop;
+        public static int GetSplitIndex() => splitIndex;
+        public static void UpdateSplitCroppings(double left, double right, double top, double bottom) { foreach (SplitData split in splits) { split.UpdateImageCropping(left, right, top, bottom); } }
+        private static float CalculateStartSimilarity() { return (float)Math.Round((1 - Settings.Default.startSimilarity + 0.1f * 4.5f) * 0.1f, 3); }
+        private static void SetSplitComparisons() 
         {
             nextComparison = splitIndex <= splits.Length - 1 ? splits[splitIndex + 1]: null;
             currentComparison = splits[splitIndex];
             previousComparison = splitIndex >= 1 ? splits[splitIndex - 1] : splits[0];
         }
 
-        //public static void PopulateSplitData()
-        //{
-        //    string[] sorted = Directory.EnumerateFiles(Environment.CurrentDirectory + "\\Assets\\Splits")
-        //        .Where(file => new string[] { ".jpg", ".jpeg", ".png", ".bmp" }
-        //        .Contains(Path.GetExtension(file)))
-        //        .CustomSort().ToArray();
-        //
-        //    if (sorted.Length != 15)
-        //    {
-        //        App.Current.Dispatcher.Invoke(() => MainWindow.instance.ShowNotEnoughSplitsMessageBox());
-        //        return;
-        //    }
-        //
-        //    splits = new SplitData[17]
-        //    {
-        //        new SplitData("Start Up / Reset", sorted[0], similarity:0.9f),
-        //        new SplitData("Main Menu / Start", sorted[0], startCrop:true, removeColor:true),
-        //        new SplitData("Dream World", sorted[1]),
-        //        new SplitData("An Unexpected Party", sorted[2]),
-        //        new SplitData("Roast Mutton", sorted[3]),
-        //        new SplitData("Troll-Hole", sorted[4], similarity:0.93f),
-        //        new SplitData("Over Hill and Under Hill", sorted[5]),
-        //        new SplitData("Riddles in the Dark", sorted[6]),
-        //        new SplitData("Flies and Spiders", sorted[7]),
-        //        new SplitData("Barrels out of Bond", sorted[8]),
-        //        new SplitData("A Warm Welcome", sorted[9]),
-        //        new SplitData("Thief", sorted[10], similarity:0.975f),
-        //        new SplitData("A Warm Welcome", sorted[9]),
-        //        new SplitData("Inside Information", sorted[11]),
-        //        new SplitData("Gathering of the Clouds", sorted[12]),
-        //        new SplitData("Clouds Burst", sorted[13]),
-        //        new SplitData("Finished", sorted[14], similarity:0.9f)
-        //    };
-        //
-        //    currentComparison = splits[1];
-        //    resetComparison = splits[0];
-        //}
+        private static void SetSplitData()
+        {
+            try
+            {
+                splits = new SplitData[17]
+                {
+                    new SplitData("Start Up / Reset", Settings.Default.menuPath, Settings.Default.resetSimilarity),
+                    new SplitData("Main Menu / Start", Settings.Default.menuPath, Settings.Default.loadsSimilarity, startCrop:true, removeColor:true),
+                    new SplitData("Dream World", Settings.Default.dwPath, Settings.Default.loadsSimilarity),
+                    new SplitData("An Unexpected Party", Settings.Default.aupPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Roast Mutton", Settings.Default.rmPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Troll-Hole", Settings.Default.thPath, Settings.Default.loadsSimilarity - 0.03f),
+                    new SplitData("Over Hill and Under Hill", Settings.Default.ohPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Riddles in the Dark", Settings.Default.riddlesPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Flies and Spiders", Settings.Default.fasPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Barrels out of Bond", Settings.Default.boobPath, Settings.Default.loadsSimilarity),
+                    new SplitData("A Warm Welcome", Settings.Default.awwPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Thief", Settings.Default.thiefPath, Settings.Default.thiefSimilarity),
+                    new SplitData("A Warm Welcome", Settings.Default.awwPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Inside Information", Settings.Default.iiPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Gathering of the Clouds", Settings.Default.gotcPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Clouds Burst", Settings.Default.tcbPath, Settings.Default.loadsSimilarity),
+                    new SplitData("Finished", Settings.Default.finalPath, Settings.Default.finalSimilarity)
+                };
+            }
+            catch
+            {
+                // Start window to fix split images.
+            }
+            
+            currentComparison = splits[1];
+            resetComparison = splits[0];
+        }
 
         public static void CompareFrames(DigestArgs args)
         {
@@ -178,6 +166,25 @@ namespace HobbitAutosplitter
             }
         }
 
-        private static float CalculateStartSimilarity() { return (float)Math.Round((1 - Settings.Default.startSimilarity + 0.1f * 4.5f) * 0.1f, 3);  }
+        public static void UpdateSplitSimilarity()
+        {
+            splits[0].SetSimilarity((float)Settings.Default.resetSimilarity);
+            splits[1].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[2].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[3].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[4].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[5].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[6].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[7].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[8].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[9].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[10].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[11].SetSimilarity((float)Settings.Default.thiefSimilarity);
+            splits[12].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[13].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[14].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[15].SetSimilarity((float)Settings.Default.loadsSimilarity);
+            splits[16].SetSimilarity((float)Settings.Default.finalSimilarity);
+        }
     }
 }

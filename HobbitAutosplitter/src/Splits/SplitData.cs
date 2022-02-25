@@ -18,10 +18,10 @@ namespace HobbitAutosplitter
         bool startCrop;
         private bool _disposedValue;
 
-        public SplitData(string name, string imagePath, bool startCrop = false, bool removeColor = false, float similarity = 0.965f)
+        public SplitData(string name, string imagePath, double similarity, bool startCrop = false, bool removeColor = false)
         {
             this.name = name;
-            this.similarity = similarity;
+            this.similarity = (float)similarity;
             this.startCrop = startCrop;
             baseImage = SetImage(imagePath);
             UpdateImageCropping(Settings.Default.refCropLeft, Settings.Default.refCropRight, Settings.Default.refCropTop, Settings.Default.refCropTop);
@@ -29,23 +29,19 @@ namespace HobbitAutosplitter
             digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 
-        private Bitmap SetImage(string path) 
-        {
-            return new Bitmap(Image.FromFile(path)).Resize();
-        }
+        private Bitmap SetImage(string path) => new Bitmap(Image.FromFile(path)).Resize();
 
-        public bool IsDigestSimilar(Digest d)
-        {
-            return ImagePhash.GetCrossCorrelation(digest, d) >= similarity;
-        }
+        public bool IsDigestSimilar(Digest d) => ImagePhash.GetCrossCorrelation(digest, d) >= similarity;
 
-        public Bitmap GetImage() { return baseCrop; }
+        public Bitmap GetImage() => baseCrop;
 
-        public Bitmap GetImageCropped() { return cropped; }
+        public Bitmap GetImageCropped() => cropped;
 
-        public string GetSplitName() { return name; }
+        public string GetSplitName() => name;
 
-        public Digest GetDigest() { return digest; }
+        public Digest GetDigest() => digest;
+
+        public void SetSimilarity(float similarity) => this.similarity = similarity;
 
         public void UpdateImageCropping(double left, double right, double top, double bottom)
         {

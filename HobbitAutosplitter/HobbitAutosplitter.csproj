@@ -80,6 +80,12 @@
     <Compile Include="src\Capture\CaptureManager.cs" />
     <Compile Include="src\Capture\ImageProcessor.cs" />
     <Compile Include="src\Capture\ProcessManager.cs" />
+    <Compile Include="src\User Controls\ChangeSimilarityControl.xaml.cs">
+      <DependentUpon>ChangeSimilarityControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\User Controls\ChangeSplitsControl.xaml.cs">
+      <DependentUpon>ChangeSplitsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Windows\ComparisonCropWindow.xaml.cs">
       <DependentUpon>ComparisonCropWindow.xaml</DependentUpon>
     </Compile>
@@ -132,6 +138,14 @@
     <Page Include="Assets\Theme\DarkTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="src\User Controls\ChangeSimilarityControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\User Controls\ChangeSplitsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="src\Windows\ComparisonCropWindow.xaml">
       <SubType>Designer</SubType>
@@ -192,6 +206,7 @@
     <Content Include="Assets\Image\hobbitspeedruns.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Image\Image_not_found.png" />
     <Content Include="Assets\Splits\0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -238,9 +253,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Setup\Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
