@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace HobbitAutosplitter
 {
-    public partial class ChangeSimilarityControl : UserControl
+    public partial class SimilarityControl : UserControl
     {
         public double valueReset { get; private set; }
         public double valueStart { get; private set; }
@@ -13,7 +13,8 @@ namespace HobbitAutosplitter
 
         private bool settingCropValue = false;
         private bool settingSliderValue = false;
-        public ChangeSimilarityControl()
+
+        public SimilarityControl()
         {
             InitializeComponent();
             GetSimilarityValues();

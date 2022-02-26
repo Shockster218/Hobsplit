@@ -80,11 +80,20 @@
     <Compile Include="src\Capture\CaptureManager.cs" />
     <Compile Include="src\Capture\ImageProcessor.cs" />
     <Compile Include="src\Capture\ProcessManager.cs" />
-    <Compile Include="src\User Controls\ChangeSimilarityControl.xaml.cs">
-      <DependentUpon>ChangeSimilarityControl.xaml</DependentUpon>
+    <Compile Include="src\User Controls\KeybindsControl.xaml.cs">
+      <DependentUpon>KeybindsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\User Controls\ChangeSplitsControl.xaml.cs">
-      <DependentUpon>ChangeSplitsControl.xaml</DependentUpon>
+    <Compile Include="src\User Controls\SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\User Controls\SimilarityControl.xaml.cs">
+      <DependentUpon>SimilarityControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\User Controls\SplitsControl.xaml.cs">
+      <DependentUpon>SplitsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\User Controls\WindowCropControl.xaml.cs">
+      <DependentUpon>WindowCropControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\Windows\ComparisonCropWindow.xaml.cs">
       <DependentUpon>ComparisonCropWindow.xaml</DependentUpon>
@@ -139,11 +148,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="src\User Controls\ChangeSimilarityControl.xaml">
+    <Page Include="src\User Controls\KeybindsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\User Controls\ChangeSplitsControl.xaml">
+    <Page Include="src\User Controls\SettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\User Controls\SimilarityControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\User Controls\SplitsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\User Controls\WindowCropControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

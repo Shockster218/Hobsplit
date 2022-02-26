@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace HobbitAutosplitter
 {
-    public partial class ChangeSplitsControl : UserControl
+    public partial class SplitsControl : UserControl
     {
         public string menuPath { get; private set; }
         public string dwPath { get; private set; }
@@ -23,7 +23,7 @@ namespace HobbitAutosplitter
         public string tcbPath { get; private set; }
         public string finalPath { get; private set; }
 
-        public ChangeSplitsControl()
+        public SplitsControl()
         {
             InitializeComponent();
             LoadSplitImagePaths();

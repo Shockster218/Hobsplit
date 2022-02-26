@@ -24,7 +24,7 @@ namespace HobbitAutosplitter
         {
             hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
             GetWindowRect(hwnd, out rc);
-            SetPreviewCrop(Settings.Default.cropLeft, Settings.Default.cropRight, Settings.Default.cropTop, Settings.Default.cropBottom);
+            SetPreviewCrop();
 
             while (ProcessManager.obsRunning)
             {
@@ -71,13 +71,13 @@ namespace HobbitAutosplitter
             catch { return null; }
         }
 
-        public static void SetPreviewCrop(double left, double right, double top, double bottom)
+        public static void SetPreviewCrop()
         {
             previewCrop = new RECT(
-                (int)left / 100 * rc.Right,
-                (int)top / 100 * rc.Bottom,
-                rc.Right - (int)(right / 100 * rc.Right),
-                rc.Bottom - (int)(bottom / 100 * rc.Bottom)
+                (int)Settings.Default.cropLeft / 100 * rc.Right,
+                (int)Settings.Default.cropTop / 100 * rc.Bottom,
+                rc.Right - (int)(Settings.Default.cropRight / 100 * rc.Right),
+                rc.Bottom - (int)(Settings.Default.cropBottom / 100 * rc.Bottom)
             );
         }
 

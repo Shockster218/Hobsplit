@@ -14,8 +14,8 @@
             <ColumnDefinition Width="119*"/>
             <ColumnDefinition Width="122*"/>
         </Grid.ColumnDefinitions>
-        <uc:ChangeSplitsControl Margin="10,-10,10,20" x:Name="ChangeSplits"/>
-        <uc:ChangeSimilarityControl Grid.Column="1" Margin="10,-8,10,72" x:Name="ChangeSimilarity"/>
+        <uc:SplitsControl Margin="10,-10,10,20" x:Name="ChangeSplits"/>
+        <uc:SimilarityControl Grid.Column="1" Margin="10,-8,10,72" x:Name="ChangeSimilarity"/>
         <Button x:Name="Save_Button" Content="Apply" Grid.Column="1" HorizontalAlignment="Left" Margin="378,403,0,0" VerticalAlignment="Top" Width="85" Height="35" FontSize="16" Click="Save_Button_Click"/>
         <Button x:Name="Cancel_Button" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="277,403,0,0" VerticalAlignment="Top" Width="85" Height="35" FontSize="16" Click="Cancel_Button_Click"/>
     </Grid>

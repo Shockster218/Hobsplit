@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HobbitAutosplitter"
-        xmlns:WPFToggleSwitch="clr-namespace:WPFToggleSwitch;assembly=WPFToggleSwitch" x:Name="Settings_Window" x:Class="HobbitAutosplitter.SettingsWindow"
+        xmlns:uc="clr-namespace:HobbitAutosplitter"
+        x:Name="Settings_Window" x:Class="HobbitAutosplitter.SettingsWindow"
         mc:Ignorable="d"
         Style="{DynamicResource CustomWindowStyle}"
         Title="General Settings" Height="304.667" Width="482" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FFFF9700">
@@ -14,37 +15,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="265"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="262"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="Controls_GroupBox" Header="General Settings" Margin="10,20,5,0" FontSize="14">
-            <StackPanel>
-                <WPFToggleSwitch:ToggleSwitch x:Name="Thief_Split_Toggle" Content="Enable Thief Split" Background="#01FFFFFF" Margin="5,5,5,7" Foreground="White"/>
-                <WPFToggleSwitch:ToggleSwitch x:Name="Manual_Controls_Toggle" Content="Manual Start and Reset" Background="#01FFFFFF" Margin="5,7" Foreground="White"/>
-                <WPFToggleSwitch:ToggleSwitch x:Name="Ready_Sound_Toggle" Content="Play Ready Sound" Background="#01FFFFFF" Margin="5,7" Foreground="White"/>
-                <WPFToggleSwitch:ToggleSwitch x:Name="Thief_Sound_Toggle" Content="Play Thief Split Sound" Background="#01FFFFFF" Margin="5,7,5,5" Foreground="White"/>
-            </StackPanel>
-        </GroupBox>
-        <GroupBox x:Name="Keybinds_GroupBox" Header="Keybind Settings" Margin="5,20,3,0" FontSize="14" Grid.Column="1">
-            <StackPanel x:Name="Main_Stack_Panel" ForceCursor="True" Margin="0">
-                <StackPanel x:Name="Split_Stack_Panel" Margin="5,10,5,9" Orientation="Horizontal">
-                    <TextBlock x:Name="Split_TextBlock" Text="Split" Margin="0,0,20,0"/>
-                    <Button x:Name="Split_Button" Content="" Width="75" Margin="63,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Split_Button_Click" KeyDown="Split_Button_KeyDown" MouseLeave="Split_Button_MouseLeave"/>
-                </StackPanel>
-                <StackPanel x:Name="Unsplit_Stack_Panel_Copy" Margin="5,10,5,9" Orientation="Horizontal">
-                    <TextBlock x:Name="Unsplit_TextBlock" Text="Unsplit" Margin="0,0,20,0"/>
-                    <Button x:Name="Unsplit_Button" Content="" Width="75" Margin="47,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Unsplit_Button_Click" KeyDown="Unsplit_Button_KeyDown" MouseLeave="Unsplit_Button_MouseLeave"/>
-                </StackPanel>
-                <StackPanel x:Name="Reset_Stack_Panel_Copy1" Margin="5,10,5,9" Orientation="Horizontal">
-                    <TextBlock x:Name="Reset_TextBlock" Text="Reset" Margin="0,0,20,0"/>
-                    <Button x:Name="Reset_Button" Content="" Width="75" Margin="57,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Reset_Button_Click" KeyDown="Reset_Button_KeyDown" MouseLeave="Reset_Button_MouseLeave"/>
-                </StackPanel>
-                <StackPanel x:Name="Pause_Stack_Panel_Copy2" Margin="5,10,5,9" Orientation="Horizontal">
-                    <TextBlock x:Name="Pause_TextBlock" Text="Pause" Margin="0,0,20,0"/>
-                    <Button x:Name="Pause_Button" Content="" Width="75" Margin="54,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Pause_Button_Click" KeyDown="Pause_Button_KeyDown" MouseLeave="Pause_Button_MouseLeave"/>
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
+        <uc:SettingsControl  x:Name="Toggles" Margin="10,20,7,5" Height="Auto" Width="Auto"/>
+        <uc:KeybindsControl  x:Name="Keybinds" Margin="5,20,10,5" Grid.Column="1" Height="Auto" Width="Auto"/>
         <Button x:Name="Apply_Button" Content="Apply" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.Row="1" Margin="40,10,0,0" Height="27" Click="Apply_Button_Click"/>
         <Button x:Name="Cancel_Button" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.Row="1" Margin="130,10,0,0" Height="27" Click="Cancel_Button_Click"/>
     </Grid>

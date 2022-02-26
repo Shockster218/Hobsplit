@@ -29,7 +29,7 @@ namespace HobbitAutosplitter
         public static SplitState GetCurrentSplitState() => splitState;
         public static RECT GetCrop() => splitIndex == 1 ? Constants.startCrop : Constants.crop;
         public static int GetSplitIndex() => splitIndex;
-        public static void UpdateSplitCroppings(double left, double right, double top, double bottom) { foreach (SplitData split in splits) { split.UpdateImageCropping(left, right, top, bottom); } }
+        public static void UpdateSplitCroppings() { foreach (SplitData split in splits) { split.UpdateImageCropping(Settings.Default.refCropLeft, Settings.Default.refCropRight, Settings.Default.refCropTop, Settings.Default.refCropBottom); } }
         private static float CalculateStartSimilarity() { return (float)Math.Round((1 - Settings.Default.startSimilarity + 0.1f * 4.5f) * 0.1f, 3); }
         private static void SetSplitComparisons() 
         {
