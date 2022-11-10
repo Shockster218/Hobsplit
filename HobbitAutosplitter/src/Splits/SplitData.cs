@@ -45,7 +45,7 @@ namespace HobbitAutosplitter
 
         public void UpdateImageCropping(double left, double right, double top, double bottom)
         {
-            baseCrop = baseImage.Crop(new RECT(
+            baseCrop = baseImage.Crop(new Rectangle(
                 (int)left / 100 * baseImage.Width,
                 (int)top / 100 * baseImage.Height,
                 baseImage.Width - (int)(right / 100 * baseImage.Width),

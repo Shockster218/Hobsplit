@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Style="{DynamicResource CustomWindowStyle}"
-        mc:Ignorable="d" Height="512" Width="225" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="512" Width="225" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ContentRendered="StartCaptureSession">
     <Grid x:Name="Grid" Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="Run_Information_Row" Height="190"/>

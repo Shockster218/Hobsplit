@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HobbitAutosplitter
 {
@@ -25,7 +26,7 @@ namespace HobbitAutosplitter
                     DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
                     if(dispatcherTarget != null)
                     {
-                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        if (dispatcherTarget is Window)
                         {
                             if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler);
                         }
@@ -38,19 +39,19 @@ namespace HobbitAutosplitter
             }
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, PreComparisonArgs args)
+        public static void SmartInvoke(this MulticastDelegate multicast, FrameCreatedArgs args)
         {
             MulticastDelegate multiDel = multicast;
             if (multiDel != null)
             {
                 var invocationList = multiDel.GetInvocationList();
 
-                foreach (PreComparisonEventHandler handler in invocationList)
+                foreach (FrameCreatedEventHandler handler in invocationList)
                 {
                     DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
                     if (dispatcherTarget != null)
                     {
-                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        if (dispatcherTarget is Window)
                         {
                             if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
                         }
@@ -75,7 +76,7 @@ namespace HobbitAutosplitter
                     DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
                     if (dispatcherTarget != null)
                     {
-                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        if (dispatcherTarget is Window)
                         {
                             if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
                         }
@@ -100,7 +101,7 @@ namespace HobbitAutosplitter
                     DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
                     if (dispatcherTarget != null)
                     {
-                        if (dispatcherTarget.GetType() == typeof(MainWindow))
+                        if (dispatcherTarget is Window)
                         {
                             if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, action);
                         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Shipwreck.Phash;
 
 namespace HobbitAutosplitter
@@ -27,10 +28,10 @@ namespace HobbitAutosplitter
         public static SplitData GetCurrentComparison() => currentComparison;
         public static SplitData GetNextComparison() => nextComparison;
         public static SplitState GetCurrentSplitState() => splitState;
-        public static RECT GetCrop() => splitIndex == 1 ? Constants.startCrop : Constants.crop;
+        public static Rectangle GetCrop() => splitIndex == 1 ? Constants.startCrop : Constants.crop;
         public static int GetSplitIndex() => splitIndex;
         public static void UpdateSplitCroppings() { foreach (SplitData split in splits) { split.UpdateImageCropping(Settings.Default.refCropLeft, Settings.Default.refCropRight, Settings.Default.refCropTop, Settings.Default.refCropBottom); } }
-        private static float CalculateStartSimilarity() { return (float)Math.Round((1 - Settings.Default.startSimilarity + 0.1f * 4.5f) * 0.1f, 3); }
+        private static float CalculateStartSimilarity() { return (float)Math.Round(Settings.Default.startSimilarity / 2f - .34f, 2); }
         private static void SetSplitComparisons() 
         {
             nextComparison = splitIndex <= splits.Length - 1 ? splits[splitIndex + 1]: null;

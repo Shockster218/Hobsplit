@@ -19,7 +19,7 @@
         <TextBlock x:Name="Comparison_Title_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Gameplay Video Crop" VerticalAlignment="Center" Margin="10,7,0,110" Height="38" Width="636" FontSize="26" FontWeight="Bold"/>
         <Image x:Name="Gameplay_Image" HorizontalAlignment="Left" Height="360" Margin="89,0,0,0" VerticalAlignment="Top" Width="480" Stretch="Fill" Grid.Row="1"/>
         <TextBlock x:Name="Crop_Explanation_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="Each slider corresponds to the stated side of the image. Each number is based on a percentage of the total image. For example, if every side is set to 100, the full image would be displayed because each side is set to it's maximum amount." Margin="10,0,0,209" Grid.Row="2" Height="74" Width="636" FontSize="16"/>
-        <uc:WindowCropControl Margin="10,84,108,7" Grid.Row="2" x:Name="CropControl" Height="Auto" Width="Auto"/>
+        <uc:WindowCropComponent Margin="10,84,108,7" Grid.Row="2" x:Name="CropControl" Height="Auto" Width="Auto"/>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="571,191,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16" Grid.Row="2"/>
         <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="571,240,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16" Grid.Row="2"/>
     </Grid>

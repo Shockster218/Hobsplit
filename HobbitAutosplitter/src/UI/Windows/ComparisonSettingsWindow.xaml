@@ -1,0 +1,25 @@
+﻿<Window x:Name="Comparison_Settings_Window" x:Class="HobbitAutosplitter.ComparisonSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:HobbitAutosplitter"
+        xmlns:local="clr-namespace:HobbitAutosplitter"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Style="{DynamicResource CustomWindowStyle}"
+        mc:Ignorable="d"
+        Title="Image Comparison Settings" Height="615" Width="945" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF939300">
+    <Grid x:Name="Grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="198*"/>
+            <ColumnDefinition Width="196*"/>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="477*"/>
+        </Grid.ColumnDefinitions>
+        <local:SplitsControl Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <local:SimilarityControl Grid.Column="3" x:Name="ChangeSimilarity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <local:ChooseFolderComponent Grid.Column="3" Margin="10,465,0,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="Save_Button" Content="Apply" Grid.Column="3" HorizontalAlignment="Left" Margin="382,537,0,0" VerticalAlignment="Top" Width="85" Height="36" FontSize="16" Click="Save_Button_Click" RenderTransformOrigin="0.44,0.469"/>
+        <Button x:Name="Cancel_Button" Content="Cancel" Grid.Column="3" HorizontalAlignment="Left" Margin="272,536,0,0" VerticalAlignment="Top" Width="85" Height="36" FontSize="16" Click="Cancel_Button_Click" RenderTransformOrigin="0.54,-0.4"/>
+    </Grid>
+</Window>

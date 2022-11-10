@@ -1,220 +1,205 @@
 ﻿using System;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using Rectangle = System.Drawing.Rectangle;
+using System.Drawing.Imaging;
 using Shipwreck.Phash;
 using Shipwreck.Phash.Bitmaps;
+using SharpDX;
+using SharpDX.Direct3D11;
+using Device = SharpDX.Direct3D11.Device;
+using MapFlags = SharpDX.Direct3D11.MapFlags;
+using SharpDX.DXGI;
+using Windows.Graphics.DirectX.Direct3D11;
+using Windows.Graphics;
+using Windows.Graphics.Capture;
+using Windows.Graphics.DirectX;
 
 namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-        public static event PreComparisonEventHandler FrameCreated;
+        public static event FrameCreatedEventHandler FrameCreated;
         public static event DigestEventHandler DigestCompleted;
 
-        private static RECT previewCrop;
-        private static RECT rc;
-        private static HandleRef hwnd;
+        private static byte[] currentFrameData;
+        private static object previewFrame;
+
+        private static IDirect3DDevice device;
+        private static Device d3dDevice;
+        private static SwapChain1 swapChain;
+        private static SizeInt32 lastSize;
+        private static GraphicsCaptureItem item;
+        private static Direct3D11CaptureFramePool framePool;
+        private static GraphicsCaptureSession session;
+        private static Texture2D screenTexture;
+
+        private static Rectangle previewCrop;
+
         public static void Init()
         {
-            ProcessManager.OBSOpenedEvent += CaptureApplication;
+            ProcessManager.OBSClosedEvent += StopCapture;
         }
 
-        public static void CaptureApplication()
+        public static void InitializeCapture()
         {
-            hwnd = new HandleRef(null, ProcessManager.GetOBS().MainWindowHandle);
-            GetWindowRect(hwnd, out rc);
-            SetPreviewCrop();
+            item = CaptureHelper.CreateItemForWindow(ProcessManager.GetOBS().MainWindowHandle);
+            device = DirectXHelper.CreateDevice();
+            d3dDevice = DirectXHelper.CreateSharpDXDevice(device);
 
-            while (ProcessManager.obsRunning)
+            Factory2 dxgiFactory = new Factory2();
+            SwapChainDescription1 description = new SwapChainDescription1()
             {
-                try
+                Width = item.Size.Width,
+                Height = item.Size.Height,
+                Format = Format.B8G8R8A8_UNorm,
+                Stereo = false,
+                SampleDescription = new SampleDescription()
                 {
-                    Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-                    Graphics gfxBmp = Graphics.FromImage(bmp);
-                    IntPtr hdcBitmap = gfxBmp.GetHdc();
+                    Count = 1,
+                    Quality = 0
+                },
+                Usage = Usage.RenderTargetOutput,
+                BufferCount = 2,
+                Scaling = Scaling.Stretch,
+                SwapEffect = SwapEffect.FlipSequential,
+                AlphaMode = AlphaMode.Premultiplied,
+                Flags = SwapChainFlags.None
+            };
 
-                    PrintWindow(hwnd.Handle, hdcBitmap, 0);
-                    gfxBmp.ReleaseHdc(hdcBitmap);
-
-                    Bitmap previewCropped = bmp.Crop(previewCrop).Resize();
-                    Bitmap finalCrop = previewCropped.Crop(SplitManager.GetCrop());
-                    if (SplitManager.GetSplitIndex() == 1) finalCrop.RemoveColor();
-
-                    Digest digest = ImagePhash.ComputeDigest(finalCrop.ToLuminanceImage());
-                    finalCrop.Dispose();
-                    
-                    DigestCompleted?.Invoke(new DigestArgs(digest));
-                    FrameCreated?.SmartInvoke(new PreComparisonArgs(previewCropped.Clone()));
-                    
-                    previewCropped.Dispose();
-                    gfxBmp.Dispose();
-                    bmp.Dispose();
-                }
-                catch {}
-            }
-        }
-
-        public static Bitmap GetCurrentFrame()
-        {
-            try
+            Texture2DDescription textureDesc = new Texture2DDescription
             {
-                Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-                Graphics gfxBmp = Graphics.FromImage(bmp);
-                IntPtr hdcBitmap = gfxBmp.GetHdc();
+                CpuAccessFlags = CpuAccessFlags.Read,
+                BindFlags = BindFlags.None,
+                Format = Format.B8G8R8A8_UNorm,
+                Width = item.Size.Width,
+                Height = item.Size.Height,
+                OptionFlags = ResourceOptionFlags.None,
+                MipLevels = 1,
+                ArraySize = 1,
+                SampleDescription = { Count = 1, Quality = 0 },
+                Usage = ResourceUsage.Staging
+            };
 
-                PrintWindow(hwnd.Handle, hdcBitmap, 0);
-                gfxBmp.ReleaseHdc(hdcBitmap);
+            screenTexture = new Texture2D(d3dDevice, textureDesc);
 
-                return bmp.Resize();
-            }
-            catch { return null; }
+            swapChain = new SwapChain1(dxgiFactory, d3dDevice, ref description);
+
+            framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
+                device,
+                DirectXPixelFormat.B8G8R8A8UIntNormalized,
+                2,
+                item.Size);
+            session = framePool.CreateCaptureSession(item);
+            lastSize = item.Size;
+
+            framePool.FrameArrived += OnFrameArrived;
+
+            session.StartCapture();
         }
 
-        public static void SetPreviewCrop()
+        private static void OnFrameArrived(Direct3D11CaptureFramePool sender, object args)
         {
-            previewCrop = new RECT(
-                (int)Settings.Default.cropLeft / 100 * rc.Right,
-                (int)Settings.Default.cropTop / 100 * rc.Bottom,
-                rc.Right - (int)(Settings.Default.cropRight / 100 * rc.Right),
-                rc.Bottom - (int)(Settings.Default.cropBottom / 100 * rc.Bottom)
+            bool newSize = false;
+
+            using (Direct3D11CaptureFrame frame = sender.TryGetNextFrame())
+            {
+                if (frame.ContentSize.Width != lastSize.Width ||
+                    frame.ContentSize.Height != lastSize.Height)
+                {
+                    newSize = true;
+                    lastSize = frame.ContentSize;
+                    swapChain.ResizeBuffers(
+                        2,
+                        lastSize.Width,
+                        lastSize.Height,
+                        Format.B8G8R8A8_UNorm,
+                        SwapChainFlags.None);
+                }
+
+                using (Texture2D texture2d = DirectXHelper.CreateSharpDXTexture2D(frame.Surface))
+                {
+                    int height = frame.ContentSize.Height;
+                    int width = frame.ContentSize.Width;
+
+                    d3dDevice.ImmediateContext.CopyResource(texture2d, screenTexture);
+                    DataBox mapSource = d3dDevice.ImmediateContext.MapSubresource(screenTexture, 0, MapMode.Read, MapFlags.None);
+
+                    Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
+                    BitmapData mapDest = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                    IntPtr sourcePtr = mapSource.DataPointer;
+                    IntPtr destPtr = mapDest.Scan0;
+
+                    for (int y = 0; y < height; y++)
+                    {
+                        Utilities.CopyMemory(destPtr, sourcePtr, width * 4);
+                        sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
+                        destPtr = IntPtr.Add(destPtr, mapDest.Stride);
+                    }
+
+                    bitmap.UnlockBits(mapDest);
+                    d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
+                    currentFrameData = bitmap.ToByteArray();
+                    bitmap.Dispose();
+                }
+
+            }
+
+            swapChain.Present(0, PresentFlags.None);
+
+            if (newSize)
+            {
+                framePool.Recreate(
+                    device,
+                    DirectXPixelFormat.B8G8R8A8UIntNormalized,
+                    2,
+                    lastSize);
+            }
+
+            FrameCreated?.SmartInvoke(new FrameCreatedArgs(currentFrameData));
+        }
+
+        private static void HandleFrameComparison()
+        {
+            Bitmap previewCropped = currentFrameData.ToBitmap().Crop(GetPreviewCrop()).Resize();
+
+            previewFrame = previewCropped;
+
+            Bitmap finalCrop = previewCropped.Crop(SplitManager.GetCrop());
+            previewCropped.Dispose();
+
+            if (SplitManager.GetSplitIndex() == 1) finalCrop.RemoveColor();
+            Digest digest = ImagePhash.ComputeDigest(finalCrop.ToLuminanceImage());
+            finalCrop.Dispose();
+
+            DigestCompleted?.Invoke(new DigestArgs(digest));
+        }
+
+        public static void UpdatePreviewCrop()
+        {
+            previewCrop = new Rectangle(
+                (int)Settings.Default.cropLeft / 100 * lastSize.Width,
+                (int)Settings.Default.cropTop / 100 * lastSize.Height,
+                lastSize.Width - (int)(Settings.Default.cropRight / 100 * lastSize.Width),
+                lastSize.Height - (int)(Settings.Default.cropBottom / 100 * lastSize.Height)
             );
         }
 
-        #region Imports
-        [DllImport("user32.dll")]
-        private static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
-        #endregion
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        private int _Left;
-        private int _Top;
-        private int _Right;
-        private int _Bottom;
-
-        public static RECT Default { get => Default; private set => new RECT(0, 0, 0, 0); }
-
-        public RECT(RECT Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
+        public static Rectangle GetPreviewCrop()
         {
-        }
-        public RECT(int Left, int Top, int Right, int Bottom)
-        {
-            _Left = Left;
-            _Top = Top;
-            _Right = Right;
-            _Bottom = Bottom;
+            return previewCrop;
         }
 
-        public int X
+        public static void StopCapture()
         {
-            get { return _Left; }
-            set { _Left = value; }
-        }
-        public int Y
-        {
-            get { return _Top; }
-            set { _Top = value; }
-        }
-        public int Left
-        {
-            get { return _Left; }
-            set { _Left = value; }
-        }
-        public int Top
-        {
-            get { return _Top; }
-            set { _Top = value; }
-        }
-        public int Right
-        {
-            get { return _Right; }
-            set { _Right = value; }
-        }
-        public int Bottom
-        {
-            get { return _Bottom; }
-            set { _Bottom = value; }
-        }
-        public int Height
-        {
-            get { return _Bottom - _Top; }
-            set { _Bottom = value + _Top; }
-        }
-        public int Width
-        {
-            get { return _Right - _Left; }
-            set { _Right = value + _Left; }
-        }
-        public System.Drawing.Point Location
-        {
-            get { return new System.Drawing.Point(Left, Top); }
-            set
-            {
-                _Left = value.X;
-                _Top = value.Y;
-            }
-        }
-        public System.Drawing.Size Size
-        {
-            get { return new System.Drawing.Size(Width, Height); }
-            set
-            {
-                _Right = value.Width + _Left;
-                _Bottom = value.Height + _Top;
-            }
+            session?.Dispose();
+            framePool?.Dispose();
+            swapChain?.Dispose();
+            d3dDevice?.Dispose();
         }
 
-        public static implicit operator Rectangle(RECT Rectangle)
+        public static Bitmap GetCurrentFrameData()
         {
-            return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
-        }
-        public static implicit operator RECT(Rectangle Rectangle)
-        {
-            return new RECT(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
-        }
-        public static bool operator ==(RECT Rectangle1, RECT Rectangle2)
-        {
-            return Rectangle1.Equals(Rectangle2);
-        }
-        public static bool operator !=(RECT Rectangle1, RECT Rectangle2)
-        {
-            return !Rectangle1.Equals(Rectangle2);
-        }
-
-        public override string ToString()
-        {
-            return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
-        }
-
-        public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
-        }
-
-        public bool Equals(RECT Rectangle)
-        {
-            return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
-        }
-
-        public override bool Equals(object Object)
-        {
-            if (Object is RECT)
-            {
-                return Equals((RECT)Object);
-            }
-            else if (Object is Rectangle)
-            {
-                return Equals(new RECT((Rectangle)Object));
-            }
-
-            return false;
+            return currentFrameData.ToBitmap();
         }
     }
 }

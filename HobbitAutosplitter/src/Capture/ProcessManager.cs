@@ -18,6 +18,7 @@ namespace HobbitAutosplitter
 
         public static void Init()
         {
+            obs = null;
             OBSProcessFoundEvent += WaitForOBS;
         }
 
@@ -37,9 +38,9 @@ namespace HobbitAutosplitter
             }
         }
 
-        private static void WaitForOBS()
+        private static async void WaitForOBS()
         {
-            while (!IsWindowVisible(obs.MainWindowHandle)) { continue; }
+            while (obs.MainWindowHandle == IntPtr.Zero) { await Task.Delay(100); }
             obsRunning = true;
             OBSOpenedEvent?.SmartInvoke();
         }

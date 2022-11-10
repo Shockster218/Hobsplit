@@ -14,9 +14,9 @@ namespace HobbitAutosplitter
 
         private void SetGameplayImage(CropArgs args)
         {
-            frame = CaptureManager.GetCurrentFrame();
+            frame = CaptureManager.GetCurrentFrameData();
             Bitmap crop = (Bitmap)frame.Clone();
-            crop.Crop(new RECT(
+            crop.Crop(new Rectangle(
                 (int)args.left / 100 * frame.Width,
                 (int)args.top / 100 * frame.Height,
                 frame.Width - (int)(args.right / 100 * frame.Width),
@@ -32,7 +32,7 @@ namespace HobbitAutosplitter
             Settings.Default.cropTop = CropControl.valueTop;
             Settings.Default.cropRight = CropControl.valueRight;
             Settings.Default.cropBottom = CropControl.valueBottom;
-            CaptureManager.SetPreviewCrop();
+            CaptureManager.UpdatePreviewCrop();
             frame.Dispose();
             Close();
         }

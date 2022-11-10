@@ -1,0 +1,22 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HobbitAutosplitter"
+        xmlns:uc="clr-namespace:HobbitAutosplitter"
+        x:Name="Settings_Window" x:Class="HobbitAutosplitter.SettingsWindow"
+        mc:Ignorable="d"
+        Style="{DynamicResource CustomWindowStyle}"
+        Title="General Settings" Height="350" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FFFF9700">
+    <Grid x:Name="Grid" Margin="0,0,0,-2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="309"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <uc:SettingsControl  x:Name="Toggles" Height="280" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,23,0,0" Width="286"/>
+        <uc:KeybindsControl  x:Name="Keybinds" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,23,0,0" Height="207" Width="207"/>
+        <Button x:Name="Apply_Button" Content="Apply" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Grid.Column="1" Margin="53,268,0,0" Height="27" Click="Apply_Button_Click" RenderTransformOrigin="0.47,1.094"/>
+        <Button x:Name="Cancel_Button" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Grid.Column="1" Margin="141,268,0,0" Height="27" Click="Cancel_Button_Click" RenderTransformOrigin="0.5,1.926"/>
+    </Grid>
+</Window>

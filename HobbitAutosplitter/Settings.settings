@@ -108,7 +108,19 @@
       <Value Profile="(Default)">0.9</Value>
     </Setting>
     <Setting Name="startSimilarity" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.945</Value>
+      <Value Profile="(Default)">0.82</Value>
+    </Setting>
+    <Setting Name="autoOBS" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="obsPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">No path set!</Value>
+    </Setting>
+    <Setting Name="updateRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="needSetup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

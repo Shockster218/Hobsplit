@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Media.Animation;
 using System.Windows;
+using System.Threading;
 
 namespace HobbitAutosplitter
 {
@@ -9,10 +10,23 @@ namespace HobbitAutosplitter
     {
         public static MainWindow instance;
         private bool isLiveFeed = false;
+        private Thread captureThread;
+
         public MainWindow()
         {
             InitializeComponent();
+            CaptureManager.FrameCreated += ShowPreview;
             instance = this;
+        }
+
+        private void ShowPreview(FrameCreatedArgs args)
+        {
+            if (isLiveFeed)
+            {
+                Live_Feed_Image.Source = args.frameData.ToBitmapImage();
+            }
+
+            args.Dispose();
         }
 
         private void Live_Feed_Button_Click(object sender, RoutedEventArgs events)
@@ -21,18 +35,13 @@ namespace HobbitAutosplitter
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(250));
             anim.From = isLiveFeed ? 830 : 225;
             anim.To = isLiveFeed ? 225 : 830;
+
             Storyboard sb = new Storyboard();
             sb.Children.Add(anim);
             Storyboard.SetTargetName(anim, Name);
             Storyboard.SetTargetProperty(anim, new PropertyPath(WidthProperty));
-
-            sb.Completed += (s, e) =>
-            {
-                // if (!isLiveFeed) start sending frames
-                // else stop
-            };
-
             sb.Begin(this);
+
             Live_Feed_Button.Content = isLiveFeed ? "Show Live Feed" : "Hide Live Feed";
             isLiveFeed = !isLiveFeed;
         }
@@ -73,6 +82,12 @@ namespace HobbitAutosplitter
         private void Github_Textblock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Process.Start("https://github.com/Shockster218/Hobbit-Autosplitter");
+        }
+
+        private void StartCaptureSession(object sender, EventArgs e)
+        {
+            captureThread = new Thread(CaptureManager.InitializeCapture);
+            captureThread.Start();
         }
 
         //public void OBSOffline()

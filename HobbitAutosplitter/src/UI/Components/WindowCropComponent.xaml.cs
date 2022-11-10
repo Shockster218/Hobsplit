@@ -7,7 +7,7 @@ namespace HobbitAutosplitter
     /// <summary>
     /// Interaction logic for WindowCropControl.xaml
     /// </summary>
-    public partial class WindowCropControl : UserControl
+    public partial class WindowCropComponent : UserControl
     {
         public double valueLeft { get; private set; }
         public double valueRight { get; private set; }
@@ -18,7 +18,7 @@ namespace HobbitAutosplitter
 
         public CropEventHandler OnValueChanged;
 
-        public WindowCropControl()
+        public WindowCropComponent()
         {
             InitializeComponent();
         }

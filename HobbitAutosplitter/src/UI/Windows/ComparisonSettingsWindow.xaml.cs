@@ -18,21 +18,21 @@ namespace HobbitAutosplitter
 
         private void SaveSplitImagePaths()
         {
-            Settings.Default.menuPath = ChangeSplits.menuPath;
-            Settings.Default.dwPath = ChangeSplits.dwPath;
-            Settings.Default.aupPath = ChangeSplits.aupPath;
-            Settings.Default.rmPath = ChangeSplits.rmPath;
-            Settings.Default.thPath = ChangeSplits.thPath;
-            Settings.Default.ohPath = ChangeSplits.ohPath;
-            Settings.Default.riddlesPath = ChangeSplits.riddlesPath;
-            Settings.Default.fasPath = ChangeSplits.fasPath;
-            Settings.Default.boobPath = ChangeSplits.boobPath;
-            Settings.Default.awwPath = ChangeSplits.awwPath;
-            Settings.Default.thiefPath = ChangeSplits.thiefPath;
-            Settings.Default.iiPath = ChangeSplits.iiPath;
-            Settings.Default.gotcPath = ChangeSplits.gotcPath;
-            Settings.Default.tcbPath = ChangeSplits.tcbPath;
-            Settings.Default.finalPath = ChangeSplits.finalPath;
+            //Settings.Default.menuPath = ChangeSplits.menuPath;
+            //Settings.Default.dwPath = ChangeSplits.dwPath;
+            //Settings.Default.aupPath = ChangeSplits.aupPath;
+            //Settings.Default.rmPath = ChangeSplits.rmPath;
+            //Settings.Default.thPath = ChangeSplits.thPath;
+            //Settings.Default.ohPath = ChangeSplits.ohPath;
+            //Settings.Default.riddlesPath = ChangeSplits.riddlesPath;
+            //Settings.Default.fasPath = ChangeSplits.fasPath;
+            //Settings.Default.boobPath = ChangeSplits.boobPath;
+            //Settings.Default.awwPath = ChangeSplits.awwPath;
+            //Settings.Default.thiefPath = ChangeSplits.thiefPath;
+            //Settings.Default.iiPath = ChangeSplits.iiPath;
+            //Settings.Default.gotcPath = ChangeSplits.gotcPath;
+            //Settings.Default.tcbPath = ChangeSplits.tcbPath;
+            //Settings.Default.finalPath = ChangeSplits.finalPath;
         }
 
         private void SaveSplitSimilarity()

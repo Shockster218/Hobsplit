@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Input;
-using WindowsInput.Native;
 
 namespace HobbitAutosplitter
 {
@@ -17,6 +15,7 @@ namespace HobbitAutosplitter
             Settings.Default.manualSplit = Toggles.GetManualToggle();
             Settings.Default.playReadySound = Toggles.GetReadySoundToggle();
             Settings.Default.playThiefSound = Toggles.GetThiefSoundToggle();
+            Settings.Default.autoOBS = Toggles.GetAutoOBSToggle();
 
             Settings.Default.split = Keybinds.splitKey;
             Settings.Default.unsplit = Keybinds.unsplitKey;

@@ -19,7 +19,7 @@
         <TextBlock x:Name="Comparison_Title_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" Text="Comparison Image Crop" VerticalAlignment="Center" Margin="10,9,0,102" Height="38" Width="636" FontSize="26" FontWeight="Bold"/>
         <Image x:Name="Split_Reference_Image" HorizontalAlignment="Left" Height="362" Margin="88,3,0,0" VerticalAlignment="Top" Width="480" Stretch="Fill" Grid.Row="1"/>
         <TextBlock x:Name="Crop_Explanation_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="Each slider corresponds to the stated side of the image. Each number is based on a percentage of the total image. For example, if every side is set to 100, the full image would be displayed because each side is set to it's maximum amount." Margin="10,0,0,208" Grid.Row="2" Height="74" Width="636" FontSize="16"/>
-        <uc:WindowCropControl Grid.Row="2" Margin="10,83,108,5" x:Name="CropControl" Height="Auto" Width="Auto"/>
+        <uc:WindowCropComponent Grid.Row="2" Margin="10,83,108,5" x:Name="CropControl" Height="Auto" Width="Auto"/>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="573,190,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" RenderTransformOrigin="1.127,2.15" Height="30" FontSize="16" Grid.Row="2"/>
         <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="573,239,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" Height="30" FontSize="16" Grid.Row="2"/>
     </Grid>

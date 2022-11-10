@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Runtime.InteropServices;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -11,26 +11,55 @@ namespace HobbitAutosplitter
     {
         public static BitmapImage ToBitmapImage(this Bitmap bitmap)
         {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+        }
+        public static BitmapImage ToBitmapImage(this byte[] array)
+        {
             BitmapImage image = new BitmapImage();
-            MemoryStream ms = new MemoryStream();
-
-            bitmap.Save(ms, ImageFormat.Bmp);
             image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-
+            image.StreamSource = new MemoryStream(array);
             image.EndInit();
-            image.Freeze();
-
             return image;
         }
 
-        public static Bitmap Crop(this Bitmap source, RECT crop)
+        public static byte[] ToByteArray(this Bitmap bm)
         {
-            Bitmap cropped = new Bitmap(crop.Right, crop.Bottom);
+            using (var stream = new MemoryStream())
+            {
+                bm.Save(stream, ImageFormat.Bmp);
+                return stream.ToArray();
+            }
+        }
+
+        public static Bitmap ToBitmap(this byte[] data)
+        {
+            using (var ms = new MemoryStream(data))
+            {
+                return new Bitmap(ms);
+            }
+        }
+
+        public static Bitmap Crop(this Bitmap source, Rectangle rect)
+        {
+            Bitmap cropped = new Bitmap(rect.Width, rect.Height);
             using (Graphics graphics = Graphics.FromImage(cropped))
             {
-                graphics.DrawImage(source, new Rectangle(0, 0, crop.Right, crop.Bottom), crop, GraphicsUnit.Pixel);
+                graphics.DrawImage(source, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
                 graphics.Dispose();
             }
             return cropped;

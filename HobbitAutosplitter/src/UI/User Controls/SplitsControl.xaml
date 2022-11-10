@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HobbitAutosplitter"
-             mc:Ignorable="d" Width="446.428" Height="434.912">
+             mc:Ignorable="d" Width="446.428" Height="566">
     <Grid x:Name="Splits_Grid">
         <GroupBox x:Name="Split_Images_GroupBox" Header="Split Images">
-            <StackPanel x:Name="Split_Main_Stack_Panel" HorizontalAlignment="Left" Height="393" VerticalAlignment="Top" Width="446" Margin="0,0,-12,-3">
+            <StackPanel x:Name="Split_Main_Stack_Panel" HorizontalAlignment="Left" Height="528" VerticalAlignment="Top" Width="446">
+                <TextBlock x:Name="Title_Textblock" Text="You can set the comparison images for each split below by clicking the image you want to replace then choosing a new image. Alternatively, you can click the &quot;Choose Image Folder&quot; button at the bottom right of the window. " FontSize="18" Width="417" TextWrapping="Wrap" Margin="0,10,0,10"/>
                 <StackPanel x:Name="Split_Stack_Panel_One" Height="125" Margin="5,5,5,0" Orientation="Horizontal">
                     <Canvas x:Name="Menu" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
                         <Border x:Name="Split_Image_Border" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
