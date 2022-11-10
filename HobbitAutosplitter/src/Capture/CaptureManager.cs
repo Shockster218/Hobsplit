@@ -21,7 +21,7 @@ namespace HobbitAutosplitter
         public static event FrameCreatedEventHandler FrameCreated;
         public static event DigestEventHandler DigestCompleted;
 
-        private static byte[] currentFrameData;
+        private static Bitmap currentFrame;
         private static object previewFrame;
 
         private static IDirect3DDevice device;
@@ -138,29 +138,16 @@ namespace HobbitAutosplitter
 
                     bitmap.UnlockBits(mapDest);
                     d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
-                    currentFrameData = bitmap.ToByteArray();
+                    currentFrame = (Bitmap)bitmap.Clone();
+                    FrameCreated?.SmartInvoke(currentFrame.ToBitmapImage());
                     bitmap.Dispose();
                 }
-
             }
-
-            swapChain.Present(0, PresentFlags.None);
-
-            if (newSize)
-            {
-                framePool.Recreate(
-                    device,
-                    DirectXPixelFormat.B8G8R8A8UIntNormalized,
-                    2,
-                    lastSize);
-            }
-
-            FrameCreated?.SmartInvoke(new FrameCreatedArgs(currentFrameData));
         }
 
         private static void HandleFrameComparison()
         {
-            Bitmap previewCropped = currentFrameData.ToBitmap().Crop(GetPreviewCrop()).Resize();
+            Bitmap previewCropped = currentFrame.Crop(GetPreviewCrop()).Resize();
 
             previewFrame = previewCropped;
 
@@ -199,7 +186,7 @@ namespace HobbitAutosplitter
 
         public static Bitmap GetCurrentFrameData()
         {
-            return currentFrameData.ToBitmap();
+            return currentFrame;
         }
     }
 }

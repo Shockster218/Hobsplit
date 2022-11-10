@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
 {
@@ -39,7 +40,7 @@ namespace HobbitAutosplitter
             }
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, FrameCreatedArgs args)
+        public static void SmartInvoke(this MulticastDelegate multicast, BitmapImage args)
         {
             MulticastDelegate multiDel = multicast;
             if (multiDel != null)

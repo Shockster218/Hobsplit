@@ -7,23 +7,23 @@ namespace HobbitAutosplitter
 {
     public delegate void SmartEventHandler();
     public delegate void LivesplitActionEventHandler(LivesplitAction action = LivesplitAction.NONE);
-    public delegate void FrameCreatedEventHandler(FrameCreatedArgs args);
+    public delegate void FrameCreatedEventHandler(BitmapImage image);
     public delegate void DigestEventHandler(DigestArgs args);
     public delegate void CropEventHandler(CropArgs args);
     public delegate void SplitImagesEventHandler();
 
     public class FrameCreatedArgs : EventArgs
     {
-        public byte[] frameData { get; set; }
+        //public Bitmap frameData { get; set; }
 
-        public FrameCreatedArgs(byte[] frameData) 
-        {
-            this.frameData = frameData;
-        }
+        //public FrameCreatedArgs(Bitmap frameData) 
+        //{
+        //    this.frameData = frameData;
+        //}
 
         public void Dispose()
         {
-            frameData = null;
+            //frameData = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.SuppressFinalize(this);

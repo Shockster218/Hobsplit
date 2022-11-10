@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Media.Animation;
 using System.Windows;
 using System.Threading;
+using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
 {
@@ -19,14 +20,12 @@ namespace HobbitAutosplitter
             instance = this;
         }
 
-        private void ShowPreview(FrameCreatedArgs args)
+        private void ShowPreview(BitmapImage image)
         {
             if (isLiveFeed)
             {
-                Live_Feed_Image.Source = args.frameData.ToBitmapImage();
+                Live_Feed_Image.Source = image;
             }
-
-            args.Dispose();
         }
 
         private void Live_Feed_Button_Click(object sender, RoutedEventArgs events)
