@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.IO;
+﻿using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
@@ -13,7 +12,7 @@ namespace HobbitAutosplitter
         {
             using (MemoryStream memory = new MemoryStream())
             {
-                bitmap.Save(memory, ImageFormat.Png);
+                bitmap.Save(memory, ImageFormat.Bmp);
                 memory.Position = 0;
 
                 BitmapImage bitmapImage = new BitmapImage();
@@ -56,34 +55,29 @@ namespace HobbitAutosplitter
 
         public static Bitmap Crop(this Bitmap source, Rectangle rect)
         {
-            Bitmap cropped = new Bitmap(rect.Width, rect.Height);
-            using (Graphics graphics = Graphics.FromImage(cropped))
-            {
-                graphics.DrawImage(source, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
-                graphics.Dispose();
-            }
-            return cropped;
+            Bitmap bmpImage = new Bitmap(source);
+            return bmpImage.Clone(rect, bmpImage.PixelFormat);
         }
 
-        public static Bitmap Resize(this Bitmap source)
+        public static Bitmap Resize(this Bitmap source, int width, int height)
         {
-            Rectangle resizeRect = new Rectangle(0, 0, Constants.width, Constants.height);
-            Bitmap resize = new Bitmap(Constants.width, Constants.height);
+            Rectangle resizeRect = new Rectangle(0, 0, width, height);
+            Bitmap resize = new Bitmap(width, height);
 
             resize.SetResolution(source.HorizontalResolution, source.VerticalResolution);
 
             using (Graphics graphics = Graphics.FromImage(resize))
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                graphics.InterpolationMode = InterpolationMode.Low;
+                graphics.SmoothingMode = SmoothingMode.HighSpeed;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
 
                 graphics.DrawImage(source, resizeRect, 0, 0, source.Width, source.Height, GraphicsUnit.Pixel);
                 graphics.Dispose();
+                return resize;
             }
-            return resize;
         }
 
         public static Bitmap RemoveColor(this Bitmap bitmap)

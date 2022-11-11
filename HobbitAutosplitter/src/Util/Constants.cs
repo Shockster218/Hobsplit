@@ -4,8 +4,10 @@ namespace HobbitAutosplitter
 {
     public static class Constants
     {
-        public const int width = 640;
-        public const int height = 360;
+        public const int previewWidth = 640;
+        public const int previewHeight = 480;
+        public const int comparisonWidth = 320;
+        public const int comparisonHeight = 240;
         public const string loadingKeyword = "loading";
 
         public static readonly Rectangle crop = new Rectangle(175, 75, 525, 150);

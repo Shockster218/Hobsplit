@@ -126,7 +126,6 @@
     <Compile Include="src\Util\EventHelper.cs" />
     <Compile Include="src\Util\Extensions.cs" />
     <Compile Include="src\Util\MessageBoxManager.cs" />
-    <Compile Include="src\Util\QueueManager.cs" />
     <Compile Include="src\UI\Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>

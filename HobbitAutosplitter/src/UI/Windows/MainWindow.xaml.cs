@@ -16,8 +16,8 @@ namespace HobbitAutosplitter
         public MainWindow()
         {
             InitializeComponent();
-            CaptureManager.FrameCreated += ShowPreview;
             instance = this;
+            CaptureManager.SendPreviewFrame += ShowPreview;
         }
 
         private void ShowPreview(BitmapImage image)

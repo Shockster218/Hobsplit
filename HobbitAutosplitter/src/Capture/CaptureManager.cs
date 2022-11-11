@@ -10,24 +10,23 @@ using Device = SharpDX.Direct3D11.Device;
 using MapFlags = SharpDX.Direct3D11.MapFlags;
 using SharpDX.DXGI;
 using Windows.Graphics.DirectX.Direct3D11;
-using Windows.Graphics;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-        public static event FrameCreatedEventHandler FrameCreated;
-        public static event DigestEventHandler DigestCompleted;
+        public static event PreviewFrameEventHandler SendPreviewFrame;
 
-        private static Bitmap currentFrame;
-        private static object previewFrame;
+        private static Bitmap previewFrame;
+        private static int frameHeight;
+        private static int frameWidth;
 
         private static IDirect3DDevice device;
         private static Device d3dDevice;
-        private static SwapChain1 swapChain;
-        private static SizeInt32 lastSize;
         private static GraphicsCaptureItem item;
         private static Direct3D11CaptureFramePool framePool;
         private static GraphicsCaptureSession session;
@@ -47,24 +46,6 @@ namespace HobbitAutosplitter
             d3dDevice = DirectXHelper.CreateSharpDXDevice(device);
 
             Factory2 dxgiFactory = new Factory2();
-            SwapChainDescription1 description = new SwapChainDescription1()
-            {
-                Width = item.Size.Width,
-                Height = item.Size.Height,
-                Format = Format.B8G8R8A8_UNorm,
-                Stereo = false,
-                SampleDescription = new SampleDescription()
-                {
-                    Count = 1,
-                    Quality = 0
-                },
-                Usage = Usage.RenderTargetOutput,
-                BufferCount = 2,
-                Scaling = Scaling.Stretch,
-                SwapEffect = SwapEffect.FlipSequential,
-                AlphaMode = AlphaMode.Premultiplied,
-                Flags = SwapChainFlags.None
-            };
 
             Texture2DDescription textureDesc = new Texture2DDescription
             {
@@ -82,15 +63,12 @@ namespace HobbitAutosplitter
 
             screenTexture = new Texture2D(d3dDevice, textureDesc);
 
-            swapChain = new SwapChain1(dxgiFactory, d3dDevice, ref description);
-
             framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
                 device,
                 DirectXPixelFormat.B8G8R8A8UIntNormalized,
-                2,
+                1,
                 item.Size);
             session = framePool.CreateCaptureSession(item);
-            lastSize = item.Size;
 
             framePool.FrameArrived += OnFrameArrived;
 
@@ -99,47 +77,34 @@ namespace HobbitAutosplitter
 
         private static void OnFrameArrived(Direct3D11CaptureFramePool sender, object args)
         {
-            bool newSize = false;
-
             using (Direct3D11CaptureFrame frame = sender.TryGetNextFrame())
             {
-                if (frame.ContentSize.Width != lastSize.Width ||
-                    frame.ContentSize.Height != lastSize.Height)
-                {
-                    newSize = true;
-                    lastSize = frame.ContentSize;
-                    swapChain.ResizeBuffers(
-                        2,
-                        lastSize.Width,
-                        lastSize.Height,
-                        Format.B8G8R8A8_UNorm,
-                        SwapChainFlags.None);
-                }
-
                 using (Texture2D texture2d = DirectXHelper.CreateSharpDXTexture2D(frame.Surface))
                 {
-                    int height = frame.ContentSize.Height;
-                    int width = frame.ContentSize.Width;
+                    frameHeight = frame.ContentSize.Height;
+                    frameWidth = frame.ContentSize.Width;
 
                     d3dDevice.ImmediateContext.CopyResource(texture2d, screenTexture);
                     DataBox mapSource = d3dDevice.ImmediateContext.MapSubresource(screenTexture, 0, MapMode.Read, MapFlags.None);
 
-                    Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
-                    BitmapData mapDest = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                    Bitmap bitmap = new Bitmap(frameWidth, frameHeight, PixelFormat.Format32bppRgb);
+                    BitmapData mapDest = bitmap.LockBits(new Rectangle(0, 0, frameWidth, frameHeight), ImageLockMode.WriteOnly, bitmap.PixelFormat);
                     IntPtr sourcePtr = mapSource.DataPointer;
                     IntPtr destPtr = mapDest.Scan0;
 
-                    for (int y = 0; y < height; y++)
+                    for (int y = 0; y < frameHeight; y++)
                     {
-                        Utilities.CopyMemory(destPtr, sourcePtr, width * 4);
+                        Utilities.CopyMemory(destPtr, sourcePtr, frameWidth * 4);
                         sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
                         destPtr = IntPtr.Add(destPtr, mapDest.Stride);
                     }
 
                     bitmap.UnlockBits(mapDest);
                     d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
-                    currentFrame = (Bitmap)bitmap.Clone();
-                    FrameCreated?.SmartInvoke(currentFrame.ToBitmapImage());
+
+                    previewFrame = bitmap.Clone() as Bitmap;
+                    HandleFrameComparison();
+
                     bitmap.Dispose();
                 }
             }
@@ -147,32 +112,40 @@ namespace HobbitAutosplitter
 
         private static void HandleFrameComparison()
         {
-            Bitmap previewCropped = currentFrame.Crop(GetPreviewCrop()).Resize();
+            previewFrame = previewFrame.Crop(GetPreviewCrop());
 
-            previewFrame = previewCropped;
+            CreateDigest(previewFrame.Clone() as Bitmap);
 
-            Bitmap finalCrop = previewCropped.Crop(SplitManager.GetCrop());
-            previewCropped.Dispose();
+            previewFrame = previewFrame.Resize(Constants.previewWidth, Constants.previewHeight);
 
-            if (SplitManager.GetSplitIndex() == 1) finalCrop.RemoveColor();
-            Digest digest = ImagePhash.ComputeDigest(finalCrop.ToLuminanceImage());
-            finalCrop.Dispose();
+            SendPreviewFrame?.SmartInvoke(((Bitmap)previewFrame.Clone()).ToBitmapImage());
+            previewFrame.Dispose();
+        }
 
-            DigestCompleted?.Invoke(new DigestArgs(digest));
+        private static async void CreateDigest(Bitmap frame)
+        {
+            frame = frame.Resize(Constants.comparisonWidth, Constants.comparisonHeight);
+            if (SplitManager.GetSplitIndex() == 1) frame.RemoveColor();
+            Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));
+
+            frame.Dispose();
+
+            //SplitManager.CompareFrames(digest);
         }
 
         public static void UpdatePreviewCrop()
         {
             previewCrop = new Rectangle(
-                (int)Settings.Default.cropLeft / 100 * lastSize.Width,
-                (int)Settings.Default.cropTop / 100 * lastSize.Height,
-                lastSize.Width - (int)(Settings.Default.cropRight / 100 * lastSize.Width),
-                lastSize.Height - (int)(Settings.Default.cropBottom / 100 * lastSize.Height)
+                frameWidth - (int)(Settings.Default.cropRight / 100 * frameWidth),
+                frameHeight - (int)(Settings.Default.cropBottom / 100 * frameHeight),
+                (int)Settings.Default.cropLeft / 100 * frameWidth,
+                (int)Settings.Default.cropTop / 100 * frameHeight
             );
         }
 
         public static Rectangle GetPreviewCrop()
         {
+            if(previewCrop.Height == 0 || previewCrop.Width == 0) UpdatePreviewCrop();
             return previewCrop;
         }
 
@@ -180,13 +153,12 @@ namespace HobbitAutosplitter
         {
             session?.Dispose();
             framePool?.Dispose();
-            swapChain?.Dispose();
             d3dDevice?.Dispose();
         }
 
-        public static Bitmap GetCurrentFrameData()
+        public static Bitmap GetPreviewFrame()
         {
-            return currentFrame;
+            return previewFrame;
         }
     }
 }

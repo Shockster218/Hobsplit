@@ -29,7 +29,7 @@ namespace HobbitAutosplitter
             digest = ImagePhash.ComputeDigest(cropped.ToLuminanceImage());
         }
 
-        private Bitmap SetImage(string path) => new Bitmap(Image.FromFile(path)).Resize();
+        private Bitmap SetImage(string path) => new Bitmap(Image.FromFile(path)).Resize(Constants.comparisonWidth, Constants.comparisonHeight);
 
         public bool IsDigestSimilar(Digest d) => ImagePhash.GetCrossCorrelation(digest, d) >= similarity;
 

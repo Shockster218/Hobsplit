@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Shipwreck.Phash;
 using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
@@ -25,7 +26,7 @@ namespace HobbitAutosplitter
                 foreach (SmartEventHandler handler in invocationList)
                 {
                     DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
-                    if(dispatcherTarget != null)
+                    if (dispatcherTarget != null)
                     {
                         if (dispatcherTarget is Window)
                         {
@@ -35,56 +36,6 @@ namespace HobbitAutosplitter
                     else
                     {
                         Task.Run(() => handler.Invoke());
-                    }
-                }
-            }
-        }
-
-        public static void SmartInvoke(this MulticastDelegate multicast, BitmapImage args)
-        {
-            MulticastDelegate multiDel = multicast;
-            if (multiDel != null)
-            {
-                var invocationList = multiDel.GetInvocationList();
-
-                foreach (FrameCreatedEventHandler handler in invocationList)
-                {
-                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
-                    if (dispatcherTarget != null)
-                    {
-                        if (dispatcherTarget is Window)
-                        {
-                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
-                        }
-                    }
-                    else
-                    {
-                        Task.Run(() => handler.Invoke(args));
-                    }
-                }
-            }
-        }
-
-        public static void SmartInvoke(this MulticastDelegate multicast, DigestArgs args)
-        {
-            MulticastDelegate multiDel = multicast;
-            if (multiDel != null)
-            {
-                var invocationList = multiDel.GetInvocationList();
-
-                foreach (DigestEventHandler handler in invocationList)
-                {
-                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
-                    if (dispatcherTarget != null)
-                    {
-                        if (dispatcherTarget is Window)
-                        {
-                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
-                        }
-                    }
-                    else
-                    {
-                        QueueManager.Enqueue(handler, args);                    
                     }
                 }
             }
@@ -110,6 +61,27 @@ namespace HobbitAutosplitter
                     else
                     {
                         Task.Run(() => handler.Invoke(action));
+                    }
+                }
+            }
+        }
+
+        public static void SmartInvoke(this MulticastDelegate multicast, BitmapImage frame)
+        {
+            MulticastDelegate multiDel = multicast;
+            if (multiDel != null)
+            {
+                var invocationList = multiDel.GetInvocationList();
+
+                foreach (PreviewFrameEventHandler handler in invocationList)
+                {
+                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+                    if (dispatcherTarget != null)
+                    {
+                        if (dispatcherTarget is Window)
+                        {
+                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, frame);
+                        }
                     }
                 }
             }

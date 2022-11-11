@@ -18,7 +18,6 @@ namespace HobbitAutosplitter
         private static bool useThiefSplit = true;
         public static void Init()
         {
-            CaptureManager.DigestCompleted += CompareFrames;
         }
         public static void SetThiefSplit(bool value) => useThiefSplit = value;
         public static bool GetThiefSplit() => useThiefSplit;
@@ -73,9 +72,9 @@ namespace HobbitAutosplitter
             resetComparison = splits[0];
         }
 
-        public static void CompareFrames(DigestArgs args)
+        public static void CompareFrames(Digest digest)
         {
-            Digest d = args.digest;
+            Digest d = digest;
             bool c = currentComparison.IsDigestSimilar(d);
             bool n = null != nextComparison ? nextComparison.IsDigestSimilar(d) : false;
             bool r = resetComparison.IsDigestSimilar(d);

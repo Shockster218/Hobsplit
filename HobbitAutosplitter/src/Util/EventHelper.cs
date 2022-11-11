@@ -1,46 +1,14 @@
-﻿using System;
+﻿using Shipwreck.Phash;
+using System;
 using System.Drawing;
 using System.Windows.Media.Imaging;
-using Shipwreck.Phash;
 
 namespace HobbitAutosplitter
 {
     public delegate void SmartEventHandler();
     public delegate void LivesplitActionEventHandler(LivesplitAction action = LivesplitAction.NONE);
-    public delegate void FrameCreatedEventHandler(BitmapImage image);
-    public delegate void DigestEventHandler(DigestArgs args);
     public delegate void CropEventHandler(CropArgs args);
-    public delegate void SplitImagesEventHandler();
-
-    public class FrameCreatedArgs : EventArgs
-    {
-        //public Bitmap frameData { get; set; }
-
-        //public FrameCreatedArgs(Bitmap frameData) 
-        //{
-        //    this.frameData = frameData;
-        //}
-
-        public void Dispose()
-        {
-            //frameData = null;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.SuppressFinalize(this);
-        }
-    }
-
-    public class DigestArgs : EventArgs
-    {
-        public Digest digest { get; set; }
-
-        public static readonly DigestArgs Default = new DigestArgs(null);
-
-        public DigestArgs(Digest digest)
-        {
-            this.digest = digest;
-        }
-    }
+    public delegate void PreviewFrameEventHandler(BitmapImage frame);
 
     public class CropArgs : EventArgs
     {

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System;
 
 namespace HobbitAutosplitter
 {
@@ -9,7 +8,7 @@ namespace HobbitAutosplitter
         public ComparisonCropWindow()
         {
             InitializeComponent();
-            //CropControl.OnValueChanged += HandleValueChanged;
+            CropControl.OnValueChanged += HandleValueChanged;
         }
 
         private void HandleValueChanged(CropArgs args)
