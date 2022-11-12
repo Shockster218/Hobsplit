@@ -47,7 +47,7 @@ namespace HobbitAutosplitter
 
         private void Live_Feed_Crop_Button_Click(object sender, RoutedEventArgs e)
         {
-            LivefeedCropWindow myOwnedWindow = new LivefeedCropWindow();
+            VideoCropWorkshopWindow myOwnedWindow = new VideoCropWorkshopWindow();
             myOwnedWindow.Owner = this;
             myOwnedWindow.Show();
         }

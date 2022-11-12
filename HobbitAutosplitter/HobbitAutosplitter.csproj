@@ -116,8 +116,8 @@
     <Compile Include="src\UI\Windows\ComparisonSettingsWindow.xaml.cs">
       <DependentUpon>ComparisonSettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\Windows\LivefeedCropWindow.xaml.cs">
-      <DependentUpon>LivefeedCropWindow.xaml</DependentUpon>
+    <Compile Include="src\UI\Windows\VideoCropWorkshopWindow.xaml.cs">
+      <DependentUpon>VideoCropWorkshopWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\UI\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -205,7 +205,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\UI\Windows\LivefeedCropWindow.xaml">
+    <Page Include="src\UI\Windows\VideoCropWorkshopWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

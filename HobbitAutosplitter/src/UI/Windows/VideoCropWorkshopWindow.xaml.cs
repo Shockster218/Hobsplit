@@ -1,17 +1,18 @@
 ﻿using System.Windows;
-using System.Drawing;
 
 namespace HobbitAutosplitter
 {
-    public partial class LivefeedCropWindow : Window
+    public partial class VideoCropWorkshopWindow : Window
     {
-        public LivefeedCropWindow()
+        public VideoCropWorkshopWindow()
         {
             InitializeComponent();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            SplitManager.UpdateSplitsFinalCrop();
+            CaptureManager.UpdatePreviewCrop();
             Settings.Default.Save();
             Close();
         }

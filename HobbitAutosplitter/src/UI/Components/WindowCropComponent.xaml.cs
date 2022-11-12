@@ -16,6 +16,8 @@ namespace HobbitAutosplitter
         private bool settingCropValue = false;
         private bool settingSliderValue = false;
 
+        public SmartEventHandler UpdateImage;
+
         public WindowCropComponent()
         {
             InitializeComponent();
@@ -49,7 +51,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Left_Slider.Value = _value;
                         valueLeft = _value;
-                        Settings.Default.compCropLeft = valueLeft;
+                        UpdateImage?.SmartInvoke();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -66,7 +68,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Left_UpDown.Value = _value;
                     valueLeft = _value;
-                    Settings.Default.compCropLeft = valueLeft;
+                    UpdateImage?.SmartInvoke();
                 }
                 finally { settingSliderValue = false; }
             }
@@ -85,7 +87,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Top_Slider.Value = _value;
                         valueTop = _value;
-                        Settings.Default.compCropTop = valueTop;
+                        UpdateImage?.SmartInvoke();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -102,7 +104,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Top_UpDown.Value = _value;
                     valueTop = _value;
-                    Settings.Default.compCropTop = valueTop;
+                    UpdateImage?.SmartInvoke();
                 }
                 finally { settingSliderValue = false; }
             }
@@ -121,7 +123,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Right_Slider.Value = _value;
                         valueRight = _value;
-                        Settings.Default.compCropRight = valueRight;
+                        UpdateImage?.SmartInvoke();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -138,7 +140,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Right_UpDown.Value = _value;
                     valueRight = _value;
-                    Settings.Default.compCropRight = valueRight;
+                    UpdateImage?.SmartInvoke();
                 }
                 finally { settingSliderValue = false; }
             }
@@ -157,7 +159,7 @@ namespace HobbitAutosplitter
                         _value = ((double)e.NewValue).Clamp(51, 100);
                         Crop_Bottom_Slider.Value = _value;
                         valueBottom = _value;
-                        Settings.Default.compCropBottom = valueBottom;
+                        UpdateImage?.SmartInvoke();
                     }
                 }
                 finally { settingCropValue = false; }
@@ -174,7 +176,7 @@ namespace HobbitAutosplitter
                     double _value = e.NewValue;
                     Crop_Bottom_UpDown.Value = _value;
                     valueBottom = _value;
-                    Settings.Default.compCropBottom = valueBottom;
+                    UpdateImage?.SmartInvoke();
                 }
                 finally { settingSliderValue = false; }
             }
