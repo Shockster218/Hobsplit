@@ -92,6 +92,9 @@
     <Compile Include="src\UI\Components\ChangePathComponent.xaml.cs">
       <DependentUpon>ChangePathComponent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="src\UI\User Controls\ComparisonCropControl.xaml.cs">
+      <DependentUpon>ComparisonCropControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\UI\User Controls\KeybindsControl.xaml.cs">
       <DependentUpon>KeybindsControl.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,9 @@
     </Compile>
     <Compile Include="src\UI\User Controls\SimilarityControl.xaml.cs">
       <DependentUpon>SimilarityControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\UI\User Controls\SourceCropControl.xaml.cs">
+      <DependentUpon>SourceCropControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\UI\User Controls\SplitsControl.xaml.cs">
       <DependentUpon>SplitsControl.xaml</DependentUpon>
@@ -167,6 +173,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="src\UI\User Controls\ComparisonCropControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\UI\User Controls\KeybindsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="src\UI\User Controls\SimilarityControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\UI\User Controls\SourceCropControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

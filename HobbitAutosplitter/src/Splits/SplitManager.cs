@@ -33,7 +33,7 @@ namespace HobbitAutosplitter
         public static int GetSplitIndex() => splitIndex;
         public static SplitData[] GetSplitDataArray() => splits;
         public static void UpdateSplit(int index, string path) => splits[index].UpdateSplitImage(path);
-        public static void UpdateSplitsFinalCrop() { foreach (SplitData split in splits) { split.UpdateFinalImageCrop(); } }
+        public static void UpdateSplitsFinalCrop() { foreach (SplitData split in splits) { split.UpdateImgWorkableCrop(); } }
         private static float CalculateStartSimilarity() { return (float)Math.Round(Settings.Default.startSimilarity / 2f - .34f, 2); }
         private static void AdjustSplitComparisons() 
         {

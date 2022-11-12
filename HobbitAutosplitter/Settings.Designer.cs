@@ -26,48 +26,48 @@ namespace HobbitAutosplitter {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double cropLeft {
+        public double sourceCropLeft {
             get {
-                return ((double)(this["cropLeft"]));
+                return ((double)(this["sourceCropLeft"]));
             }
             set {
-                this["cropLeft"] = value;
+                this["sourceCropLeft"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double cropTop {
+        public double sourceCropTop {
             get {
-                return ((double)(this["cropTop"]));
+                return ((double)(this["sourceCropTop"]));
             }
             set {
-                this["cropTop"] = value;
+                this["sourceCropTop"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double cropRight {
+        public double sourceCropRight {
             get {
-                return ((double)(this["cropRight"]));
+                return ((double)(this["sourceCropRight"]));
             }
             set {
-                this["cropRight"] = value;
+                this["sourceCropRight"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double cropBottom {
+        public double sourceCropBottom {
             get {
-                return ((double)(this["cropBottom"]));
+                return ((double)(this["sourceCropBottom"]));
             }
             set {
-                this["cropBottom"] = value;
+                this["sourceCropBottom"] = value;
             }
         }
         
@@ -452,6 +452,54 @@ namespace HobbitAutosplitter {
             }
             set {
                 this["needSetup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double compCropLeft {
+            get {
+                return ((double)(this["compCropLeft"]));
+            }
+            set {
+                this["compCropLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double compCropTop {
+            get {
+                return ((double)(this["compCropTop"]));
+            }
+            set {
+                this["compCropTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double compCropRight {
+            get {
+                return ((double)(this["compCropRight"]));
+            }
+            set {
+                this["compCropRight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double compCropBottom {
+            get {
+                return ((double)(this["compCropBottom"]));
+            }
+            set {
+                this["compCropBottom"] = value;
             }
         }
     }

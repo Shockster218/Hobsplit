@@ -133,10 +133,10 @@ namespace HobbitAutosplitter
         public static void UpdatePreviewCrop()
         {
             previewCrop = new Rectangle(
-                frameWidth - (int)(Settings.Default.cropRight / 100 * frameWidth),
-                frameHeight - (int)(Settings.Default.cropBottom / 100 * frameHeight),
-                (int)Settings.Default.cropLeft / 100 * frameWidth,
-                (int)Settings.Default.cropTop / 100 * frameHeight
+                frameWidth - (int)(Settings.Default.sourceCropRight / 100 * frameWidth),
+                frameHeight - (int)(Settings.Default.sourceCropBottom / 100 * frameHeight),
+                (int)Settings.Default.sourceCropLeft / 100 * frameWidth,
+                (int)Settings.Default.sourceCropTop / 100 * frameHeight
             );
         }
 

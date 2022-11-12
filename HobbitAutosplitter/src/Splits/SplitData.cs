@@ -72,10 +72,10 @@ namespace HobbitAutosplitter
 
         public void UpdateImgWorkableCrop()
         {
-            double left = Settings.Default.cropLeft;
-            double right = Settings.Default.cropRight;
-            double top = Settings.Default.cropTop;
-            double bottom = Settings.Default.cropBottom;
+            double left = Settings.Default.sourceCropLeft;
+            double right = Settings.Default.sourceCropRight;
+            double top = Settings.Default.sourceCropTop;
+            double bottom = Settings.Default.sourceCropBottom;
 
             originalImgWorkable = originalImg.Crop(new Rectangle(
                 originalImg.Width - (int)(right / 100 * originalImg.Width),

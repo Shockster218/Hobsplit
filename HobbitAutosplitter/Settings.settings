@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HobbitAutosplitter" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="cropLeft" Type="System.Double" Scope="User">
+    <Setting Name="sourceCropLeft" Type="System.Double" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="cropTop" Type="System.Double" Scope="User">
+    <Setting Name="sourceCropTop" Type="System.Double" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="cropRight" Type="System.Double" Scope="User">
+    <Setting Name="sourceCropRight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="cropBottom" Type="System.Double" Scope="User">
+    <Setting Name="sourceCropBottom" Type="System.Double" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="split" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
@@ -109,6 +109,18 @@
     </Setting>
     <Setting Name="needSetup" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="compCropLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="compCropTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="compCropRight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="compCropBottom" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>
