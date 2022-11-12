@@ -8,7 +8,6 @@ namespace HobbitAutosplitter
         public StartupWindow()
         {
             InitializeComponent();
-            ProcessManager.OBSOpenedEvent += OBSFound;
         }
 
         private void InitiateStartup(object sender, System.EventArgs e)
@@ -18,6 +17,7 @@ namespace HobbitAutosplitter
             // 3. Initialize all Managers.
             // 4. Check for OBS process.
             // 5. Start main window AFTER obs is found.
+
             Status_Textblock.Text = "Updating Settings...";
 
             if (Settings.Default.updateRequired)
@@ -39,13 +39,21 @@ namespace HobbitAutosplitter
 
             Status_Textblock.Text = "Initializing Managers...";
 
-            SplitManager.Init();
+            if (!SplitManager.Init())
+            {
+                ComparisonSettingsWindow win = new ComparisonSettingsWindow(true);
+                win.Show();
+                Close();
+                return;
+            }
+
             LivesplitManager.Init();
             CaptureManager.Init();
             ProcessManager.Init();
 
             Status_Textblock.Text = "Waiting for OBS...";
 
+            ProcessManager.OBSOpenedEvent += OBSFound;
             Task.Factory.StartNew(() => ProcessManager.FindOBS());
         }
 

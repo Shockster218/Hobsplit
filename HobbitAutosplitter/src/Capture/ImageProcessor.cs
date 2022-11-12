@@ -55,8 +55,14 @@ namespace HobbitAutosplitter
 
         public static Bitmap Crop(this Bitmap source, Rectangle rect)
         {
-            Bitmap bmpImage = new Bitmap(source);
-            return bmpImage.Clone(rect, bmpImage.PixelFormat);
+            using (Bitmap target = new Bitmap(rect.Right, rect.Bottom))
+            {
+                using (Graphics g = Graphics.FromImage(target))
+                {
+                    g.DrawImage(source, new Rectangle(0, 0, rect.Right, rect.Bottom), rect, GraphicsUnit.Pixel);
+                    return target.Clone() as Bitmap;
+                }
+            }
         }
 
         public static Bitmap Resize(this Bitmap source, int width, int height)

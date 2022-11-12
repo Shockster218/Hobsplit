@@ -45,13 +45,6 @@ namespace HobbitAutosplitter
             isLiveFeed = !isLiveFeed;
         }
 
-        private void Comparison_Crop_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ComparisonCropWindow myOwnedWindow = new ComparisonCropWindow();
-            myOwnedWindow.Owner = this;
-            myOwnedWindow.Show();
-        }
-
         private void Live_Feed_Crop_Button_Click(object sender, RoutedEventArgs e)
         {
             LivefeedCropWindow myOwnedWindow = new LivefeedCropWindow();

@@ -12,7 +12,6 @@ using SharpDX.DXGI;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace HobbitAutosplitter
@@ -30,7 +29,7 @@ namespace HobbitAutosplitter
         private static GraphicsCaptureItem item;
         private static Direct3D11CaptureFramePool framePool;
         private static GraphicsCaptureSession session;
-        private static Texture2D screenTexture;
+        private static Texture2DDescription textureDesc;
 
         private static Rectangle previewCrop;
 
@@ -47,7 +46,7 @@ namespace HobbitAutosplitter
 
             Factory2 dxgiFactory = new Factory2();
 
-            Texture2DDescription textureDesc = new Texture2DDescription
+            textureDesc = new Texture2DDescription
             {
                 CpuAccessFlags = CpuAccessFlags.Read,
                 BindFlags = BindFlags.None,
@@ -61,7 +60,6 @@ namespace HobbitAutosplitter
                 Usage = ResourceUsage.Staging
             };
 
-            screenTexture = new Texture2D(d3dDevice, textureDesc);
 
             framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
                 device,
@@ -78,35 +76,34 @@ namespace HobbitAutosplitter
         private static void OnFrameArrived(Direct3D11CaptureFramePool sender, object args)
         {
             using (Direct3D11CaptureFrame frame = sender.TryGetNextFrame())
+            using (Texture2D screenTexture = new Texture2D(d3dDevice, textureDesc))
+            using (Texture2D texture2d = DirectXHelper.CreateSharpDXTexture2D(frame.Surface))
             {
-                using (Texture2D texture2d = DirectXHelper.CreateSharpDXTexture2D(frame.Surface))
+                frameHeight = frame.ContentSize.Height;
+                frameWidth = frame.ContentSize.Width;
+
+                d3dDevice.ImmediateContext.CopyResource(texture2d, screenTexture);
+                DataBox mapSource = d3dDevice.ImmediateContext.MapSubresource(screenTexture, 0, MapMode.Read, MapFlags.None);
+
+                Bitmap bitmap = new Bitmap(frameWidth, frameHeight, PixelFormat.Format32bppRgb);
+                BitmapData mapDest = bitmap.LockBits(new Rectangle(0, 0, frameWidth, frameHeight), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                IntPtr sourcePtr = mapSource.DataPointer;
+                IntPtr destPtr = mapDest.Scan0;
+
+                for (int y = 0; y < frameHeight; y++)
                 {
-                    frameHeight = frame.ContentSize.Height;
-                    frameWidth = frame.ContentSize.Width;
-
-                    d3dDevice.ImmediateContext.CopyResource(texture2d, screenTexture);
-                    DataBox mapSource = d3dDevice.ImmediateContext.MapSubresource(screenTexture, 0, MapMode.Read, MapFlags.None);
-
-                    Bitmap bitmap = new Bitmap(frameWidth, frameHeight, PixelFormat.Format32bppRgb);
-                    BitmapData mapDest = bitmap.LockBits(new Rectangle(0, 0, frameWidth, frameHeight), ImageLockMode.WriteOnly, bitmap.PixelFormat);
-                    IntPtr sourcePtr = mapSource.DataPointer;
-                    IntPtr destPtr = mapDest.Scan0;
-
-                    for (int y = 0; y < frameHeight; y++)
-                    {
-                        Utilities.CopyMemory(destPtr, sourcePtr, frameWidth * 4);
-                        sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
-                        destPtr = IntPtr.Add(destPtr, mapDest.Stride);
-                    }
-
-                    bitmap.UnlockBits(mapDest);
-                    d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
-
-                    previewFrame = bitmap.Clone() as Bitmap;
-                    HandleFrameComparison();
-
-                    bitmap.Dispose();
+                    Utilities.CopyMemory(destPtr, sourcePtr, frameWidth * 4);
+                    sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
+                    destPtr = IntPtr.Add(destPtr, mapDest.Stride);
                 }
+
+                bitmap.UnlockBits(mapDest);
+                d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
+
+                previewFrame = bitmap.Clone() as Bitmap;
+                bitmap.Dispose();
+                
+                HandleFrameComparison();
             }
         }
 
@@ -127,9 +124,9 @@ namespace HobbitAutosplitter
             frame = frame.Resize(Constants.comparisonWidth, Constants.comparisonHeight);
             if (SplitManager.GetSplitIndex() == 1) frame.RemoveColor();
             Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));
-
+            
             frame.Dispose();
-
+            
             //SplitManager.CompareFrames(digest);
         }
 

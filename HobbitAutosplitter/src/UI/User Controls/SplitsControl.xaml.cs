@@ -26,11 +26,9 @@ namespace HobbitAutosplitter
         public SplitsControl()
         {
             InitializeComponent();
-            LoadSplitImagePaths();
-            SetSplitImages();
         }
 
-        private void LoadSplitImagePaths()
+        public void LoadSplitImagePaths()
         {
             menuPath = Settings.Default.menuPath;
             dwPath = Settings.Default.dwPath;
@@ -49,25 +47,27 @@ namespace HobbitAutosplitter
             finalPath = Settings.Default.finalPath;
         }
 
-        private void SetSplitImages()
+        public void SetSplitImages(bool overrideStartup = false)
         {
+            if (((ComparisonSettingsWindow)Window.GetWindow(this)).fromStartup && !overrideStartup) return;
             try
             {
-                Split_Image.Source = new Bitmap(menuPath).ToBitmapImage();
-                Split_Image1.Source = new Bitmap(dwPath).ToBitmapImage();
-                Split_Image2.Source = new Bitmap(aupPath).ToBitmapImage();
-                Split_Image3.Source = new Bitmap(rmPath).ToBitmapImage();
-                Split_Image4.Source = new Bitmap(thPath).ToBitmapImage();
-                Split_Image5.Source = new Bitmap(ohPath).ToBitmapImage();
-                Split_Image6.Source = new Bitmap(riddlesPath).ToBitmapImage();
-                Split_Image7.Source = new Bitmap(fasPath).ToBitmapImage();
-                Split_Image8.Source = new Bitmap(boobPath).ToBitmapImage();
-                Split_Image9.Source = new Bitmap(awwPath).ToBitmapImage();
-                Split_Image10.Source = new Bitmap(thiefPath).ToBitmapImage();
-                Split_Image11.Source = new Bitmap(iiPath).ToBitmapImage();
-                Split_Image12.Source = new Bitmap(gotcPath).ToBitmapImage();
-                Split_Image13.Source = new Bitmap(tcbPath).ToBitmapImage();
-                Split_Image14.Source = new Bitmap(finalPath).ToBitmapImage();
+                SplitData[] splits = SplitManager.GetSplitDataArray();
+                Split_Image.Source = splits[0].GetImage().ToBitmapImage();
+                Split_Image1.Source = splits[2].GetImage().ToBitmapImage();
+                Split_Image2.Source = splits[3].GetImage().ToBitmapImage();
+                Split_Image3.Source = splits[4].GetImage().ToBitmapImage();
+                Split_Image4.Source = splits[5].GetImage().ToBitmapImage();
+                Split_Image5.Source = splits[6].GetImage().ToBitmapImage();
+                Split_Image6.Source = splits[7].GetImage().ToBitmapImage();
+                Split_Image7.Source = splits[8].GetImage().ToBitmapImage();
+                Split_Image8.Source = splits[9].GetImage().ToBitmapImage();
+                Split_Image9.Source = splits[10].GetImage().ToBitmapImage();
+                Split_Image10.Source = splits[12].GetImage().ToBitmapImage();
+                Split_Image11.Source = splits[13].GetImage().ToBitmapImage();
+                Split_Image12.Source = splits[14].GetImage().ToBitmapImage();
+                Split_Image13.Source = splits[15].GetImage().ToBitmapImage();
+                Split_Image14.Source = splits[16].GetImage().ToBitmapImage();
             }
             catch{ }
         }
@@ -143,6 +143,12 @@ namespace HobbitAutosplitter
                 Bitmap bitmap = new Bitmap(openFileDialog.FileName);
                 ((System.Windows.Controls.Image)((Border)canvas.Children[0]).Child).Source = bitmap.ToBitmapImage();
             }
+        }
+
+        private void Splits_Control_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadSplitImagePaths();
+            SetSplitImages();
         }
     }
 }

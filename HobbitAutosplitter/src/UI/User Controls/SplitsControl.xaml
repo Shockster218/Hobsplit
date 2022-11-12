@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HobbitAutosplitter"
-             mc:Ignorable="d" Width="446.428" Height="566">
+             mc:Ignorable="d" Width="446.428" Height="566" Loaded="Splits_Control_Loaded">
     <Grid x:Name="Splits_Grid">
         <GroupBox x:Name="Split_Images_GroupBox" Header="Split Images">
             <StackPanel x:Name="Split_Main_Stack_Panel" HorizontalAlignment="Left" Height="528" VerticalAlignment="Top" Width="446">
@@ -53,7 +53,7 @@
                         <Canvas x:Name="Hover4" Height="75" Width="75" Background="#B2000000" IsHitTestVisible="False" Visibility="Hidden">
                             <Label x:Name="Hover_Label4" Content="Change" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="75" Width="75" Foreground="White" FontSize="16"/>
                         </Canvas>
-                        <TextBlock x:Name="Level_Textblock4" Text="Troll-Hole" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock x:Name="Level_Textblock4" Text="Troll Hole" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
                 </StackPanel>
                 <StackPanel x:Name="Split_Stack_Panel_Two" Height="125" Margin="5,5,5,0" Orientation="Horizontal">
