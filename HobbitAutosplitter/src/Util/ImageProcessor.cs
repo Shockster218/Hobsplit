@@ -56,7 +56,7 @@ namespace HobbitAutosplitter
         public static Bitmap Crop(this Bitmap source, Rectangle rect, int width = Constants.comparisonWidth, int height = Constants.comparisonHeight)
         {
             Rectangle temp = new Rectangle(rect.X, rect.Y, width - rect.Right, height - rect.Bottom);
-            using (Bitmap target = new Bitmap(temp.Width, temp.Height))
+            using (Bitmap target = new Bitmap(source.Width, source.Height))
             {
                 using (Graphics graphics = Graphics.FromImage(target))
                 {

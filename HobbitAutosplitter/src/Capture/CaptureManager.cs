@@ -96,6 +96,7 @@ namespace HobbitAutosplitter
                 bitmap.UnlockBits(mapDest);
                 d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
 
+                bitmap = bitmap.Resize(640, 480);
                 frameData = bitmap.ToByteArray();
 
                 bitmap.Dispose();
@@ -106,8 +107,8 @@ namespace HobbitAutosplitter
 
         private static async void PrepareFrameForComparison()
         {
-            Bitmap frame = frameData.ToBitmap().Resize();
-            frame = frame.Crop(Constants.crop);
+            Bitmap frame = frameData.ToBitmap();
+            frame = frame.Crop(Settings.Default.sourceRect);
 
             if (SplitManager.GetSplitIndex() == 1) frame.RemoveColor();
             Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));

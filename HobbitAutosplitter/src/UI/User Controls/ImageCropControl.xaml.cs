@@ -42,12 +42,12 @@ namespace HobbitAutosplitter
             if (isSource)
             {
                 gridRect = Settings.Default.sourceRect;
-                originalImage = CaptureManager.GetFrameData().ToBitmap().Resize(640, 480).ToByteArray();
+                originalImage = CaptureManager.GetFrameData();
             }
             else
             {
                 gridRect = Settings.Default.comparisonRect;
-                originalImage = SplitManager.GetSplitDataArray()[0].GetImageOriginal().Resize(640, 480).ToByteArray();
+                originalImage = SplitManager.GetSplitDataArray()[0].GetImageOriginal().ToByteArray();
             }
 
             gridRect.Multiply();
@@ -81,8 +81,8 @@ namespace HobbitAutosplitter
 
         public void Save()
         {
-            ZoomOut();
             gridRect.Divide();
+            ZoomOut();
             if (isSource) Settings.Default.sourceRect = gridRect;
             else Settings.Default.comparisonRect = gridRect;
         }

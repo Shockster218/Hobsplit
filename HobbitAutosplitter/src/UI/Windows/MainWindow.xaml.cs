@@ -53,6 +53,11 @@ namespace HobbitAutosplitter
             captureThread.Start();
         }
 
+        private void Main_Window_Closed(object sender, EventArgs e)
+        {
+            Settings.Default.Save();
+        }
+
         //public void OBSOffline()
         //{
         //    DisableButtons();

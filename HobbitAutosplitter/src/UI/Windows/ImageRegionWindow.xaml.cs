@@ -21,7 +21,7 @@ namespace HobbitAutosplitter
         {
             Game_Image_Control.Save();
             Comparison_Image_Control.Save();
-            SplitManager.UpdateSplitsFinalCrop();
+            SplitManager.UpdateSplitsImageWorkable();
             Settings.Default.Save();
             Close();
         }

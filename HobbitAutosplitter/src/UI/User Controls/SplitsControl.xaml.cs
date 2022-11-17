@@ -53,21 +53,21 @@ namespace HobbitAutosplitter
             try
             {
                 SplitData[] splits = SplitManager.GetSplitDataArray();
-                Split_Image.Source = splits[0].GetImageCropped().ToBitmapImage();
-                Split_Image1.Source = splits[2].GetImageCropped().ToBitmapImage();
-                Split_Image2.Source = splits[3].GetImageCropped().ToBitmapImage();
-                Split_Image3.Source = splits[4].GetImageCropped().ToBitmapImage();
-                Split_Image4.Source = splits[5].GetImageCropped().ToBitmapImage();
-                Split_Image5.Source = splits[6].GetImageCropped().ToBitmapImage();
-                Split_Image6.Source = splits[7].GetImageCropped().ToBitmapImage();
-                Split_Image7.Source = splits[8].GetImageCropped().ToBitmapImage();
-                Split_Image8.Source = splits[9].GetImageCropped().ToBitmapImage();
-                Split_Image9.Source = splits[10].GetImageCropped().ToBitmapImage();
-                Split_Image10.Source = splits[12].GetImageCropped().ToBitmapImage();
-                Split_Image11.Source = splits[13].GetImageCropped().ToBitmapImage();
-                Split_Image12.Source = splits[14].GetImageCropped().ToBitmapImage();
-                Split_Image13.Source = splits[15].GetImageCropped().ToBitmapImage();
-                Split_Image14.Source = splits[16].GetImageCropped().ToBitmapImage();
+                Split_Image.Source = splits[0].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image1.Source = splits[2].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image2.Source = splits[3].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image3.Source = splits[4].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image4.Source = splits[5].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image5.Source = splits[6].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image6.Source = splits[7].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image7.Source = splits[8].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image8.Source = splits[9].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image9.Source = splits[10].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image10.Source = splits[11].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image11.Source = splits[13].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image12.Source = splits[14].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image13.Source = splits[15].GetImageOriginalWorkable().ToBitmapImage();
+                Split_Image14.Source = splits[16].GetImageOriginalWorkable().ToBitmapImage();
             }
             catch{ }
         }

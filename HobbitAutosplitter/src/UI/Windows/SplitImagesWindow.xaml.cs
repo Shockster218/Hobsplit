@@ -9,6 +9,8 @@ namespace HobbitAutosplitter
         public SplitImagesWindow()
         {
             InitializeComponent();
+            LoadSplitImages();
+            Splits_Control.LoadSplitImagePaths();
         }
 
         public SplitImagesWindow(bool fromStartup = false)
@@ -19,8 +21,12 @@ namespace HobbitAutosplitter
 
         public void UpdateSplitImages()
         {
-            Splits_Control.LoadSplitImagePaths();
             SaveSplitImagePaths();
+            Splits_Control.SetSplitImages(true);
+        }
+
+        private void LoadSplitImages() 
+        {
             Splits_Control.SetSplitImages(true);
         }
 

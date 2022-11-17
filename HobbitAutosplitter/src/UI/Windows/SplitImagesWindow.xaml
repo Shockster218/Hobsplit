@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:HobbitAutosplitter"
         Style="{DynamicResource CustomWindowStyle}"
         mc:Ignorable="d"
-        Title="Image Comparison Settings" Height="490" Width="725" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF939300" ContentRendered="Comparison_Settings_Window_ContentRendered">
+        Title="Image Comparison Settings" Height="500" Width="725" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF939300" ContentRendered="Comparison_Settings_Window_ContentRendered">
     <Grid x:Name="Grid">
         <local:SplitsControl x:Name="Splits_Control" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5,17,5,0" Height="383" Width="708"/>
         <local:ChooseFolderComponent x:Name="Choose_Folder_Component" Margin="11,413,0,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
