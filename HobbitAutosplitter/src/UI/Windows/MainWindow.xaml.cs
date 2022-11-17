@@ -1,53 +1,31 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Windows.Media.Animation;
 using System.Windows;
 using System.Threading;
-using System.Windows.Media.Imaging;
 
 namespace HobbitAutosplitter
 {
     public partial class MainWindow
     {
         public static MainWindow instance;
-        private bool isLiveFeed = false;
         private Thread captureThread;
 
         public MainWindow()
         {
             InitializeComponent();
             instance = this;
-            CaptureManager.SendPreviewFrame += ShowPreview;
         }
 
-        private void ShowPreview(BitmapImage image)
+        private void Video_Crop_Workshop_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (isLiveFeed)
-            {
-                Live_Feed_Image.Source = image;
-            }
+            ImageRegionWindow myOwnedWindow = new ImageRegionWindow();
+            myOwnedWindow.Owner = this;
+            myOwnedWindow.Show();
         }
-
-        private void Live_Feed_Button_Click(object sender, RoutedEventArgs events)
+        
+        private void Comparison_Image_Setter_Button_Click(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation anim = new DoubleAnimation();
-            anim.Duration = new Duration(TimeSpan.FromMilliseconds(250));
-            anim.From = isLiveFeed ? 830 : 225;
-            anim.To = isLiveFeed ? 225 : 830;
-
-            Storyboard sb = new Storyboard();
-            sb.Children.Add(anim);
-            Storyboard.SetTargetName(anim, Name);
-            Storyboard.SetTargetProperty(anim, new PropertyPath(WidthProperty));
-            sb.Begin(this);
-
-            Live_Feed_Button.Content = isLiveFeed ? "Show Live Feed" : "Hide Live Feed";
-            isLiveFeed = !isLiveFeed;
-        }
-
-        private void Live_Feed_Crop_Button_Click(object sender, RoutedEventArgs e)
-        {
-            VideoCropWorkshopWindow myOwnedWindow = new VideoCropWorkshopWindow();
+            SplitImagesWindow myOwnedWindow = new SplitImagesWindow();
             myOwnedWindow.Owner = this;
             myOwnedWindow.Show();
         }
@@ -55,13 +33,6 @@ namespace HobbitAutosplitter
         private void Settings_Button_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow myOwnedWindow = new SettingsWindow();
-            myOwnedWindow.Owner = this;
-            myOwnedWindow.Show();
-        }
-
-        private void Comaprison_Settings_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ComparisonSettingsWindow myOwnedWindow = new ComparisonSettingsWindow();
             myOwnedWindow.Owner = this;
             myOwnedWindow.Show();
         }
@@ -141,19 +112,6 @@ namespace HobbitAutosplitter
         //    {
         //        Application.Current.Shutdown();
         //    }
-        //}
-        //
-        //private void changeComparison_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ComparisonCropWindow myOwnedWindow = new ComparisonCropWindow();
-        //    myOwnedWindow.Owner = this;
-        //    myOwnedWindow.Show();
-        //}
-        //
-        //private void thiefCheckbox_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SplitManager.SetThiefSplit((bool)thiefCheckbox.IsChecked);
-        //    Settings.Default.useThief = (bool)thiefCheckbox.IsChecked;
         //}
     }
 }

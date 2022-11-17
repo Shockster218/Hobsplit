@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Windows.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using Shipwreck.Phash;
-using System.Windows.Media.Imaging;
+using Point = System.Windows.Point;
+using Window = System.Windows.Window;
+using System.Drawing;
 
 namespace HobbitAutosplitter
 {
     public static class Extensions
     {
+        public static bool IsZero(this Point p)
+        {
+            return p.X == 0 && p.Y == 0;
+        }
+
+        public static Rectangle Multiply(this Rectangle r)
+        {
+            return new Rectangle(r.X * 2, r.Y * 2, r.Width * 2, r.Height * 2);
+        }
+
+        public static Rectangle Divide(this Rectangle r)
+        {
+            return new Rectangle(r.X / 2, r.Y / 2, r.Width / 2, r.Height / 2);
+        }
+
         public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0) return min;
@@ -66,7 +81,7 @@ namespace HobbitAutosplitter
             }
         }
 
-        public static void SmartInvoke(this MulticastDelegate multicast, BitmapImage frame)
+        public static void SmartInvoke(this MulticastDelegate multicast, byte[] frame)
         {
             MulticastDelegate multiDel = multicast;
             if (multiDel != null)

@@ -80,7 +80,7 @@
     <Compile Include="src\Capture\CaptureHelper.cs" />
     <Compile Include="src\Capture\CaptureManager.cs" />
     <Compile Include="src\Capture\DirectXHelper.cs" />
-    <Compile Include="src\Capture\ImageProcessor.cs" />
+    <Compile Include="src\Util\ImageProcessor.cs" />
     <Compile Include="src\Capture\ProcessManager.cs" />
     <Compile Include="src\Setup\SetupControlManager.cs" />
     <Compile Include="src\Setup\SetupWindow.xaml.cs">
@@ -92,9 +92,6 @@
     <Compile Include="src\UI\Components\ChangePathComponent.xaml.cs">
       <DependentUpon>ChangePathComponent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\User Controls\ComparisonCropControl.xaml.cs">
-      <DependentUpon>ComparisonCropControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="src\UI\User Controls\KeybindsControl.xaml.cs">
       <DependentUpon>KeybindsControl.xaml</DependentUpon>
     </Compile>
@@ -104,20 +101,17 @@
     <Compile Include="src\UI\User Controls\SimilarityControl.xaml.cs">
       <DependentUpon>SimilarityControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\User Controls\SourceCropControl.xaml.cs">
-      <DependentUpon>SourceCropControl.xaml</DependentUpon>
+    <Compile Include="src\UI\User Controls\ImageCropControl.xaml.cs">
+      <DependentUpon>ImageCropControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\UI\User Controls\SplitsControl.xaml.cs">
       <DependentUpon>SplitsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\Components\WindowCropComponent.xaml.cs">
-      <DependentUpon>WindowCropComponent.xaml</DependentUpon>
+    <Compile Include="src\UI\Windows\SplitImagesWindow.xaml.cs">
+      <DependentUpon>SplitImagesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\Windows\ComparisonSettingsWindow.xaml.cs">
-      <DependentUpon>ComparisonSettingsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="src\UI\Windows\VideoCropWorkshopWindow.xaml.cs">
-      <DependentUpon>VideoCropWorkshopWindow.xaml</DependentUpon>
+    <Compile Include="src\UI\Windows\ImageRegionWindow.xaml.cs">
+      <DependentUpon>ImageRegionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\UI\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -173,10 +167,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\UI\User Controls\ComparisonCropControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="src\UI\User Controls\KeybindsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\UI\User Controls\SourceCropControl.xaml">
+    <Page Include="src\UI\User Controls\ImageCropControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,15 +187,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\UI\Components\WindowCropComponent.xaml">
+    <Page Include="src\UI\Windows\SplitImagesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\UI\Windows\ComparisonSettingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="src\UI\Windows\VideoCropWorkshopWindow.xaml">
+    <Page Include="src\UI\Windows\ImageRegionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

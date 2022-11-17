@@ -3,15 +3,15 @@ using System.Windows.Forms;
 
 namespace HobbitAutosplitter
 {
-    public partial class ComparisonSettingsWindow : Window
+    public partial class SplitImagesWindow : Window
     {
         public bool fromStartup;
-        public ComparisonSettingsWindow()
+        public SplitImagesWindow()
         {
             InitializeComponent();
         }
 
-        public ComparisonSettingsWindow(bool fromStartup = false)
+        public SplitImagesWindow(bool fromStartup = false)
         {
             InitializeComponent();
             this.fromStartup = fromStartup;
@@ -29,7 +29,6 @@ namespace HobbitAutosplitter
             if (fromStartup)
             {
                 ShowErrorMessage();
-                Change_Similarity.IsEnabled = false;
             }
         }
 
@@ -41,7 +40,6 @@ namespace HobbitAutosplitter
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
             SaveSplitImagePaths();
-            SaveSplitSimilarity();
             if (fromStartup) CloseFromStartup();
             else Close();
         }
@@ -80,17 +78,6 @@ namespace HobbitAutosplitter
             Settings.Default.tcbPath = Splits_Control.tcbPath;
             Settings.Default.finalPath = Splits_Control.finalPath;
             Settings.Default.Save();
-        }
-
-        private void SaveSplitSimilarity()
-        {
-            Settings.Default.resetSimilarity = Change_Similarity.valueReset;
-            Settings.Default.startSimilarity = Change_Similarity.valueStart;
-            Settings.Default.loadsSimilarity = Change_Similarity.valueLoads;
-            Settings.Default.thiefSimilarity = Change_Similarity.valueThief;
-            Settings.Default.finalSimilarity = Change_Similarity.valueFinal;
-            Settings.Default.Save();
-            SplitManager.UpdateSplitSimilarity();
         }
     }
 }

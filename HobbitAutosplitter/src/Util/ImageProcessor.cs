@@ -53,19 +53,20 @@ namespace HobbitAutosplitter
             }
         }
 
-        public static Bitmap Crop(this Bitmap source, Rectangle rect)
+        public static Bitmap Crop(this Bitmap source, Rectangle rect, int width = Constants.comparisonWidth, int height = Constants.comparisonHeight)
         {
-            using (Bitmap target = new Bitmap(rect.Right, rect.Bottom))
+            Rectangle temp = new Rectangle(rect.X, rect.Y, width - rect.Right, height - rect.Bottom);
+            using (Bitmap target = new Bitmap(temp.Width, temp.Height))
             {
-                using (Graphics g = Graphics.FromImage(target))
+                using (Graphics graphics = Graphics.FromImage(target))
                 {
-                    g.DrawImage(source, new Rectangle(0, 0, rect.Right, rect.Bottom), rect, GraphicsUnit.Pixel);
+                    graphics.DrawImage(source, new Rectangle(0, 0, target.Width, target.Height), temp, GraphicsUnit.Pixel);
                     return target.Clone() as Bitmap;
                 }
             }
         }
 
-        public static Bitmap Resize(this Bitmap source, int width, int height)
+        public static Bitmap Resize(this Bitmap source, int width = Constants.comparisonWidth, int height = Constants.comparisonHeight)
         {
             Rectangle resizeRect = new Rectangle(0, 0, width, height);
             Bitmap resize = new Bitmap(width, height);

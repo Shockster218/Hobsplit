@@ -5,32 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Style="{DynamicResource CustomWindowStyle}"
-        mc:Ignorable="d" Height="512" Width="225" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ContentRendered="StartCaptureSession">
+        mc:Ignorable="d" Height="540" Width="230" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ContentRendered="StartCaptureSession">
     <Grid x:Name="Grid" Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="Run_Information_Row" Height="246"/>
-            <RowDefinition x:Name="Controls_Row" Height="234"/>
+            <RowDefinition x:Name="Controls_Row" Height="1*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Run_Info_and_Controls" Width="220"/>
-            <ColumnDefinition x:Name="Video_Column" Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <GroupBox x:Name="Run_Info_GroupBox" Header="Run Information" Margin="10,10,5,10" FontSize="14">
+        <GroupBox x:Name="Run_Info_GroupBox" Header="Run Information" Margin="10,15,10,5" FontSize="14">
             <StackPanel>
                 <TextBlock x:Name="Current_Level_TextBlock" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="4"/>
                 <TextBlock x:Name="Segment_Timer_TextBlock" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="4"/>
-                <Button x:Name="Live_Feed_Button" Content="Show Live Feed" Padding="5" Margin="3,4" Height="31" Click="Live_Feed_Button_Click"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="Controls_GroupBox" Header="Controls" Margin="9,6,6,78" Grid.Row="1" FontSize="14">
+        <GroupBox x:Name="Controls_GroupBox" Header="Controls" Grid.Row="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Height="186" Margin="5,5,5,5">
             <StackPanel>
-                <Button x:Name="Settings_Button" Content="Settings" Padding="5" Margin="3" Click="Settings_Button_Click"/>
-                <Button x:Name="Comaprison_Settings_Button" Content="Comaprison Settings" Padding="5" Margin="3" Click="Comaprison_Settings_Button_Click"/>
-                <Button x:Name="Video_Crop_Workshop_Button" Content="Video Crop Workshop" Padding="5" Margin="3"/>
+                <Button x:Name="Set_Image_Region_Button" Content="Set Image Region" Padding="5" Margin="3" Click="Video_Crop_Workshop_Button_Click"/>
+                <Button x:Name="Comparison_Image_Setter_Button" Content="Set Comparison Images" Padding="5" Margin="3" Click="Comparison_Image_Setter_Button_Click"/>
+                <Button x:Name="General_Settings_Button" Content="General Settings" Padding="5" Margin="3" Click="Settings_Button_Click"/>
+                <Button x:Name="Advanced_Settings_Button" Content="Advanced Settings" Padding="5" Width="190" Margin="3,3,3,3"/>
             </StackPanel>
         </GroupBox>
-        <Image x:Name="Live_Feed_Image" Margin="5,19,-2,10" Grid.RowSpan="2" Grid.Column="1" Source="pack://siteoforigin:,,,/Assets/Image/obs_offline.jpg" Stretch="Fill" IsEnabled="False"/>
-        <TextBlock x:Name="Website_Textblock" Text="Hobbit Speedruns Website" Grid.Row="1" Margin="10,170,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" TextDecorations="Underline" MouseDown="Website_Textblock_MouseDown" Height="21" Width="188"/>
-        <TextBlock x:Name="Github_Textblock" VerticalAlignment="Top" Grid.Row="1" Margin="10,206,0,0" Width="165" FontSize="16" TextDecorations="Underline" MouseDown="Github_Textblock_MouseDown" HorizontalAlignment="Left" Height="21"><Run Text="Github Page"/></TextBlock>
+        <TextBlock x:Name="Website_Textblock" Text="Hobbit Speedruns Website" Grid.Row="1" Margin="18,201,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" TextDecorations="Underline" MouseDown="Website_Textblock_MouseDown" Height="21" Width="203" Cursor="Hand"/>
+        <TextBlock x:Name="Github_Textblock" VerticalAlignment="Top" Grid.Row="1" Margin="0,233,0,0" Width="96" FontSize="16" TextDecorations="Underline" MouseDown="Github_Textblock_MouseDown" HorizontalAlignment="Center" Height="21" Cursor="Hand"><Run Text="Github Page"/></TextBlock>
     </Grid>
 </Window>

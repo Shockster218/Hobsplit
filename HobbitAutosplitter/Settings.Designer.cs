@@ -12,7 +12,7 @@ namespace HobbitAutosplitter {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,49 +25,25 @@ namespace HobbitAutosplitter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double sourceCropLeft {
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle sourceRect {
             get {
-                return ((double)(this["sourceCropLeft"]));
+                return ((global::System.Drawing.Rectangle)(this["sourceRect"]));
             }
             set {
-                this["sourceCropLeft"] = value;
+                this["sourceRect"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double sourceCropTop {
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle comparisonRect {
             get {
-                return ((double)(this["sourceCropTop"]));
+                return ((global::System.Drawing.Rectangle)(this["comparisonRect"]));
             }
             set {
-                this["sourceCropTop"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double sourceCropRight {
-            get {
-                return ((double)(this["sourceCropRight"]));
-            }
-            set {
-                this["sourceCropRight"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double sourceCropBottom {
-            get {
-                return ((double)(this["sourceCropBottom"]));
-            }
-            set {
-                this["sourceCropBottom"] = value;
+                this["comparisonRect"] = value;
             }
         }
         
@@ -452,54 +428,6 @@ namespace HobbitAutosplitter {
             }
             set {
                 this["needSetup"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double compCropLeft {
-            get {
-                return ((double)(this["compCropLeft"]));
-            }
-            set {
-                this["compCropLeft"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double compCropTop {
-            get {
-                return ((double)(this["compCropTop"]));
-            }
-            set {
-                this["compCropTop"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double compCropRight {
-            get {
-                return ((double)(this["compCropRight"]));
-            }
-            set {
-                this["compCropRight"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double compCropBottom {
-            get {
-                return ((double)(this["compCropBottom"]));
-            }
-            set {
-                this["compCropBottom"] = value;
             }
         }
     }

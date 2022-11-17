@@ -41,7 +41,7 @@ namespace HobbitAutosplitter
 
             if (!SplitManager.Init())
             {
-                ComparisonSettingsWindow win = new ComparisonSettingsWindow(true);
+                SplitImagesWindow win = new SplitImagesWindow(true);
                 win.Show();
                 Close();
                 return;

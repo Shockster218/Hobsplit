@@ -1,0 +1,19 @@
+﻿<UserControl x:Name="Image_Crop_Control" x:Class="HobbitAutosplitter.ImageCropControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:HobbitAutosplitter"
+             mc:Ignorable="d">
+    <Grid x:Name="Grid" Width="640" Height="480">
+        <Image x:Name="Image" HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="640" Stretch="Fill" IsHitTestVisible="False"/>
+        <Border x:Name="Edge_Border" BorderBrush="Black" BorderThickness="1"/>
+        <Grid x:Name="Crop_Grid" MaxWidth="640" MaxHeight="480" Background="#0042FF00">
+            <Border BorderBrush="Red" BorderThickness="1"/>
+            <Button x:Name="Left_Button" Content="" BorderBrush="#00000000" Background="#00000000" Foreground="#00000000" Width="10" Cursor="SizeWE" PreviewMouseMove="LeftMouseMove" HorizontalAlignment="Left"/>
+            <Button x:Name="Right_Button" Content="" BorderBrush="#00000000" Background="#00000000" Foreground="#00000000" Width="10" Cursor="SizeWE" PreviewMouseMove="RightMouseMove" HorizontalAlignment="Right" Height="480"/>
+            <Button x:Name="Top_Button" Content="" BorderBrush="#00000000" Background="#00000000" Foreground="#00000000" Height="10" Cursor="SizeNS" PreviewMouseMove="TopMouseMove" VerticalAlignment="Top"/>
+            <Button x:Name="Bottom_Button" BorderBrush="#00000000" Background="#00000000" Foreground="#00000000" Height="10" Cursor="SizeNS" PreviewMouseMove="BottomMouseMove" VerticalAlignment="Bottom" Width="640"/>
+        </Grid>
+    </Grid>
+</UserControl>

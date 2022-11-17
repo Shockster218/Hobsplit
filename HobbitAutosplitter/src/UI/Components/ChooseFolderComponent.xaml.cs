@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.IO;
 using System.Windows;
-using System.Text.RegularExpressions;
 
 namespace HobbitAutosplitter
 {
@@ -99,7 +98,7 @@ namespace HobbitAutosplitter
                 }
 
                 SplitManager.UpdateImagesPathSetting();
-                ((ComparisonSettingsWindow)Window.GetWindow(this)).UpdateSplitImages();
+                ((SplitImagesWindow)Window.GetWindow(this)).UpdateSplitImages();
             }
         }
     }

@@ -17,40 +17,36 @@ namespace HobbitAutosplitter
 
         private Bitmap originalImg;
         private Bitmap originalImgWorkable;
-        private Bitmap originalImgFinalized;
 
         private Digest digest;
         private float similarity;
-        bool startCrop;
+
         private bool _disposedValue;
 
-        public SplitData(string name, int splitNumber, string imagePath, double similarity, bool startCrop = false, bool removeColor = false)
+        public SplitData(string name, int splitNumber, string imagePath, double similarity, bool removeColor = false)
         {
             this.name = name;
             this.splitNumber = splitNumber;
             this.imagePath = imagePath;
             this.similarity = (float)similarity;
-            this.startCrop = startCrop;
             this.removeColor = removeColor;
         }
 
         public void UpdateSplitImage()
         {
-            originalImg = SetImage(imagePath).Resize(Constants.comparisonWidth, Constants.comparisonHeight);
+            originalImg = SetImage(imagePath).Resize();
             UpdateImgWorkableCrop();
-            UpdateFinalImageCrop();
-            if (removeColor) originalImgFinalized.RemoveColor();
-            digest = ImagePhash.ComputeDigest(originalImgFinalized.ToLuminanceImage());
+            if (removeColor) originalImgWorkable.RemoveColor();
+            digest = ImagePhash.ComputeDigest(originalImgWorkable.ToLuminanceImage());
         }
 
         public void UpdateSplitImage(string path)
         {
             imagePath = path;
-            originalImg = SetImage(imagePath).Resize(Constants.comparisonWidth, Constants.comparisonHeight);
+            originalImg = SetImage(imagePath).Resize();
             UpdateImgWorkableCrop();
-            UpdateFinalImageCrop();
-            if (removeColor) originalImgFinalized.RemoveColor();
-            digest = ImagePhash.ComputeDigest(originalImgFinalized.ToLuminanceImage());
+            if (removeColor) originalImgWorkable.RemoveColor();
+            digest = ImagePhash.ComputeDigest(originalImgWorkable.ToLuminanceImage());
         }
         private Bitmap SetImage(string path) => new Bitmap(Image.FromFile(path));
 
@@ -60,9 +56,9 @@ namespace HobbitAutosplitter
 
         public string GetImagePath() => imagePath;
 
-        public Bitmap GetImage() => originalImgWorkable;
+        public Bitmap GetImageOriginal() => originalImg;
 
-        public Bitmap GetImageCropped() => originalImgFinalized;
+        public Bitmap GetImageCropped() => originalImgWorkable;
 
         public string GetSplitName() => name;
 
@@ -72,23 +68,8 @@ namespace HobbitAutosplitter
 
         public void UpdateImgWorkableCrop()
         {
-            double left = Settings.Default.sourceCropLeft;
-            double right = Settings.Default.sourceCropRight;
-            double top = Settings.Default.sourceCropTop;
-            double bottom = Settings.Default.sourceCropBottom;
-
-            originalImgWorkable = originalImg.Crop(new Rectangle(
-                originalImg.Width - (int)(right / 100 * originalImg.Width),
-                originalImg.Height - (int)(bottom / 100 * originalImg.Height),
-                (int)left / 100 * originalImg.Width,
-                (int)top / 100 * originalImg.Height
-                ));
-        }
-
-        public void UpdateFinalImageCrop()
-        {
-            originalImgFinalized = originalImgWorkable.Crop(startCrop ? Constants.startCrop : Constants.crop);
-            digest = ImagePhash.ComputeDigest(originalImgFinalized.ToLuminanceImage());
+            originalImgWorkable = originalImg.Clone() as Bitmap;
+            originalImgWorkable = originalImgWorkable.Crop(Settings.Default.comparisonRect);
         }
 
         private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);

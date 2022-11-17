@@ -18,9 +18,7 @@ namespace HobbitAutosplitter
 {
     public static class CaptureManager
     {
-        public static event PreviewFrameEventHandler SendPreviewFrame;
-
-        private static Bitmap previewFrame;
+        private static byte[] frameData;
         private static int frameHeight;
         private static int frameWidth;
 
@@ -30,8 +28,6 @@ namespace HobbitAutosplitter
         private static Direct3D11CaptureFramePool framePool;
         private static GraphicsCaptureSession session;
         private static Texture2DDescription textureDesc;
-
-        private static Rectangle previewCrop;
 
         public static void Init()
         {
@@ -85,7 +81,7 @@ namespace HobbitAutosplitter
                 d3dDevice.ImmediateContext.CopyResource(texture2d, screenTexture);
                 DataBox mapSource = d3dDevice.ImmediateContext.MapSubresource(screenTexture, 0, MapMode.Read, MapFlags.None);
 
-                Bitmap bitmap = new Bitmap(frameWidth, frameHeight, PixelFormat.Format32bppRgb);
+                Bitmap bitmap = new Bitmap(frameWidth, frameHeight);
                 BitmapData mapDest = bitmap.LockBits(new Rectangle(0, 0, frameWidth, frameHeight), ImageLockMode.WriteOnly, bitmap.PixelFormat);
                 IntPtr sourcePtr = mapSource.DataPointer;
                 IntPtr destPtr = mapDest.Scan0;
@@ -100,50 +96,29 @@ namespace HobbitAutosplitter
                 bitmap.UnlockBits(mapDest);
                 d3dDevice.ImmediateContext.UnmapSubresource(screenTexture, 0);
 
-                previewFrame = bitmap.Clone() as Bitmap;
+                frameData = bitmap.ToByteArray();
+
                 bitmap.Dispose();
                 
-                HandleFrameComparison();
+                PrepareFrameForComparison();
             }
         }
 
-        private static void HandleFrameComparison()
+        private static async void PrepareFrameForComparison()
         {
-            previewFrame = previewFrame.Crop(GetPreviewCrop());
+            Bitmap frame = frameData.ToBitmap().Resize();
+            frame = frame.Crop(Constants.crop);
 
-            CreateDigest(previewFrame.Clone() as Bitmap);
-
-            previewFrame = previewFrame.Resize(Constants.previewWidth, Constants.previewHeight);
-
-            SendPreviewFrame?.SmartInvoke(((Bitmap)previewFrame.Clone()).ToBitmapImage());
-            previewFrame.Dispose();
-        }
-
-        private static async void CreateDigest(Bitmap frame)
-        {
-            frame = frame.Resize(Constants.comparisonWidth, Constants.comparisonHeight);
             if (SplitManager.GetSplitIndex() == 1) frame.RemoveColor();
             Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));
-            
             frame.Dispose();
-            
+
             //SplitManager.CompareFrames(digest);
         }
 
-        public static void UpdatePreviewCrop()
+        public static byte[] GetFrameData()
         {
-            previewCrop = new Rectangle(
-                frameWidth - (int)(Settings.Default.sourceCropRight / 100 * frameWidth),
-                frameHeight - (int)(Settings.Default.sourceCropBottom / 100 * frameHeight),
-                (int)Settings.Default.sourceCropLeft / 100 * frameWidth,
-                (int)Settings.Default.sourceCropTop / 100 * frameHeight
-            );
-        }
-
-        public static Rectangle GetPreviewCrop()
-        {
-            if(previewCrop.Height == 0 || previewCrop.Width == 0) UpdatePreviewCrop();
-            return previewCrop;
+            return frameData;
         }
 
         public static void StopCapture()
@@ -151,11 +126,6 @@ namespace HobbitAutosplitter
             session?.Dispose();
             framePool?.Dispose();
             d3dDevice?.Dispose();
-        }
-
-        public static Bitmap GetPreviewFrame()
-        {
-            return previewFrame;
         }
     }
 }

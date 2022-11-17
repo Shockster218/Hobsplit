@@ -47,7 +47,7 @@ namespace HobbitAutosplitter
             splits = new SplitData[17]
             {
                     new SplitData("Start Up / Reset", 0, Settings.Default.menuPath, Settings.Default.resetSimilarity),
-                    new SplitData("Main Menu / Start", 69, Settings.Default.menuPath, Settings.Default.loadsSimilarity, startCrop:true, removeColor:true),
+                    new SplitData("Main Menu / Start", 69, Settings.Default.menuPath, Settings.Default.loadsSimilarity, removeColor:true),
                     new SplitData("Dream World", 1, Settings.Default.dwPath, Settings.Default.loadsSimilarity),
                     new SplitData("An Unexpected Party", 2, Settings.Default.aupPath, Settings.Default.loadsSimilarity),
                     new SplitData("Roast Mutton", 3, Settings.Default.rmPath, Settings.Default.loadsSimilarity),

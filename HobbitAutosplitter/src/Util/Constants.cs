@@ -4,8 +4,6 @@ namespace HobbitAutosplitter
 {
     public static class Constants
     {
-        public const int previewWidth = 640;
-        public const int previewHeight = 480;
         public const int comparisonWidth = 320;
         public const int comparisonHeight = 240;
         public const string loadingKeyword = "loading";

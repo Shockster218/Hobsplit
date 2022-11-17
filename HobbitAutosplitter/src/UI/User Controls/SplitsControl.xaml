@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HobbitAutosplitter"
-             mc:Ignorable="d" Width="446.428" Height="566" Loaded="Splits_Control_Loaded">
+             mc:Ignorable="d" Width="698" Height="397">
     <Grid x:Name="Splits_Grid">
         <GroupBox x:Name="Split_Images_GroupBox" Header="Split Images">
-            <StackPanel x:Name="Split_Main_Stack_Panel" HorizontalAlignment="Left" Height="528" VerticalAlignment="Top" Width="446">
-                <TextBlock x:Name="Title_Textblock" Text="You can set the comparison images for each split below by clicking the image you want to replace then choosing a new image. Alternatively, you can click the &quot;Choose Image Folder&quot; button at the bottom right of the window. " FontSize="18" Width="417" TextWrapping="Wrap" Margin="0,10,0,10"/>
+            <StackPanel x:Name="Split_Main_Stack_Panel" HorizontalAlignment="Left" Height="361" VerticalAlignment="Top" Width="692">
+                <TextBlock x:Name="Title_Textblock" Text="You can set the comparison images for each split below by clicking the image you want to replace then choosing a new image. Alternatively, you can click the &quot;Choose Image Folder&quot; button at the bottom left of the window. " FontSize="18" Width="630" TextWrapping="Wrap" Margin="0,10,0,10"/>
                 <StackPanel x:Name="Split_Stack_Panel_One" Height="125" Margin="5,5,5,0" Orientation="Horizontal">
                     <Canvas x:Name="Menu" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
                         <Border x:Name="Split_Image_Border" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
@@ -55,9 +55,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock4" Text="Troll Hole" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                </StackPanel>
-                <StackPanel x:Name="Split_Stack_Panel_Two" Height="125" Margin="5,5,5,0" Orientation="Horizontal">
-                    <Canvas x:Name="OH" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="OH" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border5" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image5" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -66,7 +64,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock5" Text="Over and Under Hill" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="Riddles" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="Riddles" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border6" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image6" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -75,7 +73,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock6" Text="Riddles in the Dark" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="FAS" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="FAS" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border7" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image7" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -84,7 +82,9 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock7" Text="Flies and Spiders" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="Barrels" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                </StackPanel>
+                <StackPanel x:Name="Split_Stack_Panel_Two" Height="125" Margin="5,5,5,0" Orientation="Horizontal">
+                    <Canvas x:Name="Barrels" Margin="50,0,5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
                         <Border x:Name="Split_Image_Border8" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image8" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -93,7 +93,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock8" Text="Barrels out of Bond" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="AWW" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="AWW" Margin="5,0,5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
                         <Border x:Name="Split_Image_Border9" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image9" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -102,9 +102,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock9" Text="A Warm Welcome" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                </StackPanel>
-                <StackPanel x:Name="Split_Stack_Panel_Three" Height="125" Margin="5,5,5,0" Orientation="Horizontal">
-                    <Canvas x:Name="Thief" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="Thief" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border10" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image10" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -113,7 +111,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock10" Text="Thief Split" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="InsideInfo" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="InsideInfo" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border11" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image11" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -122,7 +120,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock11" Text="Inside Information" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="GOTC" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="GOTC" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border12" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image12" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -131,7 +129,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock12" Text="Gathering of the Clouds" Canvas.Top="75" Height="50" Width="75" TextWrapping="Wrap" TextAlignment="Center" FontSize="13"/>
                     </Canvas>
-                    <Canvas x:Name="TCB" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="TCB" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border13" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image13" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
@@ -140,7 +138,7 @@
                         </Canvas>
                         <TextBlock x:Name="Level_Textblock13" Text="The Clouds Burst" Canvas.Top="75" Height="50" Width="75" FontSize="14" TextWrapping="Wrap" TextAlignment="Center"/>
                     </Canvas>
-                    <Canvas x:Name="Final" Margin="5,0" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown">
+                    <Canvas x:Name="Final" MouseEnter="Split_Item_MouseEnter" MouseLeave="Split_Item_MouseLeave" Width="75" Height="125" MouseDown="Split_Item_MouseDown" Margin="5,0,5,0">
                         <Border x:Name="Split_Image_Border14" BorderThickness="1" Height="75" Width="75" BorderBrush="Black" Canvas.Left="0">
                             <Image x:Name="Split_Image14" Source="/HobbitAutosplitter;component/Assets/Image/Image_not_found.png" Margin="0" Stretch="Fill" Width="75" Height="75"/>
                         </Border>
