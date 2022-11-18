@@ -7,7 +7,7 @@
              mc:Ignorable="d">
     <Grid x:Name="Grid" Width="640" Height="480">
         <Image x:Name="Image" HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="640" Stretch="Fill" IsHitTestVisible="False"/>
-        <Border x:Name="Edge_Border" BorderBrush="Black" BorderThickness="1"/>
+        <Border x:Name="Edge_Border" BorderBrush="Black" BorderThickness="1.15"/>
         <Grid x:Name="Crop_Grid" MaxWidth="640" MaxHeight="480" Background="#0042FF00">
             <Border BorderBrush="Red" BorderThickness="1"/>
             <Button x:Name="Left_Button" Content="" BorderBrush="#00000000" Background="#00000000" Foreground="#00000000" Width="10" Cursor="SizeWE" PreviewMouseMove="LeftMouseMove" HorizontalAlignment="Left"/>

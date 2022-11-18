@@ -7,11 +7,15 @@
         xmlns:local="clr-namespace:HobbitAutosplitter"
         Style="{DynamicResource CustomWindowStyle}"
         mc:Ignorable="d"
-        Title="Image Comparison Settings" Height="500" Width="725" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF939300" ContentRendered="Comparison_Settings_Window_ContentRendered">
+        Title="Image Comparison Settings" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF939300" ContentRendered="Comparison_Settings_Window_ContentRendered" SizeToContent="WidthAndHeight">
     <Grid x:Name="Grid">
-        <local:SplitsControl x:Name="Splits_Control" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5,17,5,0" Height="383" Width="708"/>
-        <local:ChooseFolderComponent x:Name="Choose_Folder_Component" Margin="11,413,0,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190"/>
-        <Button x:Name="Save_Button" Content="Apply" HorizontalAlignment="Left" Margin="624,415,0,0" VerticalAlignment="Top" Width="85" Height="36" FontSize="16" Click="Save_Button_Click" RenderTransformOrigin="0.44,0.469"/>
-        <Button x:Name="Cancel_Button" Content="Cancel" HorizontalAlignment="Left" Margin="511,415,0,0" VerticalAlignment="Top" Width="85" Height="36" FontSize="16" Click="Cancel_Button_Click" RenderTransformOrigin="0.54,-0.4"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <local:SplitsControl x:Name="Splits_Control" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,20,10,10" Height="383" Width="708"/>
+        <local:ChooseFolderComponent x:Name="Choose_Folder_Component" Margin="20,5,0,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Grid.Row="1"/>
+        <Button x:Name="Save_Button" Content="Save" HorizontalAlignment="Left" Margin="633,5,0,10" VerticalAlignment="Top" Width="85" Height="36" FontSize="16" Click="Save_Button_Click" RenderTransformOrigin="0.44,0.469" Grid.Row="1"/>
+        <Button x:Name="Cancel_Button" Content="Cancel" HorizontalAlignment="Left" Margin="535,5,0,10" VerticalAlignment="Top" Width="85" Height="36" FontSize="16" Click="Cancel_Button_Click" RenderTransformOrigin="0.54,-0.4" Grid.Row="1"/>
     </Grid>
 </Window>

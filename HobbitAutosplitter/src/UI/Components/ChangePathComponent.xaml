@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HobbitAutosplitter"
-             mc:Ignorable="d" Height="35" Width="274">
+             mc:Ignorable="d">
     <Grid>
-        <Button x:Name="Set_Button" Content="Set" HorizontalAlignment="Left" Margin="204,2,0,0" VerticalAlignment="Top" Width="60" Click="Set_Button_Click" RenderTransformOrigin="1.505,0.685"/>
-        <TextBlock x:Name="Path_TextBlock" Margin="0,4,75,0" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Right" Width="194" FontStyle="Italic"
+        <Button x:Name="Set_Button" Content="Set" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Center" Width="60" Click="Set_Button_Click" RenderTransformOrigin="1.505,0.685"/>
+        <TextBlock x:Name="Path_TextBlock" Margin="3,0,0,0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Width="185" FontStyle="Italic" Height="20"
 />
 
     </Grid>

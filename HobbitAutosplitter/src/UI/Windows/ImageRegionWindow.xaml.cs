@@ -17,7 +17,7 @@ namespace HobbitAutosplitter
             Comparison_Image_Control.IsSource(false);
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
             Game_Image_Control.Save();
             Comparison_Image_Control.Save();
@@ -26,7 +26,7 @@ namespace HobbitAutosplitter
             Close();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

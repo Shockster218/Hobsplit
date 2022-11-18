@@ -46,6 +46,7 @@ namespace HobbitAutosplitter
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
             SaveSplitImagePaths();
+            Settings.Default.Save();
             if (fromStartup) CloseFromStartup();
             else Close();
         }

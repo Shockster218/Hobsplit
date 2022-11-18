@@ -18,23 +18,53 @@ namespace HobbitAutosplitter
 
         private void Video_Crop_Workshop_Button_Click(object sender, RoutedEventArgs e)
         {
-            ImageRegionWindow myOwnedWindow = new ImageRegionWindow();
-            myOwnedWindow.Owner = this;
-            myOwnedWindow.Show();
+            foreach(Window win in OwnedWindows)
+            {
+                if(win is ImageRegionWindow)
+                {
+                    win.WindowState = WindowState.Normal;
+                    return;
+                }
+            }
+
+            ImageRegionWindow window = new ImageRegionWindow();
+            window.Closed += (s,f) => Activate();
+            window.Owner = this;
+            window.Show();
         }
         
         private void Comparison_Image_Setter_Button_Click(object sender, RoutedEventArgs e)
         {
-            SplitImagesWindow myOwnedWindow = new SplitImagesWindow();
-            myOwnedWindow.Owner = this;
-            myOwnedWindow.Show();
+            foreach (Window win in OwnedWindows)
+            {
+                if (win is SplitImagesWindow)
+                {
+                    win.WindowState = WindowState.Normal;
+                    return;
+                }
+            }
+
+            SplitImagesWindow window = new SplitImagesWindow();
+            window.Closed += (s, f) => Activate();
+            window.Owner = this;
+            window.Show();
         }
 
         private void Settings_Button_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow myOwnedWindow = new SettingsWindow();
-            myOwnedWindow.Owner = this;
-            myOwnedWindow.Show();
+            foreach (Window win in OwnedWindows)
+            {
+                if (win is SettingsWindow)
+                {
+                    win.WindowState = WindowState.Normal;
+                    return;
+                }
+            }
+
+            SettingsWindow window = new SettingsWindow();
+            window.Closed += (s, f) => Activate();
+            window.Owner = this;
+            window.Show();
         }
 
         private void Website_Textblock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

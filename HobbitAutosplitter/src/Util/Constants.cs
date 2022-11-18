@@ -8,8 +8,8 @@ namespace HobbitAutosplitter
         public const int comparisonHeight = 240;
         public const string loadingKeyword = "loading";
 
-        public static readonly Rectangle crop = new Rectangle(10, 10, 10, 10);
-        public static readonly Rectangle startCrop = new Rectangle(50, 120, 230 - 50, 170 - 120);
+        public static readonly Rectangle crop = new Rectangle(20, 65, 120, 100);
+        public static readonly Rectangle startCrop = new Rectangle(50, 80, 90, 126);
     }
 
     public enum SplitState

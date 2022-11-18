@@ -8,10 +8,10 @@ namespace HobbitAutosplitter
 
     public partial class KeybindsControl : UserControl
     {
-        public VirtualKeyCode splitKey { get; private set; }
-        public VirtualKeyCode unsplitKey { get; private set; }
-        public VirtualKeyCode resetKey { get; private set; }
-        public VirtualKeyCode pauseKey { get; private set; }
+        private VirtualKeyCode splitKey;
+        private VirtualKeyCode unsplitKey;
+        private VirtualKeyCode resetKey;
+        private VirtualKeyCode pauseKey;
 
         public KeybindsControl()
         {
@@ -30,6 +30,14 @@ namespace HobbitAutosplitter
             Unsplit_Button.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.unsplit).ToString();
             Reset_Button.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.reset).ToString();
             Pause_Button.Content = KeyInterop.KeyFromVirtualKey((int)Settings.Default.pause).ToString();
+        }
+
+        public void Save()
+        {
+            Settings.Default.split = splitKey;
+            Settings.Default.unsplit = unsplitKey;
+            Settings.Default.reset = resetKey;
+            Settings.Default.pause = pauseKey;
         }
 
         private void Split_Button_Click(object sender, RoutedEventArgs e)
