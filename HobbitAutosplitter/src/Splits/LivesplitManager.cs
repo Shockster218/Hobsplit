@@ -1,11 +1,16 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
+using Gma.System.MouseKeyHook;
+using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace HobbitAutosplitter
 {
     public static class LivesplitManager
     {
         public static LivesplitActionEventHandler OnLivesplitAction;
+
+        private static IKeyboardMouseEvents kbHook;
 
         private static InputSimulator sim;
 
@@ -16,14 +21,16 @@ namespace HobbitAutosplitter
 
         public static void Init()
         {
-            sim = new InputSimulator();
             SetKeybinds();
+            sim = new InputSimulator();
+            kbHook = Hook.GlobalEvents();
+            kbHook.KeyDown += KeyDown;
         }
 
-        public static void SetSplitKeybind() { split = Settings.Default.split; }
-        public static void SetUnsplitKeybind() { unsplit = Settings.Default.unsplit; }
-        public static void SetResetKeybind() { reset = Settings.Default.reset; }
-        public static void SetPauseKeybind() { pause = Settings.Default.pause; }
+        private static void SetSplitKeybind() { split = Settings.Default.split; }
+        private static void SetUnsplitKeybind() { unsplit = Settings.Default.unsplit; }
+        private static void SetResetKeybind() { reset = Settings.Default.reset; }
+        private static void SetPauseKeybind() { pause = Settings.Default.pause; }
 
         public static void SetKeybinds()
         {
@@ -31,6 +38,30 @@ namespace HobbitAutosplitter
             SetUnsplitKeybind();
             SetResetKeybind();
             SetPauseKeybind();
+        }
+
+        private static void KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!Settings.Default.manualSplit) return;
+            kbHook.KeyDown -= KeyDown;
+
+            if (e.KeyValue == (int)split && SplitManager.GetCurrentSplitState() == SplitState.WAITING)
+            {
+                SplitManager.IncrementSplitIndex();
+                Split();
+            }
+            else if (e.KeyValue == (int)reset)
+            {
+                SplitManager.ResetSplitIndex();
+                Reset();
+            }
+
+            // Delay here needed to resub event otherwise it would fire 10 times at once.
+            Task.Factory.StartNew(async() => 
+            {
+                await Task.Delay(100);
+                kbHook.KeyDown += KeyDown;
+            });
         }
 
         public static void Split()

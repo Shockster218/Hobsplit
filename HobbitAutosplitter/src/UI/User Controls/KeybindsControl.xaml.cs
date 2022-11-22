@@ -34,10 +34,7 @@ namespace HobbitAutosplitter
 
         public void Save()
         {
-            Settings.Default.split = splitKey;
-            Settings.Default.unsplit = unsplitKey;
-            Settings.Default.reset = resetKey;
-            Settings.Default.pause = pauseKey;
+            LivesplitManager.SetKeybinds();
         }
 
         private void Split_Button_Click(object sender, RoutedEventArgs e)

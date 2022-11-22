@@ -14,6 +14,26 @@ namespace HobbitAutosplitter
         {
             InitializeComponent();
             instance = this;
+            SplitManager.AdvancedSplitInfo += SetAdvancedSplitInformation;
+        }
+
+        public void AdvancedInformationUIToggle()
+        {
+            bool sim = Settings.Default.advSimilarity;
+            bool index = Settings.Default.advSplitIndex;
+            bool state = Settings.Default.advSplitState;
+
+            if(sim || index || state) Advanced_Settings_Groupbox.Visibility = Visibility.Visible;
+            else Advanced_Settings_Groupbox.Visibility = Visibility.Collapsed;
+
+            if(sim) Similarity_TextBlock.Visibility = Visibility.Visible;
+            else Similarity_TextBlock.Visibility = Visibility.Collapsed;
+
+            if (index) Split_Index_TextBlock.Visibility = Visibility.Visible;
+            else Split_Index_TextBlock.Visibility = Visibility.Collapsed;
+
+            if (state) Split_State_TextBlock.Visibility = Visibility.Visible;
+            else Split_State_TextBlock.Visibility = Visibility.Collapsed;
         }
 
         private void Video_Crop_Workshop_Button_Click(object sender, RoutedEventArgs e)
@@ -67,6 +87,23 @@ namespace HobbitAutosplitter
             window.Show();
         }
 
+        private void Advanced_Settings_Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Window win in OwnedWindows)
+            {
+                if (win is AdvancedSettingsWindow)
+                {
+                    win.WindowState = WindowState.Normal;
+                    return;
+                }
+            }
+
+            AdvancedSettingsWindow window = new AdvancedSettingsWindow();
+            window.Closed += (s, f) => Activate();
+            window.Owner = this;
+            window.Show();
+        }
+
         private void Website_Textblock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Process.Start("https://hobbitspeedruns.com/");
@@ -77,8 +114,9 @@ namespace HobbitAutosplitter
             Process.Start("https://github.com/Shockster218/Hobbit-Autosplitter");
         }
 
-        private void StartCaptureSession(object sender, EventArgs e)
+        private void Main_Window_Rendered(object sender, EventArgs e)
         {
+            AdvancedInformationUIToggle();
             captureThread = new Thread(CaptureManager.InitializeCapture);
             captureThread.Start();
         }
@@ -86,6 +124,11 @@ namespace HobbitAutosplitter
         private void Main_Window_Closed(object sender, EventArgs e)
         {
             Settings.Default.Save();
+        }
+
+        private void SetAdvancedSplitInformation(AdvancedSplitInfoArgs args)
+        {
+
         }
 
         //public void OBSOffline()

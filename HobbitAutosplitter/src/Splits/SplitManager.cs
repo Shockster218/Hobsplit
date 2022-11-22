@@ -6,6 +6,8 @@ namespace HobbitAutosplitter
 {
     public static class SplitManager
     {
+        public static AdvancedSplitInformationEventHandler AdvancedSplitInfo;
+
         private static SplitData currentComparison;
         private static SplitData nextComparison;
         private static SplitData previousComparison;
@@ -15,14 +17,10 @@ namespace HobbitAutosplitter
 
         private static SplitState splitState = SplitState.GAMEPLAY;
         private static int splitIndex = 0;
-        private static bool useThiefSplit = true;
         public static bool Init()
         {
             return SetSplitData();
         }
-
-        public static void SetThiefSplit(bool value) => useThiefSplit = value;
-        public static bool GetThiefSplit() => useThiefSplit;
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; AdjustSplitComparisons(); }
         public static void DeincrementSplitIndex() { splitIndex--; AdjustSplitComparisons(); }
         public static void ResetSplitIndex() { splitIndex = 1; AdjustSplitComparisons(); }
@@ -93,7 +91,7 @@ namespace HobbitAutosplitter
             bool r = resetComparison.IsDigestSimilar(d);
 
             // Should only fire if it sees thief split again AFTER splitting.
-            if (useThiefSplit)
+            if (Settings.Default.useThief)
             {
                 if(splitIndex == 12)
                 {
@@ -105,23 +103,17 @@ namespace HobbitAutosplitter
                     }
                 }
             }
-            else
-            {
-                if (splitIndex == 10)
-                {
-                    IncrementSplitIndex(2);
-                    LivesplitManager.OnLivesplitAction();
-                }
-            }
 
-            if (r)
+            // Reset check
+            if (r && !Settings.Default.manualSplit)
             {
                 ResetSplitIndex();
                 splitState = SplitState.WAITING;
                 LivesplitManager.Reset();
             }
 
-            if (splitState == SplitState.WAITING)
+            // Start from main menu check
+            if (splitState == SplitState.WAITING && !Settings.Default.manualSplit)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
                 if(sim <= CalculateStartSimilarity())
@@ -132,13 +124,16 @@ namespace HobbitAutosplitter
                 }
             }
 
+            // Load pause and start check. Also gets the autosplitter ready from start up
             if (c)
             {
+                // Pause on load screen that is from the current comparison aka current level
                 if (splitState == SplitState.GAMEPLAY)
                 {
                     splitState = SplitState.LOADING;
                     LivesplitManager.Pause();
                 }
+                // Startup check to get the autosplitter ready
                 else if(splitState == SplitState.STARTUP)
                 {
                     splitState = SplitState.WAITING;
@@ -148,6 +143,7 @@ namespace HobbitAutosplitter
             }
             else
             {
+                // Resume after loads go away
                 if(splitState == SplitState.LOADING)
                 {
                     splitState = SplitState.GAMEPLAY;
@@ -155,28 +151,37 @@ namespace HobbitAutosplitter
                 }
             }
 
+            // Check for next level load screen to split
             if (n)
             {
+                // Make sure we are at dream world or over
                 if(splitIndex >= 2 && splitState == SplitState.GAMEPLAY)
                 {
                     LivesplitManager.Split();
-                    if(splitIndex == 10)
+                    // Thief check. Double incremenet
+                    if(splitIndex == 10 && Settings.Default.useThief)
                     {
                         IncrementSplitIndex(2);
                     }
+                    // End of run
                     else if(splitIndex == 16)
                     {
                         ResetSplitIndex();
                         splitState = SplitState.WAITING;
                     }
+                    // Normal split
                     else
                     {
-                        IncrementSplitIndex(1);
+                        IncrementSplitIndex();
                         splitState = SplitState.LOADING;
                         LivesplitManager.Pause();
                     }
                 }
             }
+
+            // Send advanced run information to main window
+            float currentSimilarity = currentComparison.GetCurrentCorrelation(d);
+            AdvancedSplitInfo?.SmartInvoke(new AdvancedSplitInfoArgs(splitIndex, currentSimilarity, splitState));
         }
 
         public static void UpdateImagesPathSetting()

@@ -108,8 +108,7 @@ namespace HobbitAutosplitter
         private static async void PrepareFrameForComparison()
         {
             Bitmap frame = frameData.ToBitmap();
-            frame = frame.Crop(Settings.Default.sourceRect, 640, 480).Resize().Crop(Constants.startCrop);
-            frame.Save("swag.bmp");
+            frame = frame.Crop(Settings.Default.sourceRect, 640, 480).Resize().Crop(SplitManager.GetCrop());
 
             if (SplitManager.GetSplitIndex() == 1) frame.RemoveColor();
             Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));

@@ -9,7 +9,7 @@
     <Grid x:Name="Similarity_Grid">
         <GroupBox x:Name="Similarity_GroupBox" Header="Split Image Similarity">
             <StackPanel x:Name="Similarity_Stack_Panel">
-                <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" FontSize="18" Margin="10,5,10,0" Height="193" Text="Adjusting these settings are not recommended, but can be used to change the positive match threshold. For each respective split, if the algorithm detects a similarity over the current threshold, that means its a positive match and the autosplitter will execute. All values are clamped from 0.7 (less strict) to 1 (very strict). "/>
+                <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" FontSize="18" Margin="10,5,10,0" Height="193" Text="Adjusting these settings are not recommended, but can be used to change the positive match threshold. For each respective split, if the algorithm detects a similarity over the current threshold, that means its a positive match and the autosplitter will execute. All values are clamped from 0.7 (less strict / 70% match) to 1 (very strict / 100% match). "/>
                 <StackPanel x:Name="Reset_Screen_Stack_Panel" Height="42" Orientation="Horizontal">
                     <TextBlock x:Name="Reset_Screen_Textblock" Text="Reset Screen" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
                     <Slider x:Name="Reset_Screen_Slider" Width="131" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,10,0,10" LargeChange="0.1" Maximum="1" SmallChange="0.001" TickFrequency="0.001" ValueChanged="Reset_Screen_Slider_ValueChanged"/>

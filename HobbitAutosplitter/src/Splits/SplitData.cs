@@ -54,6 +54,8 @@ namespace HobbitAutosplitter
 
         public bool IsDigestSimilar(Digest d) => ImagePhash.GetCrossCorrelation(digest, d) >= similarity;
 
+        public float GetCurrentCorrelation(Digest d) => ImagePhash.GetCrossCorrelation(digest, d);
+
         public string GetImagePath() => imagePath;
 
         public Bitmap GetImageOriginal() => originalImg;

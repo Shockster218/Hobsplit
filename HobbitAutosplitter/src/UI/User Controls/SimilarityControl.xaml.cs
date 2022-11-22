@@ -44,6 +44,15 @@ namespace HobbitAutosplitter
             Final_Split_Slider.Minimum = 0.7f;
         }
 
+        public void Save()
+        {
+            Settings.Default.resetSimilarity = valueReset;
+            Settings.Default.startSimilarity = valueStart;
+            Settings.Default.loadsSimilarity = valueLoads;
+            Settings.Default.thiefSimilarity = valueThief;
+            Settings.Default.finalSimilarity = valueFinal;
+        }
+
         private void Reset_Screen_UpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (!settingCropValue)

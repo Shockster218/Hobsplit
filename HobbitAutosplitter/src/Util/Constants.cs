@@ -4,13 +4,33 @@ namespace HobbitAutosplitter
 {
     public static class Constants
     {
-        public const int comparisonWidth = 320;
-        public const int comparisonHeight = 240;
+        public const int comparisonWidth = 160;
+        public const int comparisonHeight = 120;
         public const string loadingKeyword = "loading";
 
-        public static readonly Rectangle crop = new Rectangle(20, 65, 120, 100);
-        public static readonly Rectangle startCrop = new Rectangle(50, 80, 90, 126);
-    }
+        public static readonly Rectangle crop = new Rectangle(10, 32, 60, 50);
+        public static readonly Rectangle startCrop = new Rectangle(25, 40, 45, 63);
+
+        public static readonly string[] LevelNames =
+        {
+            "Main Menu",
+            "Dream World",
+            "Unexpected Party",
+            "Roast Mutton",
+            "Troll Hole",
+            "Overhill",
+            "Riddles",
+            "Flies and Spiders",
+            "Barrels",
+            "A Warm Welcome",
+            "Thief",
+            "A Warm Welcome",
+            "Inside Info",
+            "Gathering",
+            "Clouds Burst",
+            "End"
+        };
+}
 
     public enum SplitState
     {

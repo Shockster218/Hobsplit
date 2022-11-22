@@ -7,14 +7,14 @@
         xmlns:local="clr-namespace:HobbitAutosplitter" x:Name="Set_Image_Region_Window" x:Class="HobbitAutosplitter.ImageRegionWindow"
         Style="{DynamicResource CustomWindowStyle}"
         mc:Ignorable="d"
-        Height="680" Width="1325" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="#FF700091" ContentRendered="Set_Image_Region_Window_ContentRendered">
+        Height="680" Width="1325" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="Red" ContentRendered="Set_Image_Region_Window_ContentRendered">
     <Grid x:Name="Grid">
         <TextBlock x:Name="Description_TextBlock" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" FontSize="18" Margin="0,17,0,532" Text="Here you can set the region that Hobbit Autosplitter will use to compare game capture with the split images you provided. To use, drag the sides of the red rectangle in the image to the desired region. The desired region must exclude anything that isn't original video from The Hobbit (including timers). To get the most accurate crop, use the Zoom In button below the respective display." Width="1298"/>
         <local:ImageCropControl x:Name="Game_Image_Control" HorizontalAlignment="Left" Margin="12,109,0,0" VerticalAlignment="Top"/>
         <local:ImageCropControl x:Name="Comparison_Image_Control" HorizontalAlignment="Left" Margin="670,109,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Game_Image_Zoom_Button" Content="Zoom In" HorizontalAlignment="Left" Margin="32,600,0,0" VerticalAlignment="Top" Height="35" Width="125" FontSize="16" Click="Game_Image_Zoom_Button_Click"/>
         <Button x:Name="Comparison_Image_Zoom_Button" Content="Zoom In" HorizontalAlignment="Left" Margin="691,600,0,0" VerticalAlignment="Top" Height="35" Width="125" FontSize="16" Click="Comparison_Image_Zoom_Button_Click"/>
-        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="1186,600,0,0" VerticalAlignment="Top" Width="124" Click="Save_Button_Click" RenderTransformOrigin="1.127,2.15" Height="35" FontSize="16"/>
-        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="1046,600,0,0" VerticalAlignment="Top" Width="125" Click="Cancel_Button_Click" Height="35" FontSize="16"/>
+        <Button x:Name="Save_Button" Content="Save" HorizontalAlignment="Left" Margin="1186,600,0,0" VerticalAlignment="Top" Width="124" Click="Save_Button_Click" RenderTransformOrigin="1.127,2.15" Height="35" FontSize="16"/>
+        <Button x:Name="Cancel_Button" Content="Cancel" HorizontalAlignment="Left" Margin="1046,600,0,0" VerticalAlignment="Top" Width="125" Click="Cancel_Button_Click" Height="35" FontSize="16"/>
     </Grid>
 </Window>

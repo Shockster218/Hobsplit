@@ -430,5 +430,53 @@ namespace HobbitAutosplitter {
                 this["needSetup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advSimilarity {
+            get {
+                return ((bool)(this["advSimilarity"]));
+            }
+            set {
+                this["advSimilarity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advSplitIndex {
+            get {
+                return ((bool)(this["advSplitIndex"]));
+            }
+            set {
+                this["advSplitIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advSplitState {
+            get {
+                return ((bool)(this["advSplitState"]));
+            }
+            set {
+                this["advSplitState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool advHideRunInfo {
+            get {
+                return ((bool)(this["advHideRunInfo"]));
+            }
+            set {
+                this["advHideRunInfo"] = value;
+            }
+        }
     }
 }

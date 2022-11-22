@@ -55,6 +55,31 @@ namespace HobbitAutosplitter
                 }
             }
         }
+        public static void SmartInvoke(this MulticastDelegate multicast, AdvancedSplitInfoArgs args)
+        {
+            MulticastDelegate multiDel = multicast;
+            if (multiDel != null)
+            {
+                var invocationList = multiDel.GetInvocationList();
+
+                foreach (AdvancedSplitInformationEventHandler handler in invocationList)
+                {
+                    DispatcherObject dispatcherTarget = handler.Target as DispatcherObject;
+                    if (dispatcherTarget != null)
+                    {
+                        if (dispatcherTarget is Window)
+                        {
+                            if (!dispatcherTarget.Dispatcher.CheckAccess()) dispatcherTarget.Dispatcher.BeginInvoke(handler, args);
+                        }
+                    }
+                    else
+                    {
+                        Task.Run(() => handler.Invoke(args));
+                    }
+                }
+            }
+        }
+
 
         public static void SmartInvoke(this MulticastDelegate multicast, LivesplitAction action)
         {
