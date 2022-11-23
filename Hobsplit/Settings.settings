@@ -1,0 +1,120 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Hobsplit" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="sourceRect" Type="System.Drawing.Rectangle" Scope="User">
+      <Value Profile="(Default)">0, 0, 0, 0</Value>
+    </Setting>
+    <Setting Name="comparisonRect" Type="System.Drawing.Rectangle" Scope="User">
+      <Value Profile="(Default)">0, 0, 0, 0</Value>
+    </Setting>
+    <Setting Name="split" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="unsplit" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="reset" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="pause" Type="WindowsInput.Native.VirtualKeyCode" Scope="User">
+      <Value Profile="(Default)">NONAME</Value>
+    </Setting>
+    <Setting Name="useThief" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="manualSplit" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="playReadySound" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="playThiefSound" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="menuPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="dwPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="aupPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="rmPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="thPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ohPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="riddlesPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="fasPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="boobPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="awwPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="thiefPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="iiPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="gotcPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="tcbPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="finalPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="loadsSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.935</Value>
+    </Setting>
+    <Setting Name="thiefSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.975</Value>
+    </Setting>
+    <Setting Name="finalSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
+    </Setting>
+    <Setting Name="resetSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
+    </Setting>
+    <Setting Name="startSimilarity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.82</Value>
+    </Setting>
+    <Setting Name="autoOBS" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="obsPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">No path set!</Value>
+    </Setting>
+    <Setting Name="updateRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="needSetup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="advSimilarity" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="advSplitIndex" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="advSplitState" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="advHideRunInfo" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

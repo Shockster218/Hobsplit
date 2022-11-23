@@ -1,0 +1,16 @@
+﻿<Window x:Name="Start_Window" x:Class="Hobsplit.StartupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:Hobsplit"
+        mc:Ignorable="d"
+        Style="{DynamicResource CustomWindowStyle}" Height="220" Width="275" BorderBrush="#FF5B5B5B" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF232323" Title="" ContentRendered="InitiateStartup">
+    <Grid>
+        <TextBlock x:Name="Program_Title_Textblock" HorizontalAlignment="Center" Text="Hobbit Autosplitter" VerticalAlignment="Top" Margin="0,13,0,0" Width="271" FontSize="25" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock x:Name="Author_Textblock" HorizontalAlignment="Center" Text="A community tool made by Shockster_" VerticalAlignment="Top" Margin="0,50,0,0" Width="271" FontSize="15" TextAlignment="Center" FontStyle="Italic"/>
+        <fa:ImageAwesome x:Name="Loading_Spinner" Icon="CircleOutlineNotch" Height="48" Width="48" Foreground="White" SpinDuration="2.5" RenderTransformOrigin="0.5,0.5" Spin="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,89,0,0" />
+        <TextBlock x:Name="Status_Textblock" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,154,0,0" Width="275" FontSize="18" TextAlignment="Center" FontStyle="Italic"/>
+    </Grid>
+</Window>
