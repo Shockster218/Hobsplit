@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -27,15 +28,44 @@ namespace Hobsplit
             while (true)
             {
                 Process obsProcess = Process.GetProcesses().Where(x => x.ProcessName.Contains("obs")).FirstOrDefault(x => x.ProcessName.Any(char.IsDigit));
-                if (obsProcess != null)
+                if (Settings.Default.autoOBS && obsProcess == null)
                 {
-                    obs = obsProcess;
-                    obs.EnableRaisingEvents = true;
-                    obs.Exited += (s,e) => OBSClosed();
-                    OBSProcessFoundEvent?.SmartInvoke();
+                    try
+                    {
+                        string path = Settings.Default.obsPath;
+                        Process obsAuto = new Process();
+                        obsAuto.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
+                        obsAuto.StartInfo.FileName = Path.GetFileName(path);
+                        obsAuto.Start();
+                        if (obsAuto != null)
+                        {
+                            if (obsAuto.ProcessName.Contains("obs"))
+                            {
+                                OBSFound(obsAuto);
+                                return;
+                            }
+                            else obsAuto.Close();
+                        }
+                    }
+                    catch { }
+
+                    Settings.Default.autoOBS = false;
+                    Settings.Default.obsPath = "No path set!";
+                }
+                else if(obsProcess != null)
+                {
+                    OBSFound(obsProcess);
                     return;
                 }
             }
+        }
+
+        private static void OBSFound(Process obsProcess)
+        {
+            obs = obsProcess;
+            obs.EnableRaisingEvents = true;
+            obs.Exited += (s, e) => OBSClosed();
+            OBSProcessFoundEvent?.SmartInvoke();
         }
 
         private static async void WaitForOBS()

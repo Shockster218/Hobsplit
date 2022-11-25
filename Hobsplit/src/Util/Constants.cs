@@ -6,7 +6,6 @@ namespace Hobsplit
     {
         public const int comparisonWidth = 160;
         public const int comparisonHeight = 120;
-        public const string loadingKeyword = "loading";
 
         public static readonly Rectangle crop = new Rectangle(10, 32, 60, 50);
         public static readonly Rectangle startCrop = new Rectangle(25, 40, 45, 63);
