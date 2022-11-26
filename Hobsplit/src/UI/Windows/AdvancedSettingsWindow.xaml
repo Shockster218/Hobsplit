@@ -16,10 +16,10 @@
         <local:SimilarityControl x:Name="Similarity_Control" Grid.Row="1" Margin="10,20,5,10"/>
         <GroupBox x:Name="Settings_Groupbox" Header="Advanced Toggles" Grid.Column="1" Margin="5,20,10,0" VerticalAlignment="Top">
             <StackPanel Margin="5,5,5,5">
-                <WPFToggleSwitch:ToggleSwitch x:Name="Hide_Information_Toggle" FontSize="14" Content="Hide Run Information" Height="35" Width="250" Margin="0,5,0,0"/>
+                <WPFToggleSwitch:ToggleSwitch x:Name="Hide_Information_Toggle" FontSize="14" Content="Show Run Information" Height="35" Width="250" Margin="0,5,0,0"/>
+                <WPFToggleSwitch:ToggleSwitch x:Name="Split_Index_Toggle" FontSize="14" Content="Show Current Split Index" Height="35" Width="250" Margin="0,5,0,0"/>
                 <WPFToggleSwitch:ToggleSwitch x:Name="Similarity_Toggle" FontSize="14" Content="Show Current Similarities" Height="35" Width="250" Margin="0,5,0,0"/>
                 <WPFToggleSwitch:ToggleSwitch x:Name="Split_State_Toggle" FontSize="14" Content="Show Current Split State" Height="35" Width="250" Margin="0,5,0,0"/>
-                <WPFToggleSwitch:ToggleSwitch x:Name="Split_Index_Toggle" FontSize="14" Content="Show Current Split Index" Height="35" Width="250" Margin="0,5,0,0"/>
             </StackPanel>
         </GroupBox>
         <Button x:Name="Save_Button" Content="Save" FontSize="16" Margin="177,431,10,10" Grid.Column="1" Width="100" Height="35" Click="Save_Button_Click"/>

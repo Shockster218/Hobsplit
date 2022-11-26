@@ -469,13 +469,13 @@ namespace Hobsplit {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool advHideRunInfo {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool advShowRunInfo {
             get {
-                return ((bool)(this["advHideRunInfo"]));
+                return ((bool)(this["advShowRunInfo"]));
             }
             set {
-                this["advHideRunInfo"] = value;
+                this["advShowRunInfo"] = value;
             }
         }
     }

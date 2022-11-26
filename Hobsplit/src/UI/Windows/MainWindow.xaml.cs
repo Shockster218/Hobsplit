@@ -2,19 +2,28 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Threading;
+using Timer = System.Timers.Timer;
 
 namespace Hobsplit
 {
     public partial class MainWindow
     {
         public static MainWindow instance;
+
+        private Stopwatch segmentTimer;
+        private Timer timer;
         private Thread captureThread;
 
         public MainWindow()
         {
             InitializeComponent();
             instance = this;
+            segmentTimer = new Stopwatch();
+            timer = new Timer(100);
+            timer.Elapsed += (s, e) => UpdateTimer();
             SplitManager.AdvancedSplitInfo += SetAdvancedSplitInformation;
+            ProcessManager.OBSClosedEvent += OBSClosed;
+            LivesplitManager.OnLivesplitAction += HandleLiveSplitAction;
         }
 
         public void AdvancedInformationUIToggle()
@@ -22,8 +31,12 @@ namespace Hobsplit
             bool sim = Settings.Default.advSimilarity;
             bool index = Settings.Default.advSplitIndex;
             bool state = Settings.Default.advSplitState;
+            bool hideRunInfo = Settings.Default.advShowRunInfo;
 
-            if(sim || index || state) Advanced_Settings_Groupbox.Visibility = Visibility.Visible;
+            if (hideRunInfo) Run_Info_GroupBox.Visibility = Visibility.Visible;
+            else Run_Info_GroupBox.Visibility = Visibility.Collapsed;
+
+            if (sim || index || state) Advanced_Settings_Groupbox.Visibility = Visibility.Visible;
             else Advanced_Settings_Groupbox.Visibility = Visibility.Collapsed;
 
             if(sim) Similarity_TextBlock.Visibility = Visibility.Visible;
@@ -121,6 +134,43 @@ namespace Hobsplit
             captureThread.Start();
         }
 
+        private void HandleLiveSplitAction(LivesplitAction action)
+        {
+            Current_Level_TextBlock.Text = $"Current Level \n{SplitManager.GetCurrentComparison().GetSplitName()}";
+            if (SplitManager.GetSplitIndex() == (int)SplitIndex.DONE) return;
+            switch (action) 
+            {
+                case LivesplitAction.SPLIT:
+                    if (SplitManager.GetSplitIndex() == (int)SplitIndex.THIEF) return;
+                    if (segmentTimer.IsRunning) 
+                    {
+                        segmentTimer.Restart();
+                        break;
+                    }
+                    else
+                    {
+                        timer.Start();
+                        segmentTimer.Start();
+                        break;
+                    }
+                case LivesplitAction.RESET:
+                    segmentTimer.Reset();
+                    Segment_Timer_TextBlock.Text = "Current Segment Time \n0.00";
+                    timer.Stop();
+                    break;
+            }
+        }
+
+        private void UpdateTimer()
+        {
+            if (!segmentTimer.IsRunning) return;
+            if (SplitManager.GetSplitIndex() > 2 && segmentTimer.ElapsedMilliseconds <= 5000) return;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Segment_Timer_TextBlock.Text = $"Current Segment Time \n{new TimeSpan(segmentTimer.ElapsedTicks).ToString("hh\\:mm\\:ss\\.ff").TrimStart(':','0')}";
+            }));
+        }
+
         private void Main_Window_Closed(object sender, EventArgs e)
         {
             Settings.Default.Save();
@@ -128,68 +178,17 @@ namespace Hobsplit
 
         private void SetAdvancedSplitInformation(AdvancedSplitInfoArgs args)
         {
-
+            Split_Index_TextBlock.Text = $"Split Index \n{args.splitIndex} ({args.splitName})";
+            Similarity_TextBlock.Text = $"Similarity Percentage \nCurrent Split {(args.currentSim * 100).ToString("00.0")}% \n Reset: {(args.resetSim * 100).ToString("00.0")}%";
+            Split_State_TextBlock.Text = $"Split State \n{args.state}";
         }
 
-        //public void OBSOffline()
-        //{
-        //    DisableButtons();
-        //    Task.Factory.StartNew(() => ProcessManager.FindOBS());
-        //}
-        //
-        //public void ShowPreview(PreComparisonArgs args)
-        //{
-        //    obsPreview.Source = ((Bitmap)args.frame).ToBitmapImage();
-        //}
-        //
-        //public void ToggleThiefSplit(LivesplitAction action)
-        //{
-        //    switch (action)
-        //    {
-        //        case LivesplitAction.SPLIT:
-        //            thiefCheckbox.IsEnabled = false;
-        //            break;
-        //        case LivesplitAction.RESET:
-        //            thiefCheckbox.IsEnabled = true;
-        //            break;
-        //    }
-        //}
-        //
-        //public void ChangeComparisonReference(LivesplitAction action)
-        //{
-        //    splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
-        //    SetLevelText();
-        //}
-        //
-        //public void OBSOpened()
-        //{
-        //    splitReference.Source = SplitManager.GetCurrentComparison().GetImage().ToBitmapImage();
-        //    SetLevelText();
-        //    EnableButtons();
-        //}
-        //
-        //
-        //public void SetLevelText()
-        //{
-        //    levelLab.Content = SplitManager.GetCurrentComparison().GetSplitName();
-        //}
-        //
-        //public void ShowNotEnoughSplitsMessageBox()
-        //{
-        //    MessageBoxManager.OK = "Retry";
-        //    MessageBoxManager.Cancel = "Exit";
-        //    MessageBoxManager.Register();
-        //    MessageBoxResult result = MessageBox.Show("Incorrect number of split image files found or they are incorrectly named. Please add them to " +
-        //        "Assets/Splits or adjust the file names then click \"Retry\"", "Not enough split images", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-        //    MessageBoxManager.Unregister();
-        //    if(result == MessageBoxResult.OK)
-        //    {
-        //        SplitManager.PopulateSplitData();
-        //    }
-        //    else
-        //    {
-        //        Application.Current.Shutdown();
-        //    }
-        //}
+        private void OBSClosed()
+        {
+            foreach (Window win in OwnedWindows) win.Close();
+            StartupWindow window = new StartupWindow();
+            window.Show();
+            Close();
+        }
     }
 }

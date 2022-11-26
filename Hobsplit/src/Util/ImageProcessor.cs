@@ -89,7 +89,7 @@ namespace Hobsplit
 
         public static Bitmap RemoveColor(this Bitmap bitmap)
         {
-            const float limit = 0.03f;
+            const float limit = 0.1f;
             for (int i = 0; i < bitmap.Width; i++)
             {
                 for (int j = 0; j < bitmap.Height; j++)

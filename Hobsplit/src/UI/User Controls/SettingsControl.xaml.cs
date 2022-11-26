@@ -1,17 +1,18 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Hobsplit
 {
-    /// <summary>
-    /// Interaction logic for SettingsControl.xaml
-    /// </summary>
     public partial class SettingsControl : UserControl
     {
+        private bool startup = true;
         public SettingsControl()
         {
             InitializeComponent();
             GetAndSetToggles();
+            startup = false;
         }
+
         private void GetAndSetToggles()
         {
             Thief_Split_Toggle.IsChecked = Settings.Default.useThief;
@@ -30,8 +31,12 @@ namespace Hobsplit
             Settings.Default.autoOBS = (bool)Open_OBS_Toggle.IsChecked;
         }
 
-        private void Open_OBS_Toggle_Checked(object sender, System.Windows.RoutedEventArgs e) => Change_Path_Component.Toggle(true);
+        private void Open_OBS_Toggle_Checked(object sender, RoutedEventArgs e) => Change_Path_Component.Toggle(true);
 
-        private void Open_OBS_Toggle_Unchecked(object sender, System.Windows.RoutedEventArgs e) => Change_Path_Component.Toggle(false);
+        private void Open_OBS_Toggle_Unchecked(object sender, RoutedEventArgs e) => Change_Path_Component.Toggle(false);
+
+        private void Ready_Sound_Toggle_Checked(object sender, RoutedEventArgs e) { if (!startup) SplitManager.PlayReadySound(); }
+
+        private void Thief_Sound_Toggle_Checked(object sender, RoutedEventArgs e) { if (!startup) SplitManager.PlayThiefSound(); }
     }
 }

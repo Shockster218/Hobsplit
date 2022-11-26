@@ -8,13 +8,17 @@
     public class AdvancedSplitInfoArgs
     {
         public int splitIndex;
-        public float similarity;
+        public string splitName;
+        public float currentSim;
+        public float resetSim;
         public SplitState state;
 
-        public AdvancedSplitInfoArgs(int splitIndex, float similarity, SplitState state)
+        public AdvancedSplitInfoArgs(int splitIndex, string splitName, float currentSim, float resetSim, SplitState state)
         {
             this.splitIndex = splitIndex;
-            this.similarity = similarity;
+            this.splitName = splitName;
+            this.currentSim = currentSim;
+            this.resetSim = resetSim;
             this.state = state;
         }
     }

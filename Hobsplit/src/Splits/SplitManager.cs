@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Media;
+using System.Timers;
 using Shipwreck.Phash;
 
 namespace Hobsplit
@@ -13,18 +15,31 @@ namespace Hobsplit
         private static SplitData nextComparison;
         private static SplitData previousComparison;
         private static SplitData resetComparison;
+        private static Timer advancedInfoTimer;
 
         private static SplitData[] splits;
 
-        private static SplitState splitState = SplitState.GAMEPLAY;
+        private static SplitState splitState = SplitState.STARTUP;
+
         private static int splitIndex = 0;
+
+        private static float currentSim = 0f;
+        private static float resetSim = 0f;
+
         public static bool Init()
         {
+            if (advancedInfoTimer == null)
+            {
+                advancedInfoTimer = new Timer(250);
+                advancedInfoTimer.Elapsed += (s, e) => AdvancedInfoSender();
+                ProcessManager.OBSOpenedEvent += StartAdvancedInfoTimer;
+            }
             return SetSplitData();
         }
         public static void IncrementSplitIndex(int ammount = 1) { splitIndex += ammount; AdjustSplitComparisons(); }
         public static void DeincrementSplitIndex() { splitIndex--; AdjustSplitComparisons(); }
         public static void ResetSplitIndex() { splitIndex = 1; AdjustSplitComparisons(); }
+        public static SplitData GetResetComparison() => resetComparison;
         public static SplitData GetCurrentComparison() => currentComparison;
         public static SplitData GetNextComparison() => nextComparison;
         public static SplitState GetCurrentSplitState() => splitState;
@@ -33,10 +48,10 @@ namespace Hobsplit
         public static SplitData[] GetSplitDataArray() => splits;
         public static void UpdateSplit(int index, string path) => splits[index].UpdateSplitImage(path);
         public static void UpdateSplitsImageWorkable() { foreach (SplitData split in splits) { split.UpdateImgWorkableCrop(); } }
-        private static float CalculateStartSimilarity() { return (float)Math.Round(Settings.Default.startSimilarity / 2f - .34f, 2); }
+        private static float CalculateStartSimilarity() { return 1f - (float)Settings.Default.startSimilarity; }
         private static void AdjustSplitComparisons() 
         {
-            nextComparison = splitIndex <= splits.Length - 1 ? splits[splitIndex + 1]: null;
+            nextComparison = splitIndex < splits.Length - 1 ? splits[splitIndex + 1]: null;
             currentComparison = splits[splitIndex];
             previousComparison = splitIndex >= 1 ? splits[splitIndex - 1] : splits[0];
         }
@@ -46,7 +61,7 @@ namespace Hobsplit
             splits = new SplitData[]
             {
                     new SplitData("Start Up / Reset", 0, Settings.Default.menuPath, Settings.Default.resetSimilarity),
-                    new SplitData("Main Menu / Start", 69, Settings.Default.menuPath, Settings.Default.loadsSimilarity, removeColor:true),
+                    new SplitData("Main Menu / Start", 69, Settings.Default.menuPath, Settings.Default.startSimilarity, removeColor:true),
                     new SplitData("Dream World", 1, Settings.Default.dwPath, Settings.Default.loadsSimilarity),
                     new SplitData("An Unexpected Party", 2, Settings.Default.aupPath, Settings.Default.loadsSimilarity),
                     new SplitData("Roast Mutton", 3, Settings.Default.rmPath, Settings.Default.loadsSimilarity),
@@ -73,6 +88,7 @@ namespace Hobsplit
                 else splits[i].UpdateSplitImage();
             }
 
+            splitIndex = 1;
             currentComparison = splits[1];
             resetComparison = splits[0];
 
@@ -89,13 +105,14 @@ namespace Hobsplit
             // Should only fire if it sees thief split again AFTER splitting.
             if (Settings.Default.useThief)
             {
-                if(splitIndex == 12)
+                if(splitIndex == (int)SplitIndex.AWWPOST)
                 {
                     bool p = previousComparison.IsDigestSimilar(d);
                     if (p)
                     {
                         LivesplitManager.Unsplit();
                         LivesplitManager.Split();
+                        PlayThiefSound();
                     }
                 }
             }
@@ -106,13 +123,14 @@ namespace Hobsplit
                 ResetSplitIndex();
                 splitState = SplitState.WAITING;
                 LivesplitManager.Reset();
+                PlayReadySound();
             }
 
             // Start from main menu check
             if (splitState == SplitState.WAITING && !Settings.Default.manualSplit)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if(sim <= CalculateStartSimilarity())
+                if (sim <= CalculateStartSimilarity())
                 {
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
@@ -135,6 +153,7 @@ namespace Hobsplit
                     splitState = SplitState.WAITING;
                     ResetSplitIndex();
                     LivesplitManager.Reset();
+                                    PlayReadySound();
                 }
             }
             else
@@ -151,16 +170,17 @@ namespace Hobsplit
             if (n)
             {
                 // Make sure we are at dream world or over
-                if(splitIndex >= 2 && splitState == SplitState.GAMEPLAY)
+                if(splitIndex >= (int)SplitIndex.DW && splitState == SplitState.GAMEPLAY)
                 {
                     LivesplitManager.Split();
                     // Thief check. Double incremenet
-                    if(splitIndex == 10 && Settings.Default.useThief)
+                    if(splitIndex == (int)SplitIndex.AWWPRE && Settings.Default.useThief)
                     {
                         IncrementSplitIndex(2);
+                        PlayThiefSound();
                     }
                     // End of run
-                    else if(splitIndex == 16)
+                    else if(splitIndex == (int)SplitIndex.DONE)
                     {
                         ResetSplitIndex();
                         splitState = SplitState.WAITING;
@@ -175,9 +195,8 @@ namespace Hobsplit
                 }
             }
 
-            // Send advanced run information to main window
-            float currentSimilarity = currentComparison.GetCurrentCorrelation(d);
-            AdvancedSplitInfo?.SmartInvoke(new AdvancedSplitInfoArgs(splitIndex, currentSimilarity, splitState));
+            currentSim = currentComparison.GetCurrentCorrelation(d);
+            resetSim = resetComparison.GetCurrentCorrelation(d);
         }
 
         public static void UpdateSplitSimilarity()
@@ -202,6 +221,33 @@ namespace Hobsplit
             splits[15].SetSimilarity((float)Settings.Default.loadsSimilarity);
             // 16 = barrel touch comparison (final split)
             splits[16].SetSimilarity((float)Settings.Default.finalSimilarity);
+        }
+
+        public static void PlayReadySound()
+        {
+            using(SoundPlayer player = new SoundPlayer(Environment.CurrentDirectory + "\\Assets\\Audio\\ready.wav")) 
+            {
+                player.Play();
+            }
+        }
+
+        public static void PlayThiefSound()
+        {
+            using (SoundPlayer player = new SoundPlayer(Environment.CurrentDirectory + "\\Assets\\Audio\\thief.wav"))
+            {
+                player.Play();
+            }
+        }
+
+        private static void AdvancedInfoSender()
+        {
+            string currentSplitName = splits[splitIndex].GetSplitName();
+            AdvancedSplitInfo?.SmartInvoke(new AdvancedSplitInfoArgs(splitIndex, currentSplitName, currentSim, resetSim, splitState));
+        }
+
+        private static void StartAdvancedInfoTimer()
+        {
+            advancedInfoTimer.Start();
         }
     }
 }
