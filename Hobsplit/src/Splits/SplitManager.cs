@@ -25,6 +25,7 @@ namespace Hobsplit
 
         private static float currentSim = 0f;
         private static float resetSim = 0f;
+        private static float lastStartSim = 0.3f;
 
         private static bool startMenuFadeIn = false;
 
@@ -128,17 +129,19 @@ namespace Hobsplit
             // Start from main menu check
             if (splitState == SplitState.WAITING && !Settings.Default.manualSplit)
             {
-                float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if (sim <= 0.3f)
+                float sim = currentComparison.GetCurrentCorrelation(d);
+                if (sim <= lastStartSim - 0.3f)
                 {
                     if(!startMenuFadeIn) return;
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
                     LivesplitManager.Split();
                     startMenuFadeIn = false;
+                    lastStartSim = 0f;
                 }
                 else 
                 {
+                    lastStartSim = sim;
                     if(!startMenuFadeIn && sim >= Settings.Default.startSimilarity)
                     {
                         startMenuFadeIn = true;
