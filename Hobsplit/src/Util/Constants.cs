@@ -8,7 +8,7 @@ namespace Hobsplit
         public const int comparisonHeight = 120;
 
         public static readonly Rectangle crop = new Rectangle(30, 32, 60, 50);
-        public static readonly Rectangle startCrop = new Rectangle(20, 20, 75, 50);
+        public static readonly Rectangle startCrop = new Rectangle(35, 45, 45, 70);
 
         public static readonly string[] LevelNames =
         {

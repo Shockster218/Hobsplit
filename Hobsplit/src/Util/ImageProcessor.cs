@@ -87,31 +87,21 @@ namespace Hobsplit
             }
         }
 
-        public static Bitmap MakeGrayscale3(this Bitmap original)
+        public static Bitmap MakeGrayscale3(this Bitmap bitmap)
         {
-            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
-            using (Graphics g = Graphics.FromImage(newBitmap))
+            const float limit = 0.15f;
+            for (int i = 0; i < bitmap.Width; i++)
             {
-
-                //create the grayscale ColorMatrix
-                ColorMatrix colorMatrix = new ColorMatrix(
-                   new float[][]
-                   {
-                        new float[] {.3f, .3f, .3f, 0, 0},
-                        new float[] {.59f, .59f, .59f, 0, 0},
-                        new float[] {.11f, .11f, .11f, 0, 0},
-                        new float[] {0, 0, 0, 1, 0},
-                        new float[] {0, 0, 0, 0, 1}
-                   });
-
-                using (ImageAttributes attributes = new ImageAttributes())
+                for (int j = 0; j < bitmap.Height; j++)
                 {
-                    attributes.SetColorMatrix(colorMatrix);
-                    g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
-                                0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+                    Color c = bitmap.GetPixel(i, j);
+                    if (c.GetBrightness() > limit)
+                    {
+                        bitmap.SetPixel(i, j, Color.Transparent);
+                    }
                 }
             }
-            return newBitmap;
+            return bitmap;
         }
     }
 }

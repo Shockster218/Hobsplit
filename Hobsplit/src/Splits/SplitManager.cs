@@ -45,7 +45,6 @@ namespace Hobsplit
         public static SplitData GetCurrentComparison() => currentComparison;
         public static SplitData GetNextComparison() => nextComparison;
         public static SplitState GetSplitState() => splitState;
-        public static Rectangle GetCrop() => splitIndex == 1 ? Constants.startCrop : Constants.crop;
         public static int GetSplitIndex() => splitIndex;
         public static SplitData[] GetSplitDataArray() => splits;
         public static void UpdateSplit(int index, string path) => splits[index].UpdateSplitImage(path);
@@ -119,19 +118,18 @@ namespace Hobsplit
             }
 
             // Reset check
-            if (r && !Settings.Default.manualSplit && splitIndex >= 2)
+            if (r && !Settings.Default.manualSplit && splitState != SplitState.WAITING)
             {
                 ResetSplitIndex();
                 splitState = SplitState.WAITING;
                 LivesplitManager.Reset();
-                PlayReadySound();
             }
 
             // Start from main menu check
             if (splitState == SplitState.WAITING && !Settings.Default.manualSplit)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if (sim <= Settings.Default.startSimilarity)
+                if (sim <= 0.3f)
                 {
                     if(!startMenuFadeIn) return;
                     IncrementSplitIndex();
@@ -141,9 +139,10 @@ namespace Hobsplit
                 }
                 else 
                 {
-                    if(!startMenuFadeIn)
+                    if(!startMenuFadeIn && sim >= Settings.Default.startSimilarity)
                     {
                         startMenuFadeIn = true;
+                        PlayReadySound();
                     }
                 }
             }
@@ -156,14 +155,6 @@ namespace Hobsplit
                 {
                     splitState = SplitState.LOADING;
                     LivesplitManager.Pause();
-                }
-                // Startup check to get the autosplitter ready
-                else if(splitState == SplitState.STARTUP)
-                {
-                    splitState = SplitState.WAITING;
-                    ResetSplitIndex();
-                    LivesplitManager.Reset();
-                                    PlayReadySound();
                 }
             }
             else
