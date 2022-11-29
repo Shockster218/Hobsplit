@@ -50,6 +50,7 @@ namespace Hobsplit
         private void CloseFromStartup()
         {
             StartupWindow win = new StartupWindow();
+            win.Topmost = Settings.Default.alwaysOnTop;
             win.Show();
             Close();
             return;

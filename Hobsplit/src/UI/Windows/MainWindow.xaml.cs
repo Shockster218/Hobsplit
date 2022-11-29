@@ -198,7 +198,8 @@ namespace Hobsplit
         private void OBSClosed()
         {
             foreach (Window win in OwnedWindows) win.Close();
-            StartupWindow window = new StartupWindow();
+            StartupWindow window = new StartupWindow(true);
+            window.Topmost = Settings.Default.alwaysOnTop;
             window.Show();
             Close();
         }

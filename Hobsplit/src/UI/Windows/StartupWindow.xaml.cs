@@ -5,9 +5,20 @@ namespace Hobsplit
 {
     public partial class StartupWindow : Window
     {
+        bool obsClosed = false;
         public StartupWindow()
         {
             InitializeComponent();
+            ProcessManager.OBSOpenedEvent += OBSFound;
+        }
+
+        public StartupWindow(bool obsClosed)
+        {
+            InitializeComponent();
+            ProcessManager.OBSOpenedEvent += OBSFound;
+            this.obsClosed = true;
+            Status_Textblock.Text = "Waiting for OBS...";
+            Task.Factory.StartNew(() => ProcessManager.FindOBS());
         }
 
         private void InitiateStartup(object sender, System.EventArgs e)
@@ -18,6 +29,7 @@ namespace Hobsplit
             // 4. Check for OBS process.
             // 5. Start main window AFTER obs is found.
 
+            if (obsClosed) return;
             Status_Textblock.Text = "Updating Settings...";
 
             if (Settings.Default.updateRequired)
@@ -53,13 +65,13 @@ namespace Hobsplit
 
             Status_Textblock.Text = "Waiting for OBS...";
 
-            ProcessManager.OBSOpenedEvent += OBSFound;
             Task.Factory.StartNew(() => ProcessManager.FindOBS());
         }
 
         public void OBSFound()
         {
             Status_Textblock.Text = "Starting...";
+            ProcessManager.OBSOpenedEvent -= OBSFound;
 
             MainWindow win = new MainWindow();
             win.Show();
