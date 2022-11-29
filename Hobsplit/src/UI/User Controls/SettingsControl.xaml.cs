@@ -20,6 +20,7 @@ namespace Hobsplit
             Ready_Sound_Toggle.IsChecked = Settings.Default.playReadySound;
             Thief_Sound_Toggle.IsChecked = Settings.Default.playThiefSound;
             Open_OBS_Toggle.IsChecked = Settings.Default.autoOBS;
+            Always_On_Top_Toggle.IsChecked = Settings.Default.alwaysOnTop;
         }
 
         public void Save()
@@ -29,6 +30,7 @@ namespace Hobsplit
             Settings.Default.playReadySound = (bool)Ready_Sound_Toggle.IsChecked;
             Settings.Default.playThiefSound = (bool)Thief_Sound_Toggle.IsChecked;
             Settings.Default.autoOBS = (bool)Open_OBS_Toggle.IsChecked;
+            Settings.Default.alwaysOnTop = (bool)Always_On_Top_Toggle.IsChecked;
         }
 
         private void Open_OBS_Toggle_Checked(object sender, RoutedEventArgs e) => Change_Path_Component.Toggle(true);

@@ -21,6 +21,8 @@ namespace Hobsplit
             segmentTimer = new Stopwatch();
             timer = new Timer(100);
             timer.Elapsed += (s, e) => UpdateTimer();
+            Topmost = Settings.Default.alwaysOnTop;
+
             SplitManager.AdvancedSplitInfo += SetAdvancedSplitInformation;
             ProcessManager.OBSClosedEvent += OBSClosed;
             LivesplitManager.OnLivesplitAction += HandleLiveSplitAction;
@@ -49,6 +51,12 @@ namespace Hobsplit
             else Split_State_TextBlock.Visibility = Visibility.Collapsed;
         }
 
+        public void SetWindowsOnTop()
+        {
+            Topmost = Settings.Default.alwaysOnTop;
+            foreach (Window win in OwnedWindows) win.Topmost = Settings.Default.alwaysOnTop;
+        }
+
         private void Video_Crop_Workshop_Button_Click(object sender, RoutedEventArgs e)
         {
             foreach(Window win in OwnedWindows)
@@ -63,6 +71,7 @@ namespace Hobsplit
             ImageRegionWindow window = new ImageRegionWindow();
             window.Closed += (s,f) => Activate();
             window.Owner = this;
+            window.Topmost = Settings.Default.alwaysOnTop;
             window.Show();
         }
         
@@ -80,6 +89,7 @@ namespace Hobsplit
             SplitImagesWindow window = new SplitImagesWindow();
             window.Closed += (s, f) => Activate();
             window.Owner = this;
+            window.Topmost = Settings.Default.alwaysOnTop;
             window.Show();
         }
 
@@ -97,6 +107,7 @@ namespace Hobsplit
             SettingsWindow window = new SettingsWindow();
             window.Closed += (s, f) => Activate();
             window.Owner = this;
+            window.Topmost = Settings.Default.alwaysOnTop;
             window.Show();
         }
 
@@ -114,6 +125,7 @@ namespace Hobsplit
             AdvancedSettingsWindow window = new AdvancedSettingsWindow();
             window.Closed += (s, f) => Activate();
             window.Owner = this;
+            window.Topmost = Settings.Default.alwaysOnTop;
             window.Show();
         }
 

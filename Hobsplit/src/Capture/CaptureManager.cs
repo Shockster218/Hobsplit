@@ -110,10 +110,10 @@ namespace Hobsplit
             Bitmap frame = frameData.ToBitmap();
             frame = frame.Crop(Settings.Default.sourceRect, 640, 480);
 
-            if (SplitManager.GetSplitIndex() == 1) frame.RemoveColor();
-
             frame = frame.Resize();
             frame = frame.Crop(SplitManager.GetCrop());
+
+            if (SplitManager.GetSplitState() == SplitState.WAITING) frame = frame.MakeGrayscale3();
 
             Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));
             frame.Dispose();

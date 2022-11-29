@@ -45,7 +45,7 @@ namespace Hobsplit
             if (!Settings.Default.manualSplit) return;
             kbHook.KeyDown -= KeyDown;
 
-            if (e.KeyValue == (int)split && SplitManager.GetCurrentSplitState() == SplitState.WAITING)
+            if (e.KeyValue == (int)split && SplitManager.GetSplitState() == SplitState.WAITING)
             {
                 SplitManager.IncrementSplitIndex();
                 Split();

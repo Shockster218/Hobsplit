@@ -34,6 +34,10 @@ namespace Hobsplit
 
         public void Save()
         {
+            Settings.Default.split = splitKey;
+            Settings.Default.unsplit = unsplitKey;
+            Settings.Default.reset = resetKey;
+            Settings.Default.pause = pauseKey;
             LivesplitManager.SetKeybinds();
         }
 
@@ -61,8 +65,9 @@ namespace Hobsplit
         {
             if (Split_Button.IsFocused)
             {
-                splitKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                Split_Button.Content = e.Key.ToString();
+                Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+                splitKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(key);
+                Split_Button.Content = key.ToString();
                 Keyboard.ClearFocus();
             }
         }
@@ -71,8 +76,9 @@ namespace Hobsplit
         {
             if (Unsplit_Button.IsFocused)
             {
-                unsplitKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                Unsplit_Button.Content = e.Key.ToString();
+                Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+                unsplitKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(key);
+                Unsplit_Button.Content = key.ToString();
                 Keyboard.ClearFocus();
             }
         }
@@ -81,8 +87,9 @@ namespace Hobsplit
         {
             if (Reset_Button.IsFocused)
             {
-                resetKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                Reset_Button.Content = e.Key.ToString();
+                Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+                resetKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(key);
+                Reset_Button.Content = key.ToString();
                 Keyboard.ClearFocus();
             }
         }
@@ -91,8 +98,9 @@ namespace Hobsplit
         {
             if (Pause_Button.IsFocused)
             {
-                pauseKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(e.Key);
-                Pause_Button.Content = e.Key.ToString();
+                Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+                pauseKey = (VirtualKeyCode)KeyInterop.VirtualKeyFromKey(key);
+                Pause_Button.Content = key.ToString();
                 Keyboard.ClearFocus();
             }
         }

@@ -90,7 +90,7 @@
       <Value Profile="(Default)">0.9</Value>
     </Setting>
     <Setting Name="startSimilarity" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.82</Value>
+      <Value Profile="(Default)">0.935</Value>
     </Setting>
     <Setting Name="autoOBS" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -115,6 +115,9 @@
     </Setting>
     <Setting Name="advShowRunInfo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="alwaysOnTop" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

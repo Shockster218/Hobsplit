@@ -26,6 +26,8 @@ namespace Hobsplit
         private static float currentSim = 0f;
         private static float resetSim = 0f;
 
+        private static bool startMenuFadeIn = false;
+
         public static bool Init()
         {
             if (advancedInfoTimer == null)
@@ -42,13 +44,12 @@ namespace Hobsplit
         public static SplitData GetResetComparison() => resetComparison;
         public static SplitData GetCurrentComparison() => currentComparison;
         public static SplitData GetNextComparison() => nextComparison;
-        public static SplitState GetCurrentSplitState() => splitState;
+        public static SplitState GetSplitState() => splitState;
         public static Rectangle GetCrop() => splitIndex == 1 ? Constants.startCrop : Constants.crop;
         public static int GetSplitIndex() => splitIndex;
         public static SplitData[] GetSplitDataArray() => splits;
         public static void UpdateSplit(int index, string path) => splits[index].UpdateSplitImage(path);
         public static void UpdateSplitsImageWorkable() { foreach (SplitData split in splits) { split.UpdateImgWorkableCrop(); } }
-        private static float CalculateStartSimilarity() { return 1f - (float)Settings.Default.startSimilarity; }
         private static void AdjustSplitComparisons() 
         {
             nextComparison = splitIndex < splits.Length - 1 ? splits[splitIndex + 1]: null;
@@ -118,7 +119,7 @@ namespace Hobsplit
             }
 
             // Reset check
-            if (r && !Settings.Default.manualSplit)
+            if (r && !Settings.Default.manualSplit && splitIndex >= 2)
             {
                 ResetSplitIndex();
                 splitState = SplitState.WAITING;
@@ -130,11 +131,20 @@ namespace Hobsplit
             if (splitState == SplitState.WAITING && !Settings.Default.manualSplit)
             {
                 float sim = ImagePhash.GetCrossCorrelation(currentComparison.GetDigest(), d);
-                if (sim <= CalculateStartSimilarity())
+                if (sim <= Settings.Default.startSimilarity)
                 {
+                    if(!startMenuFadeIn) return;
                     IncrementSplitIndex();
                     splitState = SplitState.GAMEPLAY;
                     LivesplitManager.Split();
+                    startMenuFadeIn = false;
+                }
+                else 
+                {
+                    if(!startMenuFadeIn)
+                    {
+                        startMenuFadeIn = true;
+                    }
                 }
             }
 

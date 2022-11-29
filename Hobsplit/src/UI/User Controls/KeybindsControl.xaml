@@ -10,19 +10,19 @@
             <StackPanel x:Name="Main_Stack_Panel" ForceCursor="True" Margin="0">
                 <StackPanel x:Name="Split_Stack_Panel" Margin="5,10,5,9" Orientation="Horizontal">
                     <TextBlock x:Name="Split_TextBlock" Text="Split" Margin="0,0,20,0"/>
-                    <Button x:Name="Split_Button" Content="" Width="75" Margin="63,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Split_Button_Click" KeyDown="Split_Button_KeyDown" MouseLeave="Split_Button_MouseLeave"/>
-                </StackPanel>
-                <StackPanel x:Name="Unsplit_Stack_Panel_Copy" Margin="5,10,5,9" Orientation="Horizontal">
-                    <TextBlock x:Name="Unsplit_TextBlock" Text="Unsplit" Margin="0,0,20,0"/>
-                    <Button x:Name="Unsplit_Button" Content="" Width="75" Margin="47,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Unsplit_Button_Click" KeyDown="Unsplit_Button_KeyDown" MouseLeave="Unsplit_Button_MouseLeave"/>
+                    <Button x:Name="Split_Button" Content="" Width="75" Margin="63,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Split_Button_Click" PreviewKeyDown="Split_Button_KeyDown" MouseLeave="Split_Button_MouseLeave"/>
                 </StackPanel>
                 <StackPanel x:Name="Reset_Stack_Panel_Copy1" Margin="5,10,5,9" Orientation="Horizontal">
                     <TextBlock x:Name="Reset_TextBlock" Text="Reset" Margin="0,0,20,0"/>
-                    <Button x:Name="Reset_Button" Content="" Width="75" Margin="57,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Reset_Button_Click" KeyDown="Reset_Button_KeyDown" MouseLeave="Reset_Button_MouseLeave"/>
+                    <Button x:Name="Reset_Button" Content="" Width="75" Margin="57,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Reset_Button_Click" PreviewKeyDown="Reset_Button_KeyDown" MouseLeave="Reset_Button_MouseLeave"/>
+                </StackPanel>
+                <StackPanel x:Name="Unsplit_Stack_Panel_Copy" Margin="5,10,5,9" Orientation="Horizontal">
+                    <TextBlock x:Name="Unsplit_TextBlock" Text="Unsplit" Margin="0,0,20,0"/>
+                    <Button x:Name="Unsplit_Button" Content="" Width="75" Margin="47,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Unsplit_Button_Click" PreviewKeyDown="Unsplit_Button_KeyDown" MouseLeave="Unsplit_Button_MouseLeave"/>
                 </StackPanel>
                 <StackPanel x:Name="Pause_Stack_Panel_Copy2" Margin="5,10,5,9" Orientation="Horizontal">
                     <TextBlock x:Name="Pause_TextBlock" Text="Pause" Margin="0,0,20,0"/>
-                    <Button x:Name="Pause_Button" Content="" Width="75" Margin="54,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Pause_Button_Click" KeyDown="Pause_Button_KeyDown" MouseLeave="Pause_Button_MouseLeave"/>
+                    <Button x:Name="Pause_Button" Content="" Width="75" Margin="54,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Pause_Button_Click" PreviewKeyDown="Pause_Button_KeyDown" MouseLeave="Pause_Button_MouseLeave"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

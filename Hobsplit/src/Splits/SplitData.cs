@@ -38,7 +38,6 @@ namespace Hobsplit
             if (imageInit) return;
             originalImg = SetImage(imagePath).Resize(640, 480);
             UpdateImgWorkableCrop();
-            if (removeColor) originalImgWorkable.RemoveColor();
             digest = ImagePhash.ComputeDigest(GetFinalImage().ToLuminanceImage());
             imageInit = true;
         }
@@ -49,7 +48,6 @@ namespace Hobsplit
             imagePath = path;
             originalImg = SetImage(imagePath).Resize(640, 480);
             UpdateImgWorkableCrop();
-            if (removeColor) originalImgWorkable.RemoveColor();
             digest = ImagePhash.ComputeDigest(GetFinalImage().ToLuminanceImage());
             imageInit = true;
         }
@@ -80,6 +78,7 @@ namespace Hobsplit
             Bitmap final = originalImgWorkable.Clone() as Bitmap;
             final = final.Resize();
             final = final.Crop(removeColor ? Constants.startCrop : Constants.crop);
+            if (removeColor) final = final.MakeGrayscale3();
             return final;
         }
 

@@ -18,6 +18,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <WPFToggleSwitch:ToggleSwitch x:Name="Open_OBS_Toggle" Content="Automatically open OBS" Background="#01FFFFFF" Foreground="White" Checked="Open_OBS_Toggle_Checked" Unchecked="Open_OBS_Toggle_Unchecked" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,5" Width="240"/>
                     <Components:ChangePathComponent x:Name="Change_Path_Component" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,10"/>
@@ -25,6 +26,7 @@
                     <WPFToggleSwitch:ToggleSwitch x:Name="Manual_Controls_Toggle" Content="Manual Start and Reset" Background="#01FFFFFF" Margin="5,0,5,5" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="240"/>
                     <WPFToggleSwitch:ToggleSwitch x:Name="Ready_Sound_Toggle" Content="Play Ready Sound" Background="#01FFFFFF" Margin="5,0,5,5" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Width="240" Checked="Ready_Sound_Toggle_Checked"/>
                     <WPFToggleSwitch:ToggleSwitch x:Name="Thief_Sound_Toggle" Content="Play Thief Split Sound" Background="#01FFFFFF" Margin="5,5,5,5" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Width="240" Checked="Thief_Sound_Toggle_Checked"/>
+                    <WPFToggleSwitch:ToggleSwitch x:Name="Always_On_Top_Toggle" Content="Windows Always on Top" Background="#01FFFFFF" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Width="240"/>
                 </Grid>
             </StackPanel>
         </GroupBox>

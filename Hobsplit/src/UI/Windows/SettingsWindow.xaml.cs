@@ -13,6 +13,7 @@ namespace Hobsplit
         {
             Settings_Control.Save();
             Keybinds_Control.Save();
+            MainWindow.instance.SetWindowsOnTop();
             Settings.Default.Save();
             Close();
         }
