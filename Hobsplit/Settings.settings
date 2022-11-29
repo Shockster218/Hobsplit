@@ -90,7 +90,7 @@
       <Value Profile="(Default)">0.9</Value>
     </Setting>
     <Setting Name="startSimilarity" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.935</Value>
+      <Value Profile="(Default)">0.92</Value>
     </Setting>
     <Setting Name="autoOBS" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
