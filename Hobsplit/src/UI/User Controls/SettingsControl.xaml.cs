@@ -39,6 +39,6 @@ namespace Hobsplit
 
         private void Ready_Sound_Toggle_Checked(object sender, RoutedEventArgs e) { if (!startup) SplitManager.PlayReadySound(); }
 
-        private void Thief_Sound_Toggle_Checked(object sender, RoutedEventArgs e) { if (!startup) SplitManager.PlayThiefSound(); }
+        private void Thief_Sound_Toggle_Checked(object sender, RoutedEventArgs e) { if (!startup) SplitManager.PlayThiefSound(false); }
     }
 }

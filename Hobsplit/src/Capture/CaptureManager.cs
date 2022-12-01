@@ -112,15 +112,8 @@ namespace Hobsplit
 
             frame = frame.Resize();
 
-            if (SplitManager.GetSplitState() == SplitState.WAITING)
-            {
-                frame = frame.Crop(Constants.startCrop);
-                frame = frame.MakeGrayscale3();
-            }
+            if (SplitManager.GetSplitState() == SplitState.WAITING) frame = frame.Crop(Constants.startCrop);
             else frame = frame.Crop(Constants.crop);
-
-            SplitManager.GetSplitDataArray()[1].GetFinalImage().Save("swag2.bmp");
-            frame.Save("swag.bmp");
 
             Digest digest = await Task.Factory.StartNew(() => ImagePhash.ComputeDigest(frame.ToLuminanceImage()));
             frame.Dispose();

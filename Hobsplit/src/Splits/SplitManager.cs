@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Media;
+using System.Threading.Tasks;
 using System.Timers;
 using Shipwreck.Phash;
 
@@ -113,7 +114,7 @@ namespace Hobsplit
                     {
                         LivesplitManager.Unsplit();
                         LivesplitManager.Split();
-                        PlayThiefSound();
+                        Task.Run(() => PlayThiefSound(true));
                     }
                 }
             }
@@ -181,7 +182,7 @@ namespace Hobsplit
                     if(splitIndex == (int)SplitIndex.AWWPRE && Settings.Default.useThief)
                     {
                         IncrementSplitIndex(2);
-                        PlayThiefSound();
+                        Task.Run(() => PlayThiefSound(true));
                     }
                     // End of run
                     else if(splitIndex == (int)SplitIndex.DONE)
@@ -235,8 +236,14 @@ namespace Hobsplit
             }
         }
 
-        public static void PlayThiefSound()
+        public static async void PlayThiefSound(bool delay)
         {
+            if (delay) 
+            { 
+                if (splitIndex != 12) return;
+                await Task.Delay(73 * 1000);
+            }
+
             using (SoundPlayer player = new SoundPlayer(Environment.CurrentDirectory + "\\Assets\\Audio\\thief.wav"))
             {
                 player.Play();

@@ -156,6 +156,7 @@ namespace Hobsplit
                     if (SplitManager.GetSplitIndex() == (int)SplitIndex.THIEF) return;
                     if (segmentTimer.IsRunning) 
                     {
+                        if(SplitManager.GetSplitIndex() == (int)SplitIndex.DONE) segmentTimer.Stop();
                         segmentTimer.Restart();
                         break;
                     }

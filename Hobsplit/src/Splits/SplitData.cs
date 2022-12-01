@@ -78,7 +78,6 @@ namespace Hobsplit
             Bitmap final = originalImgWorkable.Clone() as Bitmap;
             final = final.Resize();
             final = final.Crop(removeColor ? Constants.startCrop : Constants.crop);
-            if (removeColor) final = final.MakeGrayscale3();
             return final;
         }
 
