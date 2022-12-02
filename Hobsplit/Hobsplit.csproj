@@ -80,6 +80,9 @@
     <Compile Include="src\Capture\CaptureHelper.cs" />
     <Compile Include="src\Capture\CaptureManager.cs" />
     <Compile Include="src\Capture\DirectXHelper.cs" />
+    <Compile Include="src\UI\Components\SplitControlComponent.xaml.cs">
+      <DependentUpon>SplitControlComponent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\UI\Windows\AdvancedSettingsWindow.xaml.cs">
       <DependentUpon>AdvancedSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="src\UI\Components\ChangePathComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\UI\Components\SplitControlComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

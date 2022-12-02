@@ -34,6 +34,7 @@ namespace Hobsplit
             bool index = Settings.Default.advSplitIndex;
             bool state = Settings.Default.advSplitState;
             bool hideRunInfo = Settings.Default.advShowRunInfo;
+            bool splitControl = Settings.Default.advSplitControl;
 
             if (hideRunInfo) Run_Info_GroupBox.Visibility = Visibility.Visible;
             else Run_Info_GroupBox.Visibility = Visibility.Collapsed;
@@ -49,6 +50,9 @@ namespace Hobsplit
 
             if (state) Split_State_TextBlock.Visibility = Visibility.Visible;
             else Split_State_TextBlock.Visibility = Visibility.Collapsed;
+
+            if (splitControl) Split_Control_Component.Visibility = Visibility.Visible;
+            else Split_Control_Component.Visibility = Visibility.Collapsed;
         }
 
         public void SetWindowsOnTop()

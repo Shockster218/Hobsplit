@@ -131,7 +131,7 @@ namespace Hobsplit
             if (splitState == SplitState.WAITING && !Settings.Default.manualSplit)
             {
                 float sim = currentComparison.GetCurrentCorrelation(d);
-                if (sim <= lastStartSim - 0.3f)
+                if (sim <= lastStartSim - 0.1f)
                 {
                     if(!startMenuFadeIn) return;
                     IncrementSplitIndex();

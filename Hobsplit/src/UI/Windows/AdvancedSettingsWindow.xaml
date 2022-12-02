@@ -20,6 +20,7 @@
                 <WPFToggleSwitch:ToggleSwitch x:Name="Split_Index_Toggle" FontSize="14" Content="Show Current Split Index" Height="35" Width="250" Margin="0,5,0,0"/>
                 <WPFToggleSwitch:ToggleSwitch x:Name="Similarity_Toggle" FontSize="14" Content="Show Current Similarities" Height="35" Width="250" Margin="0,5,0,0"/>
                 <WPFToggleSwitch:ToggleSwitch x:Name="Split_State_Toggle" FontSize="14" Content="Show Current Split State" Height="35" Width="250" Margin="0,5,0,0"/>
+                <WPFToggleSwitch:ToggleSwitch x:Name="Control_Split_Toggle" FontSize="14" Content="Manual Split Increment" Height="35" Width="250"/>
             </StackPanel>
         </GroupBox>
         <Button x:Name="Save_Button" Content="Save" FontSize="16" Margin="177,431,10,10" Grid.Column="1" Width="100" Height="35" Click="Save_Button_Click"/>

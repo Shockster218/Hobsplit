@@ -1,0 +1,13 @@
+﻿<UserControl x:Name="Split_Control_Component" x:Class="Hobsplit.SplitControlComponent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hobsplit"
+             mc:Ignorable="d" Height="58" Width="200">
+    <Grid>
+        <TextBlock x:Name="Title_Textblock" HorizontalAlignment="Center" Text="Manual Split Control" TextAlignment="Center" Height="31" Width="200" FontSize="16" VerticalAlignment="Top" RenderTransformOrigin="0.671,0.129"/>
+        <Button x:Name="Previous_Button" Content="Previous" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="80" Height="25" FontSize="14" Click="Previous_Button_Click"/>
+        <Button x:Name="Next_Button" Content="Next" HorizontalAlignment="Left" Margin="110,31,0,0" VerticalAlignment="Top" Width="80" Height="25" FontSize="14" Click="Next_Button_Click"/>
+    </Grid>
+</UserControl>

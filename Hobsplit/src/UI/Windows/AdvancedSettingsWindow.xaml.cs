@@ -16,6 +16,7 @@ namespace Hobsplit
             Similarity_Toggle.IsChecked = Settings.Default.advSimilarity;
             Split_Index_Toggle.IsChecked = Settings.Default.advSplitIndex;
             Split_State_Toggle.IsChecked = Settings.Default.advSplitState;
+            Control_Split_Toggle.IsChecked = Settings.Default.advSplitControl;
         }
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
@@ -39,6 +40,7 @@ namespace Hobsplit
             Settings.Default.advSimilarity = (bool)Similarity_Toggle.IsChecked;
             Settings.Default.advSplitIndex = (bool)Split_Index_Toggle.IsChecked;
             Settings.Default.advSplitState = (bool)Split_State_Toggle.IsChecked;
+            Settings.Default.advSplitControl = (bool)Control_Split_Toggle.IsChecked;
         }
     }
 }
