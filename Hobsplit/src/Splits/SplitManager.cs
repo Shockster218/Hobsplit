@@ -241,7 +241,7 @@ namespace Hobsplit
             if (delay) 
             { 
                 if (splitIndex != 12) return;
-                await Task.Delay(73 * 1000);
+                await Task.Delay(82750);
             }
 
             using (SoundPlayer player = new SoundPlayer(Environment.CurrentDirectory + "\\Assets\\Audio\\thief.wav"))

@@ -33,10 +33,10 @@ namespace Hobsplit
             bool sim = Settings.Default.advSimilarity;
             bool index = Settings.Default.advSplitIndex;
             bool state = Settings.Default.advSplitState;
-            bool hideRunInfo = Settings.Default.advShowRunInfo;
+            bool showRunInfo = Settings.Default.advShowRunInfo;
             bool splitControl = Settings.Default.advSplitControl;
 
-            if (hideRunInfo) Run_Info_GroupBox.Visibility = Visibility.Visible;
+            if (showRunInfo) Run_Info_GroupBox.Visibility = Visibility.Visible;
             else Run_Info_GroupBox.Visibility = Visibility.Collapsed;
 
             if (sim || index || state) Advanced_Settings_Groupbox.Visibility = Visibility.Visible;
@@ -45,7 +45,7 @@ namespace Hobsplit
             if(sim) Similarity_TextBlock.Visibility = Visibility.Visible;
             else Similarity_TextBlock.Visibility = Visibility.Collapsed;
 
-            if (index) Split_Index_TextBlock.Visibility = Visibility.Visible;
+            if (index || splitControl) Split_Index_TextBlock.Visibility = Visibility.Visible;
             else Split_Index_TextBlock.Visibility = Visibility.Collapsed;
 
             if (state) Split_State_TextBlock.Visibility = Visibility.Visible;
